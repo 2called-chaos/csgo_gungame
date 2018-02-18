@@ -1269,7 +1269,7 @@ public Action:UTIL_Timer_ShowHintText(Handle:timer, any:data)
     }
     else
     {
-        SetPackPosition(data, 0);
+        ResetPack(data);
         WritePackCell(data, times);
         return Plugin_Continue;
     }
