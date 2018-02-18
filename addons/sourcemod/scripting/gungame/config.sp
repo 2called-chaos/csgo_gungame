@@ -167,8 +167,6 @@ public GG_ConfigKeyValue(const String:key[], const String:value[])
                g_Cfg_TripleLevelBonusGravity = StringToFloat(value);
             } else if(strcmp("LevelsInScoreboard", key, false) == 0) {
                 g_Cfg_LevelsInScoreboard = StringToInt(value);
-            } else if(strcmp("UnlimitedNadesMinPlayers", key, false) == 0) {
-                UnlimitedNadesMinPlayers = StringToInt(value);
             } else if(strcmp("WarmupRandomWeaponMode", key, false) == 0) {
                 WarmupRandomWeaponMode = bool:StringToInt(value);
                 WarmupRandomWeaponLevel = -1;
@@ -223,8 +221,6 @@ public GG_ConfigKeyValue(const String:key[], const String:value[])
                 NadeFlash = bool:StringToInt(value);
             } else if(strcmp("ExtraNade", key, false) == 0) {
                 g_Cfg_ExtraNade = StringToInt(value);
-            } else if(strcmp("UnlimitedNades", key, false) == 0) {
-                UnlimitedNades = bool:StringToInt(value);
             } else if(strcmp("WarmupNades", key, false) == 0) {
                 WarmupNades = bool:StringToInt(value);
             } else if(strcmp("MultiLevelBonus", key, false) == 0) {

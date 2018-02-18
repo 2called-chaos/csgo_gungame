@@ -5,14 +5,14 @@
         /* ===== [1. GUNGAME MAIN CONFIG] ===== */
 
         /* ----- [1.1. main] ----- */
-        
+
         /* Enables/Disables GunGame Mod */
         "Enabled" "1"
 
         /**
          * Do not fast switch on level up for this weapons.
          *
-         * Comma-separated list 
+         * Comma-separated list
          * of weapon names from gungame.equip.txt.
          *
          * Options:
@@ -22,7 +22,7 @@
          *      ""                                      - Disabled
          */
         "FastSwitchSkipWeapons" "taser,hegrenade,molotov,incgrenade"
-        
+
         /**
          * Switch weapon without delays after level up.
          *
@@ -62,7 +62,7 @@
         "WinnerEffect" "0"
 
         /**
-         * Delay before end of multiplayer game after gungame win. 
+         * Delay before end of multiplayer game after gungame win.
          *
          * Options:
          *      0 - Disabled.
@@ -103,7 +103,7 @@
         "BlockWeaponSwitchIfKnife" "1"
 
         /**
-         * Block weapon switch if you get next hegrenade 
+         * Block weapon switch if you get next hegrenade
          * after previous hegrenade explode or after getting extra nade.
          *
          * You need SDK Hooks (sdkhooks) if you want to set it to "1"
@@ -114,22 +114,22 @@
          */
         "BlockWeaponSwitchOnNade" "1"
 
-        /** 
+        /**
          * Show players level message in hint box instead of chat.
-         * If enabled then multikill chat messages will be shown 
+         * If enabled then multikill chat messages will be shown
          * in hint box too (requres "MultiKillChat" "1").
          */
         "ShowSpawnMsgInHintBox" "0"
-        
+
         /**
-         * Show leader level info in hint box 
+         * Show leader level info in hint box
          * (requires "ShowSpawnMsgInHintBox" to be "1")
          */
         "ShowLeaderInHintBox" "0"
 
         /* Show leader's weapon name in chat with leading message */
         "ShowLeaderWeapon" "0"
-        
+
         /**
          * Strip dead players weapon
          *
@@ -139,35 +139,35 @@
          *  2 - Enabled for dead players only (alive players can drop guns)
          */
         "StripDeadPlayersWeapon" "0"
-        
+
         /* Show levels in scoreboard */
         "LevelsInScoreboard" "1"
 
         /**
-         * When shows levels in scoreboard it will 
+         * When shows levels in scoreboard it will
          * clear deaths (requires "LevelsInScoreboard" "1")
          */
         "ScoreboardClearDeaths" "0"
-        
+
         /* Restore level on player reconnect */
         "RestoreLevelOnReconnect" "1"
 
         /* Allow level up after round end */
         "AllowLevelUpAfterRoundEnd" "1"
-    
+
         /* Show multikill hints in chat */
         "MultiKillChat" "0"
-        
+
         /* Set sv_alltalk 1 after player win */
         "AlltalkOnWin" "1"
-        
+
         /* Start voting if leader level is less maximum level by this value */
         "VoteLevelLessWeaponCount" "2"
-        
+
         /* Display a join message, popup giving players instructions on how to play */
         "JoinMessage" "1"
 
-        /** 
+        /**
          * Level down playr if they kill themself by WorldSpawn Suicide.
          * 0 - Disable
          * 1..N - Levels to loose
@@ -209,10 +209,10 @@
          */
         "AutoFriendlyFire" "0"
 
-        /** 
+        /**
          * FFA DM mode.
          *
-         * If you are using CSS:DM with FFA mode enabled, 
+         * If you are using CSS:DM with FFA mode enabled,
          * then you should set this variable to "1".
          *
          * 0 - Disabled
@@ -220,7 +220,7 @@
          */
         "FFA" "0"
 
-        /** 
+        /**
          * Enable friendly fire on defined level.
          *
          * This does not affect AutoFriendlyFire and AutoFriendlyFire is not requered to be 1.
@@ -230,8 +230,8 @@
          * 1..N - enable friendly fire on defined level.
          */
         "EnableFriendlyFireLevel" "0"
-        
-        /** 
+
+        /**
          * What to do with friendly fire when EnableFriendlyFireLevel is not 0 and leader reaches EnableFriendlyFireLevel
          * or AutoFriendlyFire is 1 and someone reaches nade level.
          *
@@ -239,8 +239,8 @@
          * 0 - Disable friendy fire
          */
         "FriendlyFireOnOff" "1"
-        
-        /** 
+
+        /**
          * Disable rtv on defined level. 0 - disabled.
          */
         "DisableRtvLevel" "0"
@@ -248,7 +248,7 @@
         /**
          * If this option is enabled, than player can level up by killing with prop_physics.
          * For example with fuel barrels etc.
-         * 
+         *
          * 1 - Enabled
          * 0 - Disabled
          */
@@ -256,7 +256,7 @@
 
         /**
          * Use "CanLevelUpWithPhysics" option when player is on grenade level.
-         * 
+         *
          * 1 - Enabled
          * 0 - Disabled
          */
@@ -264,7 +264,7 @@
 
         /**
          * Use "CanLevelUpWithPhysics" option when player is on knife level.
-         * 
+         *
          * 1 - Enabled
          * 0 - Disabled
          */
@@ -273,7 +273,7 @@
         /**
          * If this option is enabled, than player can level up by killing with nade at any time.
          * For example there are maps having grenades on them leaved by the author.
-         * 
+         *
          * 1 - Enabled
          * 0 - Disabled
          */
@@ -281,7 +281,7 @@
 
         /**
          * Use "CanLevelUpWithMapNades" option when player is on knife level.
-         * 
+         *
          * 1 - Enabled
          * 0 - Disabled
          */
@@ -299,13 +299,13 @@
          *
          * "{version}" will be changed to plugin version.
          *
-         * Options: 
+         * Options:
          *     "" = Option disabled.
          */
         "GameDesc" "GunGame:SM {version}"
 
         /* ----- [1.2. knifepro] ----- */
-        
+
         /* Turn Knife Pro allow stealing a player level by killing them with a knife */
         "KnifePro" "1"
 
@@ -314,12 +314,12 @@
 
         /* The minimum level that a player must be at before another player can knife steal from. Requires KnifePro on */
         "KnifeProMinLevel" "0"
-        
+
         /* If enabled then knife kill will also affect points */
         "KnifeProRecalcPoints" "0"
-        
+
         /**
-         * Maximum level difference between players to allow steal level 
+         * Maximum level difference between players to allow steal level
          * 0 - Disabled
          * 1..N - Level difference between killer and victim
          */
@@ -334,7 +334,7 @@
         "DisableLevelDown" "0"
 
         /* ----- [1.3. objectives] ----- */
-        
+
         /* Give x number of level by completing the bomb planting/defusing objectives.
          * Amount giving base on the value setting.
          */
@@ -342,8 +342,8 @@
 
         /* Enables objective bonus on last level */
         "ObjectiveBonusWin" "0"
-        
-        /** 
+
+        /**
          * Gives objective bonus on exploding the bomb instead of planting
          * 0 - bonus on planting
          * 1 - bonus on exploding
@@ -354,14 +354,14 @@
         "RemoveObjectives" "3"
 
         /* ----- [1.4. handicap] ----- */
-        
+
         /**
          * Maximum level that handicap can give.
          * 0 - Disable restriction
          * 1..N - Max level
          */
         "MaxHandicapLevel" "0"
-        
+
         /* Substract handicap level by this value */
         "HandicapLevelSubstract" "1"
 
@@ -386,12 +386,12 @@
 
         /**
          * Gives handicap level automaticaly every defined number of seconds.
-         * This only works for players that is on very minimum level from 
+         * This only works for players that is on very minimum level from
          * all the players.
          * Handicap must also be turned on for this to work.
          */
         "HandicapUpdate" "0"
-        
+
         /**
          * Give handicap not more then given number of times per map.
          * 0 - disabled
@@ -407,7 +407,7 @@
          * N - Do not give handicap for the first N players.
          */
         "HandicapTopRank" "10"
-        
+
         /**
          * Use spectator's levels to calculate handicap level.
          *
@@ -415,9 +415,9 @@
          * 1 - Handicap counts levels of spectators.
          */
         "HandicapUseSpectators" "0"
-        
+
         /* ----- [1.5. equip] ----- */
-        
+
         /**
          * Give extra taser for the knife kill.
          *
@@ -440,7 +440,7 @@
          * This gives the player a weapon with 50 bullets on molotov level.
          *
          * Example:
-         *     "MolotovBonusWeaponName" "glock"  - gives glock 
+         *     "MolotovBonusWeaponName" "glock"  - gives glock
          *     "MolotovBonusWeaponName" "deagle" - gives deagle
          *     "MolotovBonusWeaponName" ""       - feature disabled
          */
@@ -454,16 +454,16 @@
 
         /* Auto reload current level weapon on kill */
         "ReloadWeapon" "1"
-        
+
         /* Give player armor on spawn */
         "ArmorKevlar" "1"
         "ArmorHelmet" "1"
-        
+
         /* Remove additional ammo in bonus weapon on the nade level */
         "RemoveBonusWeaponAmmo" "1"
-        
+
         /**
-         * If remove additional ammo in bonus weapon on the nade level is enabled, then give that bullets count. 
+         * If remove additional ammo in bonus weapon on the nade level is enabled, then give that bullets count.
          *
          * 0 - default clip size
          * 1-N - number of bullets
@@ -473,7 +473,7 @@
         /**
          * This gives the player a weapon with 50 bullets on nade level.
          * Example:
-         *     "NadeBonus" "glock"  - gives glock 
+         *     "NadeBonus" "glock"  - gives glock
          *     "NadeBonus" "deagle" - gives deagle
          *     "NadeBonus" ""       - feature disabled
          */
@@ -493,38 +493,23 @@
 
         /**
          * Gives an extra hegrenade to the player if they get a kill
-         * 
+         *
          * 0 - Disable
          * 1 - Enable
          * 2 - Enable only for knife kills
          */
         "ExtraNade" "0"
 
-        /* Gives unlimited hegrenades to the player if he is on nage level */
-        "UnlimitedNades" "0"
-
-        /**
-         * Enable UnlimitedNades depending on the number of players in team.
-         *
-         * If UnlimitedNades is off and the number of players in one team less or 
-         * equal to UnlimitedNadesMinPlayers then enable UnlimitedNades.
-         * When it will be more players on both teams, turn UnlimitedNades back to off.
-         *
-         * 0 - Disable
-         * 1 and above - Minimum number of players in each team for UnlimitedNames to be on.
-         */
-        "UnlimitedNadesMinPlayers" "1"
-        
         /**
          * Number of nades on the nade level.
          *
-         * This option is disabled 
+         * This option is disabled
          * if less then 2.
          */
         "NumberOfNades" "0"
-        
+
         /* ----- [1.6. multi level] ----- */
-        
+
         /* Multi Level Bonus */
         "MultiLevelBonus" "0"
 
@@ -553,7 +538,7 @@
         "MultilevelEffectType" "2"
 
         /* ----- [1.7. warmup] ----- */
-        
+
         /* Enables Warmup Round*/
         "WarmupEnabled" "1"
 
@@ -584,16 +569,16 @@
         "WarmupWeapon" ""
 
         /* ===== [2. GUNGAME TK CONFIG] ===== */
-        
+
         /**
          * How much levels to loose after TK
          * 0 - Disable
          * 1..N - Levels to loose
          */
         "TkLooseLevel" "0"
-    
+
         /* ===== [3. GUNGAME AFK CONFIG] ===== */
-        
+
         /* Enables or disables built in Afk management system */
         "AfkManagement" "1"
 
@@ -602,15 +587,15 @@
 
         /**
          * What action to deal with the player when the maximum is reach?
-         * 0 = Nothing, 1 = Kick, 2 = Move to spectate, 
+         * 0 = Nothing, 1 = Kick, 2 = Move to spectate,
          */
         "AfkAction" "2"
-        
+
         /* Reload current weapon on afk kill. */
         "AfkReload" "0"
 
         /* ===== [4. GUNGAME STATS CONFIG] ===== */
-        
+
         /**
          * Prune player from player win database after numbers of days if they
          * havn't been in the server in awhile. This occur during map change.
@@ -621,15 +606,15 @@
         "Prune"     "366"
 
         /* ===== [5. GUNGAME DISPLAY WINNER CONFIG] ===== */
-        
+
         /* Display winner in MOTD window. */
         "DisplayWinnerMotd" "1"
 
         /**
-          * URL to display in MOTD window. 
+          * URL to display in MOTD window.
           *
           * Default: http://otstrel.ru/gg5_win_csgo.php?close=10
-          *     URL Params: 
+          *     URL Params:
           *         close=<int> - close popup window in that number of seconds. 0 = disabled. default = disabled.
           */
         "DisplayWinnerUrl" "http://otstrel.ru/gg5_win_csgo.php?close=10"
@@ -648,7 +633,7 @@
         /* ===== [6. GUNGAME BOTS CONFIG] ===== */
 
         /**
-         * Dont use bots levels for handicap calculation. 
+         * Dont use bots levels for handicap calculation.
          * Dont give handicap level to bots too.
          */
         "HandicapSkipBots" "0"
@@ -668,7 +653,7 @@
         /* Allow level up by killing a bot with hegrenade if there is no other human */
         "AllowLevelUpByExplodeBotIfNoHuman" "1"
      }
-    
+
     "Sounds"
     {
         "IntroSound"        "gungame/gungame2.mp3"

@@ -117,11 +117,6 @@ public _PlayerTeam(Handle:event, const String:name[], bool:dontBroadcast)
         }
     }
 
-    if ( UnlimitedNadesMinPlayers )
-    {
-        UnlimitedNades = ( Tcount <= UnlimitedNadesMinPlayers || CTcount <= UnlimitedNadesMinPlayers );
-    }
-
     new client = GetClientOfUserId(GetEventInt(event, "userid"));
     if ( client && !disconnect && (oldTeam >= 2) && IsClientInGame(client) && IsPlayerAlive(client) )
     {
