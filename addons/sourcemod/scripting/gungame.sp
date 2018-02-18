@@ -42,9 +42,9 @@
 
 public Plugin:myinfo = {
     #if defined WITH_SDKHOOKS
-    name = "GunGame:SM (with SDK Hooks support)",
+    name = "GunGame:SM (with SDK Hooks support) - CHAOS edit",
     #else
-    name = "GunGame:SM",
+    name = "GunGame:SM - CHAOS edit",
     #endif
     author = GUNGAME_AUTHOR,
     description = "GunGame:SM for SourceMod",
