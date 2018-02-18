@@ -1,0 +1,101 @@
+1+) UTIL_Remove calls can be replaced in all games by 
+    AcceptEntityInput( index, "Kill" ).
+
+2+-) GetSlot and RemoveAmmo should still work fine with new offsets.
+
+REMOVEAMMO
+================================
+I'll look into it, but as an alternative, in any game, you can remove ammo by utilizing the m_iAmmo (array of ammo per ammo type on player), and m_iClip1 / m_iClip2 (ammo inside weapon) netprops.
+
+Example of removing all ammo:
+Code:
+new ammoTypeCount = GetEntPropArraySize(client, Prop_Send, "m_iAmmo")
+for (new i = 0; i < ammoTypeCount; ++i)
+{
+    SetEntProp(client, Prop_Send, "m_iAmmo", 0, _, i);
+}
+
+new weaponCount = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons")
+for (new i = 0; i < weaponCount; ++i)
+{
+    new weapon = GetEntPropEnt(client, Prop_Send, "m_hMyWeapons", _, i);
+    if (weapon == INVALID_ENT_REFERENCE)
+        continue;
+    SetEntProp(weapon, Prop_Send, "m_iClip1", 0);
+    SetEntProp(weapon, Prop_Send, "m_iClip2", 0);
+}
+
+Or example to just remove all ammo for one weapon (using active weapon as example):
+Code:
+new weapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
+if (weapon != INVALID_ENT_REFERENCE)
+{
+    new primaryAmmoType = GetEntProp(weapon, Prop_Send, "m_iPrimaryAmmoType");
+    if (primaryAmmoType != -1)
+        SetEntProp(client, Prop_Send, "m_iAmmo", 0, _, primaryAmmoType);
+
+    new secondaryAmmoType = GetEntProp(weapon, Prop_Send, "m_iSeconaryAmmoType");
+    if (secondaryAmmoType != -1)
+        SetEntProp(client, Prop_Send, "m_iAmmo", 0, _, secondaryAmmoType);
+
+    SetEntProp(weapon, Prop_Send, "m_iClip1", 0);
+    SetEntProp(weapon, Prop_Send, "m_iClip2", 0);
+}
+
+I hope this helps.
+================================
+
+3+) There is a new native in SM for CSWeaponDrop, CS_DropWeapon, 
+    [url]http://docs.sourcemod.net/api/index.php?fastload=show&id=1013&[/url] 
+    It should work in both CS:S and CS:GO.
+
+4+) I'm not sure about EndMultiplayerGame. It might or might 
+    not work with new offset.
+
+5+)
+Looking at the sdk, at least in CS:S, you should be able to force EndMultiplayerGame 
+by creating a game_end entity (with CreateEntityByName) and then 
+using AcceptEntityInput to fire the "EndGame" input. 
+I have not tested this, but it looks like it is exactly what you want.
+
+6)
+For GetSlot, the only thing that comes to mind is maybe checking 
+the ammo type (m_iPrimaryAmmoType, Prop_Send) on the weapon 
+since each grenade type has their own.
+
+From ZR:
+#define AMMO_INDEX_HE 11
+#define AMMO_INDEX_FLASH 12
+#define AMMO_INDEX_SMOKE 13
+
+    нужно понять, для чего сейчас конкретно используется getslot
+
+    1) UTIL_FindGrenadeByName(client, const String:Grenade[], bool:drop = false, bool:remove = false);
+        GET entity id
+        DROP entity
+        REMOVE entity
+        <-- 1) UTIL_GiveExtraNade(client, bool:knife) {
+            CHECK if player has hegrenade (before five another one)
+        <-- 2) public _HeExplode(Handle:event, const String:name[], bool:dontBroadcast) {
+            CHECK if player has hegrenade (before five another one)
+        <-- 3) public _ItemPickup(Handle:event, const String:name[], bool:dontBroadcast)
+            STORE entity id in g_ClientSlotEntHeGrenade
+            STORE entity id in g_ClientSlotEntSmokeGrenade
+
+        ---> 4) UTIL_RemoveClientDroppedWeapons(client, bool:disconnect = false)
+            GET entity id in g_ClientSlotEntHeGrenade
+            GET entity id in g_ClientSlotEntSmokeGrenade
+
+    2) UTIL_UpdateFlashCounter(client);
+        GET flash enitiy ids, STORE flash entity ids to g_ClientSlotEntFlashbang[]
+        <-- 1) UTIL_FindGrenadeByName(client, const String:Grenade[], bool:drop = false, bool:remove = false) {
+            NEVER (realy)
+        <-- 2) public _FlashExplode(Handle:event, const String:name[], bool:dontBroadcast)
+            RECALC (move to weaponfire?)
+        <-- 3) public _ItemPickup(Handle:event, const String:name[], bool:dontBroadcast)
+            RECALC
+
+        ---> 4) UTIL_RemoveClientDroppedWeapons(client, bool:disconnect = false)
+            GET entity id in g_ClientSlotEntFlashbang
+    
+    Итак нужно это гломально только для того, чтобы после смерти игрока убирать за ним предметы с пола.

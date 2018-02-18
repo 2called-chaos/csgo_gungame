@@ -1,0 +1,828 @@
+Changelog
+---------
+        * Added french translation. Thanks to Moltard.
+        * Fixed '[GunGame] Weapon index for "prop_physics*" not found' message in sourcemod log files.
+        * [CSGO] Added new weapons after update in Feb 2014.
+
+    1.2.16.0:
+        * Added polish translation. Thanks to PlasteR.
+        * Added ability to show scoreboard after match end (see "EndGameSilent" in config). Added gungame config variable "EndGameSilent" (default set to "0") to set how to finish the game after someone has won.
+            Thanks to LambdaLambda for help in research.
+
+    1.2.15.1:
+        * [CSGO] Added new weapons support (weapon_bayonet).
+
+    1.2.15.0:
+        * Added count for multiple level downs so that gg_leveldown will trigger for each level a player lost
+            (thanks to zeroibis).
+        * Added gg_lose to help tracking of the player who caused the game to end
+            (thanks to zeroibis).
+
+    1.2.14.1:
+        * Fixed logging bot events with random player's steamid.
+            Thanks to peace-maker (https://github.com/peace-maker).
+
+    1.2.14.0:
+        * Fix for CSGO only after arms deal update update on 15.08.2013. Added support for super special cool knifes.
+
+    1.2.13.0:
+        * Fix for CSGO only after update on 15.08.2013.
+
+    1.2.12.0:
+        * Fixed bug. If gungame is disabled then players can drop weapons if StripDeadPlayersWeapon is enabled. 
+            Before fix it was not possible to drop the gun even if gungame is disabled.
+            But dont forget to set mp_death_drop_gun and mp_death_drop_grenade if you use CSGO.
+            So now you can use gg_enable/gg_disable to switch between gungame and normal game.
+        * Fixed bug. If Prune = 0 in config then prune is disabled. 
+            Before fix prune=0 was deleting all the players info.
+        * Added another workaround to CSGO sound system. Now it's possible to play sounds not only 
+            in sound/music folder, so snd_musicvolume does not affect it.
+            But still there are some disadvantages, for example it's not possible to play more than one sound 
+            at once. So "TripleLevelBonus" music will be stoped after any other sound like "levelup".
+        * Sounds have been relocated. "sound/music/gungame" folder have been renamed to "sound/gungame".
+    
+    1.2.11.2:
+        * Added check if protobuf is supported by sourcemod. It's needed by old sourcemod versions.
+
+    1.2.11.1:
+        * Fixed after new games update. Updated colors.inc.
+        * Improved removing of default map weapons that is been gived on player spawn. 
+            Now "game_player_equip" entity is been removed every round start.
+
+    1.2.11.0:
+        * Added config variable "FastSwitchSkipWeapons". Use it to skip fast switch on level up for the defined list of weapons.
+
+    1.2.10.0:
+        * Improved glow for winner if "WinnerEffect" is enabled.
+        * Added config variable "WinnerFreezePlayers".
+        * Fixed freeze players after player win.
+        * Added separate plugin for winner effects: "gungame_winner_effects.smx". Moved winner effects functionality from "gungame.smx" into it.
+        * Added options for the fast weapon switch: "FastSwitchOnLevelUp" and "FastSwitchOnChangeWeapon". "FastSwitchOnChangeWeapon" requires SDKHooks.
+            Thanks for help to "bl4nk" in this thread http://forums.alliedmods.net/showthread.php?t=197634.
+            Credits to "blodia" for the plugin "[CSS] Weapon Mod" (http://forums.alliedmods.net/showthread.php?t=123015)
+            Fast weapon switch code, fixed weapon animation on fast switch code is ported from this plugin.
+    
+    1.2.9.0:
+        * Fixed all the menus (like !rules). Now they are closing by number "9" instead of "0".
+        * Buyzones are now toggles on/off on gungame start/end. You dont need to restart map anymore if you are enable/disable gungame with gg_enable/gg_disable.
+        * Added tools: "config_diff.php" - shows diff between two KeyValue configs. 
+          For example between default gungame.config.txt and that one on your server to see what keys was added.
+
+    1.2.8.0:
+        * Improved detection of "gungame.smx" and "gungame_sdkhooks.smx" files. Now you can compile version with sdkhooks support with name "gungame.smx".
+        * Added global forward: "GG_OnWarmupStart".
+        * Added plugin "gungame_warmup_configs.smx".
+        * Added configs "gungame.warmupend.cfg" and "gungame.warmupstart.cfg" that executes on warmup start and end by plugin "gungame_warmup_configs.smx".
+        * Added new option for config variable "StripDeadPlayersWeapon". If "StripDeadPlayersWeapon" set to "2", then alive players can drop weapons.
+        * Added "WinnerEffect" config variable. If "1" then there will be funny winner effect after gungame winner. All players will fly into the sky and winner will be glowing.
+        * Added "EndGameDelay" config variable. You can set delay before end of multiplayer game is triggered after player win the gungame.
+        * Added new native into "gungame_config.smx" plugin: "GG_ConfigGetDir" - to get config directory (for example "gungame/csgo" is default for csgo if "sm_gg_cfgdirname" is not changed).
+
+    1.2.7.0:
+        * [CS:GO] Fixed MOTD.
+          Config "cfg\gungame\csgo\gungame.config.txt" updated. 
+          Config variable "DisplayWinnerMotd" set to "1".
+          Config variable "DisplayWinnerUrl" set to "http://otstrel.ru/gg5_win_csgo.php?close=10".
+        * Added files:
+          "tools/README.txt" - description of tools files, 
+          "tools/csgo_window_open.php" - file to make MOTD works on csgo (if you want to make you own web server only).
+
+    1.2.6.2:
+        * [CS:S] Fixed CSS version of plugin. It was completely broken after last plugin release with error in sourcemod error log file.
+
+    1.2.6.1:
+        * Refactoring. Performance improvement.
+
+    1.2.6.0:
+        * [CS:GO] Added support for "molotov", "incgrenade" and "taser" weapon level.
+        * [CS:GO] Added config variables: "ExtraTaserOnKnifeKill", "ExtraMolotovOnKnifeKill", "MolotovBonusWeaponName", "MolotovBonusSmoke", "MolotovBonusFlash".
+        * [CS:GO] The file "weaponinfo.txt" has been updated!
+
+    1.2.5.0:
+        * Added support for multiple sounds to all sounds types. Now they work like Winner sound, randomly choosing at the map start from the comma separated list.
+        * Fixed AutoFriendlyFire message.
+
+    1.2.4.5:
+        * Now you can use both "WarmupWeapon" and "WarmupNades" together in config.
+
+    1.2.4.4:
+        * Imploved weapon removement on spawn. Fixed for some maps that give you weapons (not only knife and pistol) on spawn.
+
+    1.2.4.3:
+        * Fixed "AllowLevelUpByKnifeBotIfNoHuman" when using "knifegg" weapon.
+
+    1.2.4.2:
+        * Updated check for startup errors. Improved detection of errors in weaponinfo.txt.
+
+    1.2.4.1:
+        * Updated check for startup errors. Improved detection of gungame files.
+
+    1.2.4.0:
+        * Added check for startup errors. If you have both gungame.smx and gungame_sdkhooks.smx, then you will see errors in your logs and gungame will not be loaded.
+
+    1.2.3.0:
+        * Added "BonusWeaponAmmo" config variable. Now you can increase number of bullets in one clip on nade level.
+        * [CS:GO] Fixed "IntroSound". Added delay for 1.5 seconds.
+
+    1.2.2.0:
+        * [CS:GO] Fixed colors for several phrases.
+        * [CS:GO] Added "MultiplySoundVolume" config variable. You can increase the volume of the sounds.
+        * [CS:S/CS:GO] Updated "cfg\gungame\csgo\weaponinfo.txt" and "cfg\gungame\css\weaponinfo.txt". If you're upgrading the plugin, you have to update this file from the latest release.
+
+    1.2.1.0:
+        * [CS:GO] added "knifegg" weapon in "cfg\gungame\csgo\gungame.equip.txt". You can use it instead of "knife".
+        * [CS:GO] updated "cfg\gungame\csgo\weaponinfo.txt". If you're upgrading the plugin, you have to update this file from the latest release.
+
+    1.2.0.1:
+        * Fixed drop of C4. Minor fix.
+
+    1.2.0.0:
+        * Added spanish translation, thanks to Xilver266.
+        * Added CSGO support. Thanks to psychonic! Actualy he made this version possible and can not imagine this plugin without his support.
+        * Merged css and csgo versions of plugin into one plugin (you can use it without recompiling).
+        * Removed all old hacks. Thanks to psychonic.
+        * Optimized CPU preformance. Rewrote hegrenade check. Thanks to ZR's author - rhelgeby. Hegrenade check is from his plugin.
+
+    1.1.9.1:
+        * gamedata file updated after css update on 15 Apr 2011.
+        * Removed sdkhooks autodetection and reverted gungame_sdkhooks.smx because i don't know how to make sdkhooks optional.
+        * Changed "ExtraNade" config option. Now you can set it to "2" 
+          if you want to give extra nade only on knife kills.
+
+    1.1.9.0:
+        * Added sdkhooks autodetection and removed gungame_sdkhooks.smx.
+
+    1.1.8.2:
+        * Added config option "BlockWeaponSwitchOnNade".
+
+    1.1.8.1:
+        * Removed sdkhooks autodetection, it does not work. Reverted separate 
+          plugin with sdkhooks support - "plugins/disabled/gungame_sdkhooks.smx".
+
+    1.1.8.0:
+        * Added console variable "sm_gg_turbo".
+        * Added console variable "sm_gg_multilevelamount".
+        * Added config variable "MultilevelEffectType" and you can choose between 
+          old and new multi level bonus effect.
+        * Added config variable "SelfKillProtection".
+        * Added sdkhooks autodetection and removed gungame_sdkhooks.smx.
+        * Added config variable "GameDesc".
+
+    1.1.7.0:
+        * Added cvar "sm_gg_cfgdirname". Now you can change gungame rules after every map change.
+
+    1.1.6.0: 
+        * Gamedata file updated.
+        * Fixed level up with prop_physics_multiplayer.
+        * Changed default url for winner display.
+        * Added option "AfkReload". Thanks to LordMarqus.
+        * Added cool multilevel bonus effect. 
+          Thanks to Ted Theodore Logan & xDr.HaaaaaaaXx from http://www.war3source.com/
+          for "War3Source - Addon - Display Particles on Level Up" plugin version 1.1.
+
+    1.1.5.0: 
+        * GG_OnWinner forward has changed. See gungame.inc.
+        + Added config variable "DontAddWinsOnBot".
+
+    1.1.4.0: 
+        + Added option "DisableLevelDown".
+        * Fixed KnifeElite.
+
+    1.1.3.0: 
+        + Added options: "CanLevelUpWithMapNades", "CanLevelUpWithNadeOnKnife".
+        - Removed ChangeLevelTime option.
+        * Fixed misspelling for event logger - gg_team_loose -> gg_team_lose.
+
+    1.1.2.0: 
+        + Added config variables: "CanLevelUpWithPhysics", "CanLevelUpWithPhysicsOnGrenade", 
+          "CanLevelUpWithPhysicsOnKnife".
+        + Added events for players on gungame win: gg_team_win, gg_team_loose.
+        * Fixed stopping triple level effects when round ends. Now triple level effects stops on spawn.
+          Old behaviour of multi-level bonuses is restored.
+        * Fixed unpredictible weapon disapearing on round start by adding 0.3 seconds delay.
+        + Added config variable "ChangeLevelTime".
+
+    1.1.1.0: 
+        * Fixed stopping triple level effects when round ends.
+        + Feature: Added option to ignore spectators when caclulating handicap level ("HandicapUseSpectators").
+        * New function signatures. Thanks to psychonic.
+        * Small fix with weapons in the air after player death.
+
+    1.1.0.1: 
+        + Added "USE_SDK_HOOKS" define in gungame_const.inc.
+        - SDK Hooks is not required by default.
+
+    1.1.0.0:
+        + Now hegrenades, flashbangs, smokegrenades are removing if "StripDeadPlayersWeapon" is enabled.
+        + SDK Hooks is now required.
+        + Added config variable "BlockWeaponSwitchIfKnife".
+        + Added config options: "AllowLevelUpByKnifeBot", "AllowLevelUpByExplodeBot", 
+          "AllowLevelUpByKnifeBotIfNoHuman", "AllowLevelUpByExplodeBotIfNoHuman".
+        * Fixed: Skip first bot spawn to not allow them drop knifes and pistols on spawn.
+
+    1.0.9.8:
+        * Fixed sql error when nick contains doublequotes.
+        - Removed "gungame\gungame.enable_friendly_fire.cfg" file.
+        + Added config variable "FriendlyFireOnOff".
+        + Added GG_OnWinnerSound forward.
+        * Fixed: When you do multikill (for example kill two enemies with single AWP shot) you level up twice.
+
+    1.0.9.7:
+        * Fixed:
+            L 07/23/2010 - 23:06:22: [SM] Displaying call stack trace for plugin "gungame.smx":
+            L 07/23/2010 - 23:06:22: [SM]   [0]  Line 1027, gungame/util.sp::UTIL_Timer_ShowHintText()
+            L 07/23/2010 - 23:06:22: [SM] Native "ReadPackString" reported: DataPack operation is out of bounds.
+
+    1.0.9.6:
+        * Fixed:
+            L 07/23/2010 - 20:57:48: [SM] Displaying call stack trace for plugin "gungame.smx":
+            L 07/23/2010 - 20:57:48: [SM]   [0]  Line 1023, gungame/util.sp::UTIL_Timer_ShowHintText()
+            L 07/23/2010 - 20:57:49: [SM] Native "ResetPack" reported: Invalid data pack handle 31b50627 (error 1)
+
+    1.0.9.5:
+        * Bug fixed: "has won" does not translates.
+        - Removed native GG_IsGameCommenced. Now commencing of the game is not important.
+        - Removed config variable WarmupStartup. Now warmup starts only on map start.
+        + Added config variable MultiLevelEffect.
+        * Updated gungame.games.txt after css update on 16 Jul 2010. Thanks to p3tsin. 
+        * Optimized ammo removement code. Thanks to p3tsin. 
+
+    1.0.9.4:
+        * Added cssdm 2.1.1 support.
+
+    1.0.9.3:
+        * Fixed: handicap does not work for new players who has never win yet.
+        * Update: gungame.games.txt updated for CSS OB version. Thanks to psychonic.
+
+    1.0.9.2:
+        + Feature: Added config variable "HandicapTopRank" to define what is the lowest rank
+            which is not allowing players to get handicap if "TopRankHandicap" "0".
+        * Config variable "Top10Handicap" renamed to "TopRankHandicap".
+                
+    1.0.9.1:
+        * Improvement: Handicap is now been gived on first team join, not on connect.
+        + Added motd example file "tools/gungame_winner.php".
+
+    1.0.9.0:
+        + Feature: Added config variable "EnableFriendlyFireLevel" to enable friendly fire on defined level.
+        + Feature: Added config variable "DisableRtvLevel" to disable rtv if leader is on defined level.
+        * Fixed: Not to display winner motd after map end if database was slow to display motd right
+            after player win.
+        * Fixed:
+            L 02/19/2010 - 00:25:54: [SM] Native "GG_GetPlayerPlaceInStat" reported: Client is not currently ingame [15]
+            L 02/19/2010 - 00:25:54: [SM] Displaying call stack trace for plugin "gungame_display_winner.smx":
+            L 02/19/2010 - 00:25:54: [SM]   [0]  Line 75, gungame_display_winner.sp::GG_OnLoadRank()
+        * German translation has been updated. Thanks to tObIwAnKeNoBi.
+        * Fixed: 
+            L 02/02/2010 - 17:11:02: [SM] Native "SetEntProp" reported: Entity -1 (-1) is invalid
+            L 02/02/2010 - 17:11:02: [SM] Displaying call stack trace for plugin "gungame.smx":
+            L 02/02/2010 - 17:11:02: [SM]   [0]  Line 725, gungame/util.sp::UTIL_ReloadActiveWeapon()
+            L 02/02/2010 - 17:11:02: [SM]   [1]  Line 271, gungame/event.sp::_PlayerDeath()
+        * Portuguese translation has been updated. Thanks to VoGon.
+
+    1.0.8.10:
+        * Translation file has been changed. Need update from translators.
+        + Feature: Added config variable "HandicapTimesPerMap" option to give handicap level 
+            maximum this times per map;
+        + Feature: Added config variable "MultiLevelAmount" for number of levels to get bonus.
+            All config variables names changed from "TripleLevel*" to "MultiLevel*".
+        + Feature: Added config variable "KnifeProMaxDiff". If a players level is x amount below 
+            the persons level they knifed they will not get a level up and the person knifed will not 
+            get a level down.
+        * Fixed:
+            L 02/02/2010 - 16:35:56: [SM] Native "GG_ShowRank" reported: Client is not currently ingame [14]
+            L 02/02/2010 - 16:35:56: [SM] Displaying call stack trace for plugin "gungame_display_winner.smx":
+            L 02/02/2010 - 16:35:56: [SM]   [0]  Line 66, gungame_display_winner.sp::GG_OnLoadRank()
+        * Fixed: "SV_StartSound:  not precached (0)" in error logs.
+    
+    1.0.8.9:
+        * Fixed: Player names have not been properly quoted in sql.
+        + Added translation to portuguese. Thanks to VoGon.
+        * German transtlation has been updated. Thanks to tObIwAnKeNoBi.
+        
+    1.0.8.8:
+        + Feature: Added config variable "HandicapSkipBots". If it is enabled then handicap 
+            will not set level to bots and will not use bots levels for handicap calculation.
+        * Config variable "HandicapMode" has been changed. Removed mode "3".
+        * Handicap totaly refactored.
+    
+    1.0.8.7:
+        * Improvement: Added custom kills per level info into weapons panel.
+        * Fixed: If multikill and knifepro are enabled then clear current points 
+            of the knifed victim even if it is on the first level.
+        
+    1.0.8.6:
+        + Feature: Added config variable "KnifeProRecalcPoints" that saves level kills 
+            when level down (and level up) with knife kill. For example when there are 
+            3 kill levels and you have already killed 2 and somebody 
+            knifes you. Instead of starting from 0 kills on previous level you could continue 
+            from 2 kill.
+        * Fixed: In the config file two variables was with incorrect names: 
+            "TripleLevelBonusSpeed", "TripleLevelBonusGravity".
+        * Improvement: Random number generation algorythm improved.
+            If you are using sm version >= 1.3.0 then uncomment URANDOM_SUPPORT
+            in gungame.sp and recompile plugin for better random algorythm support.
+        + Feature: Added config variable "HandicapUpdate" for updating players
+            on minimum level automaticaly.
+        * Improvement: If warmup is enabled do not use levelinscoreboard.
+        * Improvement: Handicap mode 2 and 3 is now does not count spectators.
+
+    1.0.8.5:
+        + Feature: Added equip config variable "RandomWeaponReserveLevels" to set
+            the numbers of levels which to keep unchanged from randomization by
+            "RandomWeaponOrder" "1" config variable. It is usefull for example
+            if you want to run a random weapon order but always have knife 
+            and nade as the last two weapons.
+        + Feature: Added config variable "WarmupWeapon" to specify which weapon 
+            is to be used during the warmup round.
+        * Updated german translation. Thanks to tObIwAnKeNoBi.
+
+    1.0.8.4:
+        + Added config variable "ScoreboardClearDeaths" to make clearing deaths optional. 
+        
+    1.0.8.3:
+        + Added config variable "MaxHandicapLevel" to restrict maximum handicap level. 
+        + Added config variable "ShowSpawnMsgInHintBox" to show players level message 
+            in hint box instead of chat. If enabled then multikill chat messages will 
+            be shown in hint box too (requres "MultiKillChat" "1").
+        + Added config variable "ShowLeaderInHintBox" to show leader level info in hint box
+            (requires "ShowSpawnMsgInHintBox" to be "1").
+        - Removed config variable "CanLevelDownOnGrenade". Absolutely not usefull feature.
+        - Removed config variable "CanStealFirstLevel". It is now always enabled. Disabling of this
+            config variable was just equivalent to "KnifeProMinLevel" "1".
+        - Removed config variable "IntermissionCalcWinner". It is not very usefull feature.
+        - Removed config variable "ResetLevelAfterWarmup". It is now always enabled. Actualy 
+            you can not level up or level down while warmup is enabled. If you still want to 
+            disable it, just disable warmup at all.
+        - Removed config variable "WarmupKnifeOnly". It is just automaticaly enables if no other 
+            warmup weapons options is used ("WarmupNades" "0" and "WarmupRandomWeaponMode" "0").
+
+    1.0.8.2:
+        * Fixed: "ObjectiveBonus" more then "1" was working like it is "1".
+        * Fixed: When the bomb explodes you dont level up because of round_end fires 
+            before bomb_exploded.
+
+    1.0.8.1:
+        + Feature: Added config variable "ObjectiveBonusExplode" to choose if it gives
+            bonus for exploding or planting the bomb.
+        + Feature: Added config variable "ShowLeaderWeapon" to have information about 
+            leader weapon in chat message when someone is leading.
+        * Fixed: "UnlimitedNadesMinPlayers" was unable to work properly after map change
+            because of not reseting team players counters.
+            
+    1.0.8.0:
+        + Feature: Added config variable "TkLooseLevel". It sets how much levels to loose after TK.
+        + Feature: Updated config variables "WorldspawnSuicide" and "CommitSuicide".
+            Now it sets how much levels to loose on suicide.
+        + Feature: Added config variable "LevelsInScoreboard" to show levels in scoreboard.
+            If enabled, display the players current level as their kills on the scoreboard.
+        + Feature: Added config variable "ShowPlayerRankOnWin" to show player rank on win in chat.
+        * Improvement: Added "DisplayWinnerMotd" and "DisplayWinnerUrl" config variables
+            instead of sm_gungame_display_winner_url.
+        + Feature: Added config variable "HandicapLevelSubstract" to subtract specified number 
+            of levels from level given by handicap. 
+        + Feature: Added config variables "ArmorKevlar" and "ArmorHelmet" to customize player armor.
+        + Feature: Added config variables "TripleLevelSpeed" and "TripleLevelGravity" to set
+            custom speed and gravity for triple level bonus.
+        + Feature: Added config variables "KnifeSmoke" and "KnifeFlash" to add bonuses on knife level.
+
+    1.0.7.13:
+        + Added postgresql support to stats plugin. Thanks to Lyfe from alliedmods forum.
+        * Stats plugin improved: Stats plugin now checks sourcemod database config for section "gungame" 
+            and only if there is no such section then use "storage-local". So now you can 
+            use different databases for gungame and other plugins.
+        * Stats plugin improved: Stats plugin has been rewritten to support all types of databases without recompiling.
+        * Fixed translation file:
+            L 01/16/2010 - 11:47:21: [SM] Plugin encountered error 4: Invalid parameter or parameter type
+            L 01/16/2010 - 11:47:21: [SM] Native "Format" reported: Language phrase "CommandPanel: !top10 to see the top 10 winners on the server" not found
+            L 01/16/2010 - 11:47:21: [SM] Displaying call stack trace for plugin "gungame.smx":
+            L 01/16/2010 - 11:47:21: [SM]   [0]  Line 345, gungame/menu.sp::ShowCommandPanel()
+            L 01/16/2010 - 11:47:21: [SM]   [1]  Line 111, gungame/commands.sp::_CmdCommand()
+        
+    1.0.7.12:
+        * Fixed FFA
+        
+    1.0.7.11:
+        * Fixed UnlimitedNadesMinPlayers for player numbers more then "1".
+        
+    1.0.7.10:
+        + Added config variable "NumberOfNades" to set custom number of nades for the nade level.
+          
+    1.0.7.9:
+        + Added config variable "UnlimitedNadesMinPlayers":
+            If UnlimitedNades is off and the number of players in one team less or 
+            equal to UnlimitedNadesMinPlayers then enable UnlimitedNades.
+            When it will be more players on both teams, turn UnlimitedNades back to off.
+        * If enabled weapon reloading on kill then reload warmup weapon.
+        + FFA config variable added into config file.
+        + WarmupRandomWeaponMode config variable added into config file.
+        * Refactoring of player_spawn hook.
+        
+    1.0.7.8:
+        * Fixed: Url encode player names in gungame_display_winner in the url.
+        * Fixed: Do not show info about loosing level on tk on warmup.
+        
+    1.0.7.7:
+        * Fixed: gungame_display_winner must show motd only after database has been updated.
+        * Fixed: when player switches team do not level down him, but when he selects the same
+            team he must loose his level.
+
+    1.0.7.6:
+        * Fixed bug:
+            Bug report: When player moves to spec by afk plugin then his gun does not removes.
+            Added weapon and triple bonus removement on player swith team to spec.
+        
+    1.0.7.5:
+        + Added browsable winners list and replaced top10 list. !top and !top10 are now the same commands.
+        
+    1.0.7.4:
+        * Reduced lag after player win by making almost all sql threaded.
+    
+    1.0.7.3:
+        + Added level and weapon info into !leader panel.
+    
+    1.0.7.2:
+        + Added !rank command to show player's current place in stats.
+        * Menus !leader and !score optimized to be more ergonomic and closing by pressing "1" on all pages.
+        
+    1.0.7.1:
+        + Added shortcuts: 
+            You can access !leader menu from !level panel by pressing "3".
+            You can access !top10 menu from !level panel by pressing "2".
+        + Added new !leader command, which should show list of players on leader level in a panel.
+        * Fixed minor translation bugs in menu panels.
+        + Added info about player's weapon in !scores and !level panels.
+            
+    1.0.7.0:
+        + Added sqlite and mysql support for players stats. Sqlite support is enabled by default.
+            To enable mysql support or disable any sql support you need to recompile gungame_stats plugin.
+            To import your current player wins data you need to run "rcon gg_importdb" and "rcon gg_rebuild".
+        + Added native GG_IsWarmupInProgress().
+        * Fixed (last similar fix was not working correctly):
+            Bug report: after win, winner levels up and gets a level greater than max level defined 
+            in equip file (there is an info about it in chat). I think that you should block 
+            leveling after win.
+    
+    1.0.6.3:
+        * Refactoring:
+            gungame_config.smx is now independent from gungame.smx.
+            gungame.inc has been splitted into gungame_const.inc with constants,
+                gungame_config.inc with gungame_config global forwards and 
+                gungame.inc with gungame global forwards and natives.
+    
+    1.0.6.2:
+        * Fixed bug:
+            When player is on a first level and multikill is enabled then if he lost level
+            with knife or by siucided he should loose all multikill points.
+    
+    1.0.6.1:
+        - Removed config variable "StatsEnabled". It's now detecting automaticaly.
+        * gungame.inc and gungame_stats.inc are been splitted into independent libraries.
+    
+    1.0.6.0:
+        * Handicap moved from gungame_stats to gungame plugin.
+        + Added config variable "StatsEnabled" to make gungame_stats optional.
+        * Fixed bug:
+            Bug report: When multikill is enabled, and pnifepro is enabled
+            then kills per level does not reset for player if he is killed with 
+            knife when he is on the first level.
+        * Updated german translation.
+
+    1.0.5.19:
+        * All panel texts moved to translation files.
+        
+    1.0.5.18:
+        * Fixed: 
+            Bug report: I'm not sure if this has already been mentioned, but it seems name changes 
+            don't apply to !top10. So your gungame rank would always be stored with the name you 
+            used on the first game you won.    
+
+    1.0.5.17:
+        * Fixed:
+            Bug report: Triple bonus sound keeps playing on death/respawn
+        + Added team change check and do not level down if player changed team.
+        * Some minor improvments:
+            Cpu usage reduced if kills per level is 1.
+            If kills per level is 1 than trigger event knife_steal on knife level.
+
+    1.0.5.16:
+        * Fixed:
+            Bug report: after win, winner levels up and gets a level greater than max level defined 
+            in equip file (there is an info about it in chat). I think that you should block 
+            leveling after win.
+        + Added native: GG_GetLevelWeaponName.
+
+    1.0.5.15:
+        * Improvement: 
+            In warmup when you have "ResetLevelAfterWarmup" "1" and you don't level up, there 
+            is an info in chat "[GunGame] Player has lost a level by suicided" or any other 
+            about losing a level (i.e. tk). I think it's unnecessary since you can't gain 
+            or loss any level in this warmup mode.
+        + Added config variable to enabled/disable god mode on 
+            triple level - "TripleLevelBonusGodMode".
+        + Added gravity boost to the player on bonus.
+            
+    1.0.5.14:
+        + Added global forward with triple level event.
+        + Added "gg_triple_level" log event.
+        + Added "gg_last_level" log event.
+        * Fixed:
+            Bug report: I noticed this on respawn servers, the FF is not enabled directly when a player reach nade 
+            level, but only if he dies and respawns. (So if he doesnt die, the game can end without 
+            ff being enabled.
+        * Fixed:
+            L 12/26/2009 - 20:41:35: [SM] Plugin encountered error 25: Call was aborted
+            L 12/26/2009 - 20:41:35: [SM] Native "ThrowError" reported: Client 3 is not in game
+            L 12/26/2009 - 20:41:35: [SM] Displaying call stack trace for plugin "gungame.smx":
+            L 12/26/2009 - 20:41:35: [SM]   [0]  Line 150, C:\css-server\server\cstrike\addons\sourcemod\scripting\include\colors.inc::CPrintToChatAllEx()
+            L 12/26/2009 - 20:41:35: [SM]   [1]  Line 499, gungame.sp::PrintLeaderToChat()
+            L 12/26/2009 - 20:41:35: [SM]   [2]  Line 158, gungame.sp::OnClientAuthorized()
+
+    1.0.5.13:
+        * Fixed:
+            Bug report: Well i'm running a respawn/turbo server and it seems ff stays turned on even 
+            if player is no longer on nade level. I'm running some tests and it seems the ff warning 
+            is displayed when a player does reach nade even if another player is already on nade level 
+            sometimes.
+        * Fixed:
+            Bug report: when somebody reaches knife level then you don't hear nade level sound (but this 
+            is ok, isn't it?); however, when somebody else reaches knife level then you don't hear next 
+            knife level sound and I think it's bad because this is usually last level and everybody 
+            should now that next knifer is among them
+        * Fixed:
+            Bug report: after nade kill you get knife instantly, on next spawn knife is not your default 
+            weapon and you have to switch to it manually; it would be nice to have it on spawn as 
+            primary weapon ;)
+            
+    1.0.5.12:
+        * Fixed: server crash when removing C4 (with remove map objectives enabled).
+        * Fixed: When you steal level with knife you don't hear steal sound but level up sound.
+    
+    1.0.5.11:
+        * Fixed: Players should not level down for suicide after round end.
+        * Improvement: weapon removement improved.
+        * Fixed bug: When a player reach triple level, the triple level sound (default 
+            one) stop playing after 1 sec.
+
+    1.0.5.10:
+        * Fixed: recalculate leader if restored level is greater than leader level.
+        
+    1.0.5.9:
+        * Fix for 1.0.5.8: gungame does not work at all. I forgot to remove very last hack.
+
+    1.0.5.8:
+        - Removed unused hacks.
+
+    1.0.5.7:
+        * Fixed bug:
+            Miltilevel with knife does not work if knifepro enabled.
+    
+        * Improvement:
+            I'm getting info in chat during warmup "[GunGame] You are on level 1 :: glock". 
+            I think that player level info shouldn't appear when I have "ResetLevelAfterWarmup" "1".
+
+    1.0.5.6:
+        + Added russian translation.
+        + Added german translation. Thanks to tObIwAnKeNoBi.
+        * Fixed bug:
+            Players do not triple level. Fast speed, sound etc - when they get 3 levels.
+        * Fixed bug:
+            when I have "WarmupStartup" "1" and each team has a player then new round starts with info 
+            in chat "[GunGame] Warmup round has not started yet" when should be "[GunGame] Warmup round 
+            is in progress". It is ok in next round.
+        * Fixed bug:
+            plugin require one extra AFK death than set in config file i.e. 
+            "AfkDeaths" "2" - requires 3 AFK deaths before an action
+        * Fixed bug:
+            AFK deaths counter is not cleared after AFK kick (maybe also when it 
+            moves to spectators). When you got AFK kick, rejoin and get one more AFK 
+            death then plugin kicks instantly no matter what is in "AfkDeaths".
+        * Fixed bug:
+            AFK action moving to spectators don't work
+
+    1.0.5.5:
+        * Fixed bug: With knifepro enabled and the attacker on knife level, they do not steal 
+            levels from other players when they knife someone.
+    
+    1.0.5.4:
+        * Fixed bug: 
+            There is one little bug. I'm using Turbo mode on my server and when I kill somebody 
+            with awp then next weapon is a nade. So, I should get glock, flashbang, smokenade 
+            and hegrenade (i set it on config). But I'm getting only glock and nade. I have it 
+            all on next spawn but not in the same round I gained new level  . This happens every 
+            time to me when I get nade level before round end.
+
+    1.0.5.3:
+        * Fixed bug: If WorldspawnSuicide is 0 than player could level up with worldspawn.
+
+        * Refactoring: Restore level on reconnect was moved from handicap and now is independent.
+          Added new config variable to enable/disable this function - RestoreLevelOnReconnect.
+
+    1.0.5.2:
+        * Fixed:
+            [SM] Native "IsPlayerAlive" reported: Client 10 is not in game
+            L 12/22/2009 - 15:27:41: [SM] Displaying call stack trace for plugin "gungame.smx": L 12/22/2009 - 15:27:41: [SM]
+            [0]  Line 290, E:\Download \sm_gungame-1.0.5.1\addons\sourcemod\scripting\gungame.sp::OnClientDisconnect()
+            
+    1.0.5.1:
+        * Strip weapons from dead players completely rewritten.
+          Cpu usage optimization.
+
+        * Weapon to index procedure rewritten from keyvalue to trie array. 
+          Cpu usage optimization.
+    
+    1.0.5.0:
+        + Providing "AfkAction" = 0 in gungame.config.txt will disables kicking/moving
+            to specs afk players without disabling afk management completely.
+        + Added config variable to allow level up after round end - "AllowLevelUpAfterRoundEnd".
+        + Added config variable to strip dead players weapons so that their weapons can't 
+            be picked up - "StripDeadPlayersWeapon".
+        + Timer moved to hint box instead of screen center.
+        + Added ticking sound for the last 5 warmup seconds.
+        + Added global forward GG_OnWarmupEnd which fire when GG warmup is over.
+        * All "play" sounds replaced with EmitSound.
+        * All chat texts are moved to translation files.
+
+    1.0.4.1:
+        * Fixed bug:
+            - its seems like there is a bug in the latest release with the two new cvars. I 
+            have the RemoveWeaponAmmo set to 0 and it works for one round and not the next 
+            round I have nade set to 2 kills required. 
+        + Added handicap mode 3. It's like handicap mode 2 but skipping bots.
+            Usefull for dm servers with bots blocking round end.
+            
+    1.0.4.0:
+        * Fixed bug:
+            I dont level down at all, when i kill my self with a nade.
+            (autofriendlyfire is 1 i think)
+        * Fixed bug: 
+            When i kill a teammate, kill a enemy and then another enemy with the knife 
+            i triple level. But not always. Yet I couldn't figure it out why.
+            (maxlevelperround is 2 i think)
+        + Added configuration variable for disable RemoveWeaponAmmo of NadeBonus weapon.
+        + Added option to reload ammo on player kill.
+        + Enabled removing all weapons before giving next level 
+            weapon for player if Turbo is enabled.
+        
+    1.0.3.0:
+        + Restore level on player reconnect.
+      
+    1.0.2.0:
+        + There are forwards for logging level up and level down.
+          Added logging for lvlup, lvldn, lvlsteal to gungame_logging.sp
+        * Fixed:
+            L 09/16/2009 - 13:26:45: [SM] Native "GetClientAuthString" reported: Client index 0 is invalid
+            L 09/16/2009 - 13:26:45: [SM] Displaying call stack trace for plugin "gungame_logging.smx":
+            L 09/16/2009 - 13:26:45: [SM]   [0]  Line 94, gungame_logging.sp::LogEventToGame()
+            L 09/16/2009 - 13:26:45: [SM]   [1]  Line 62, gungame_logging.sp::GG_OnLeaderChange()
+        * Bugfix for:
+            L 10/07/2009 - 00:27:23: [SM] Native "GetClientTeam" reported: Client 1 is not in game
+            L 10/07/2009 - 00:27:23: [SM] Displaying call stack trace for plugin "gungame_logging.smx":
+            L 10/07/2009 - 00:27:23: [SM]   [0]  Line 99, gungame_logging.sp::LogEventToGame()
+            L 10/07/2009 - 00:27:23: [SM]   [1]  Line 64, gungame_logging.sp::GG_OnLeaderChange()
+        + Added gg_leader and gg_knife_level events to logger.
+          gg_leader event triggered when leader changed.
+          gg_knife_level event triggered when player reaches last level.
+        * Changed GG_OnClientLevelChange forward prototype. Added "last level"
+          param.
+        * Bugfix: 
+            One BIG bug, which, I think, wasn't mentioned here: gungame 1.0.1.1 
+            removes buysites. When it's disabled, it also removes.
+
+    1.0.1.1:
+        * Renamed cvar from sm_gungame_css_version to sm_gungamesm_version.
+        * Blue color is unreadable. Changed to light blue.
+        * Disabled money removement. Removed buyzones instead.
+        * Fixed issue: map does not change after gungame winner.
+          Update your gungame.games.txt only if you've updated
+          your steam engine to the latest version and map
+          does not change after somebody win.
+        * Fixed warmup end right after round_restart (warmup was 
+          ending 1 second before round_restart).
+        - Removed CSSDM patch.
+        + Added elimination mode. Elimination mode added to ggdm plugin.
+          For elimination mode you will need sm_ggdm 1.5.1+
+          http://forums.alliedmods.net/showpost.php?p=927227&postcount=27
+          You should not update gungame plugin for that, only ggdm.
+        * Bug fixed:
+            L 07/30/2009 - 06:55:41: [SM] Native "GetClientTeam" reported: Client index 0 is invalid
+            L 07/30/2009 - 06:55:41: [SM] Displaying call stack trace for plugin "gungame.smx":
+            L 07/30/2009 - 06:55:41: [SM]   [0]  Line 371, gungame/event.sp::_PlayerDeath()
+        * Fixed top10 scoreboard.
+            !top10 was not working corretly, when someone reaches someone's else place.
+            For example player1 is on 8 place with 255 wins, player2 is on place 9
+            with 254 wins. Than player 2 wins 2 times, and even so he has 255 wins 
+            on top10 list. But in winners he has 256 wins.
+        
+    1.0.0.1.12:
+        * Fixed if VoteLevelLessWeaponCount = 0 then player can not win from the first time.
+        * Fixed to change player's level down when self killed with grenade if autofriendlyfire is disabled.
+        * Fixed Handicap.
+        * Fixed intermission to start right after player has won (no round start if team has won).
+        + Added examples to gungame.mapconfig.cfg.
+        - Removed mp_chattime modification.
+        
+    1.0.0.1.11:
+        * Fixed top10 update on gungame win (it was not working if players have same wins).
+        * Fixed not to give additional grenade if player kills with grenade with ExtraNade on.
+    
+    1.0.0.1.10:
+        + Added motd winner display.
+        + Added option to winner display for the custom URL.
+        + Added option to give deagle or other weapon instead of glock when on nade level.
+        * Fixed NadeBonus to work if turbo is enabled.
+      
+    1.0.0.1.9:
+        * Extended plugin info: added new author and new url.
+        + Added external converter for winners db file from es gg5 to gg3.
+        + Added option to disable annoying chat messages if multikill enabled.
+
+    1.0.0.1.8:
+        * Fixed multiple kills.
+        + Added random weapon order option.
+        
+    1.0.0.1.7:
+        + Added option no activate alltalk after player win.
+        + Added grenade warmup.
+        + Added unlimited nades.
+        * Fixed for:
+            ==== in sm error log ====
+            L 05/24/2009 - 19:48:22: [SM] Native "SetEntData" reported: Entity 9 is invalid
+            L 05/24/2009 - 19:48:22: [SM] Displaying call stack trace for plugin "gungame.smx":
+            L 05/24/2009 - 19:48:22: [SM]   [0]  Line 305, gungame/event.sp::DelayClearMoney()
+            ==== in srv log ====
+            L 05/24/2009 - 19:48:22: World triggered "Round_Start"
+            L 05/24/2009 - 19:48:22: World triggered "Round_Start"
+            L 05/24/2009 - 19:48:22: " -=XXXX=-<158><STEAM_0:0:XXXX><>" disconnected (reason "Disconnect by user.")
+    
+    1.0.0.1.6:
+        * Fixed top left winner message size for long nicknames.
+        + Added handycap option to give the lowest level to new connected player.
+        
+    1.0.0.1.5:
+        * Fixed money remove on player kill.
+        * Colorized winner message.
+        + Added sounds on last/nade level.
+        * Colorized nick names in chat by red/blue color.
+        * Fixed levels freezing on warmup if warmupreset is set.
+        * Fixed not to give weapon on warmup if warmupknifeonly is set in turbo mode.
+        * Fixed automatic switching to new given weapon in turbo mode.
+        * Fixed mp_chattime time.
+        + Added "!score" button to "!level" panel.
+    
+    1.0.0.1.4:
+        * Reverted changes about warmup. Need more think about.
+    
+    1.0.0.1.3:
+        * Added exit button "1" to "!score" menu
+        * Code improved. Separated business logic about calculating leader from
+          showing messages to chat. Added UTIL_RecalculateLeader and it is called from 
+          UTIL_ChangeLevel. Added PrintLeaderToChat. 
+        * Fixed recalculating leader on TK (GG_RemoveALevel)
+        * Fixed saving to top10.txt. The issue was that only 9 players was in !top10. 10-th player
+          was never loaded, so on map end his rank was rewritten by the winner.
+        * Fixed warmup end right after round_restart (warmup was ending 1 second before round_restart).
+        
+    1.0.0.1.2:
+        * Fixed bug with no message about tied with the leader when leader on level 2 (first level gained)
+          Fixed FindLeader to return CLIENT (it was returning LEVEL not CLIENT). (!!!)
+        * Fixed bug with no message about leaders if stealing level
+        * ChangeLevel and FindLeader should come together, because
+          each ChangeLevel can change and the CurrentLeader.
+        * Fixed CurrentLeader calculation on stealing level
+        * Fixed behaviour if multiple leaders found on intermission
+    
+    1.0.0.1.1:
+        * Version changed :)
+        * Write leaders to chat, not in hint box
+        * Disable second line on spawn to chat if custom kill per level = 1 (annoying line)
+        - Disable "congratulation" line (there is a sound)
+        + Added line "is leading on level X" after leader gained next level
+        * Fixed possible bug for random winner sound
+        * Redesigned all menus where it is possible to change "0. Exit" to "1. Exit".
+          It's pretty much ergonomic button.
+        * Fixed gg_rebuild to recreate top10panel. Now you do not need to wait for map end
+          to see recreated top10 panel.
+        * Fixed HasRank value after SaveRank. Now you do not need to restart plugin 
+          if there was no winners yet.
+        * Redesigned "!level" panel.
+    
+    1.0.0.1 unofficial release 2:
+        * Fixed gg_import
+        * Redesigned join message panel
+
+    1.0.0.1 unofficial release 1:
+        + Added option to disable calculate winner on intermission
+        + Added option to level up attacker even if victim on first level
+        + Added option to level down victim even if attacker is on grenade level
+        * Fixed player stats saving on map end
+        + Start map voting on level provided in config
+        + Added random winner sound
+        * Fixed bug win BotCanWin
+        * Fixed JoinMessage config variable
+        * Commented hookusermessage due to bug (server crash on plugin unload)
+          So calculate winner on intermission is disabled.
+
+    1.0.0.1:
+        * Original Liam's version http://forums.alliedmods.net/showthread.php?t=80609
+

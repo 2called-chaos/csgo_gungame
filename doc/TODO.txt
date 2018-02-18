@@ -1,0 +1,244 @@
+TODO
+==============================================================================
+
+    ----====----==== High priority list ----====----====
+
+    * Bugreport: 
+        Info: In CSS "EndGameSilent" "0" doesn't work. No mapchange and game freezes.
+        "EndGameSilent" "1" works fine. Incl. scoreboard.
+
+    * Bugreport: When loading gungame.smx instead of gungame_sdkhooks.smx, I got this error in my console:
+        exec //*/cfg/\\gungame.mapconfig.cfg: invalid path.
+
+    * Altex, I am remembering when I first set GG up - this is for CS:S specifically - 
+        the problem I was having with having GG run alongside other gametypes is that 
+        the server browser was reading as GunGame, even when GunGame wasn't running.
+
+    * Bug Report: If you triple level after you die (for instance, you get two kills, throw a grenade, and die, 
+        but your grenade kills the third enemy after you've died), the triple kill music and effect will still occur.
+
+    * error in logs
+        L 10/31/2012 - 13:48:28: [SM] Native "GetEntProp" reported: Property "m_iPrimaryAmmoType" not found (entity 138/cs_ragdoll)
+        L 10/31/2012 - 13:48:28: [SM] Displaying call stack trace for plugin "gungame.smx":
+        L 10/31/2012 - 13:48:28: [SM]   [0]  Line 436, gungame/util.sp::UTIL_IsWeaponTaser()
+        L 10/31/2012 - 13:48:28: [SM]   [1]  Line 428, gungame/util.sp::UTIL_FindTaser()
+        L 10/31/2012 - 13:48:28: [SM]   [2]  Line 454, gungame/util.sp::UTIL_ForceDropAllWeapon()
+        L 10/31/2012 - 13:48:28: [SM]   [3]  Line 654, gungame/util.sp::UTIL_GiveNextWeaponReal()
+        L 10/31/2012 - 13:48:28: [SM]   [4]  Line 636, gungame/util.sp::UTIL_Timer_GiveNextWeapon()
+
+    * SetEntProp(client, Prop_Send, "m_iAssists", 0) does not work
+        mukunda (https://forums.alliedmods.net/showpost.php?p=1823872&postcount=9)
+
+        #define ASSISTS_OFFSET_FROM_FRAGS 4
+        #define SCORE_OFFSET_FROM_CONTROLLINGBOT -132
+        #define CASHSPENT_OFFSET_FROM_SCORE 20
+
+        Scores_SetPlayer( client, kills, assists, deaths, cashspent, score ) {
+            if( !IsClientConnected(client) ) return;
+            
+            new assists_offset = FindDataMapOffs( client, "m_iFrags" ) + ASSISTS_OFFSET_FROM_FRAGS;
+            
+            SetEntProp( client, Prop_Data, "m_iFrags", kills );
+            SetEntData( client, assists_offset, assists );
+            SetEntProp( client, Prop_Data, "m_iDeaths", deaths );
+            new score_offset = FindSendPropInfo( "CCSPlayer", "m_bIsControllingBot" ) + SCORE_OFFSET_FROM_CONTROLLINGBOT;
+            SetEntData( client, score_offset, score );
+            SetEntData( client, score_offset + CASHSPENT_OFFSET_FROM_SCORE, cashspent );
+        }
+    
+    * [csgo] fix error
+        ----
+        L 08/21/2012 - 22:08:00: [SM] Native "GetEntProp" reported: Entity 151 (151) is invalid
+        L 08/21/2012 - 22:08:00: [SM] Displaying call stack trace for plugin "gungame.smx":
+        L 08/21/2012 - 22:08:00: [SM]   [0]  Line 1448, E:\Downloads\sm_gungame-1.2.0.0.beta2-csgo\addons\sourcemod\scripting\gungame/util.sp::UTIL_RemoveAmmoNew()
+        L 08/21/2012 - 22:08:00: [SM]   [1]  Line 62, E:\Downloads\sm_gungame-1.2.0.0.beta2-csgo\addons\sourcemod\scripting\gungame/hacks.sp::HACK_RemoveAmmo()
+        L 08/21/2012 - 22:08:00: [SM]   [2]  Line 769, E:\Downloads\sm_gungame-1.2.0.0.beta2-csgo\addons\sourcemod\scripting\gungame/util.sp::UTIL_DelayAmmoRemove()  
+
+        [PHP]L 08/25/2012 - 07:20:02: [SM] Native "GetEntProp" reported: Entity 161 (161) is invalid
+        L 08/25/2012 - 07:20:02: [SM] Displaying call stack trace for plugin "gungame.smx":
+        L 08/25/2012 - 07:20:02: [SM]   [0]  Line 1403, gungame/util.sp::UTIL_RemoveAmmo()
+        L 08/25/2012 - 07:20:02: [SM]   [1]  Line 760, gungame/util.sp::UTIL_DelayAmmoRemove()[/PHP]
+
+        Тут используется задержка в 0.1 секунды. За это время оружие может пропасть у игрока? Оружие даётся при спавне или при левелапе.
+        А может попробовать сразу у оружия обнулять патроны?
+        ----
+
+    ----====----==== Normal priority list ----====----====
+
+    * Bugfix request
+        Bomb is striped always at roundstart even if cvars are set right!
+
+    * Feature request
+        Could you add getting another molotov and taser with a gun kill too, just like regular grenade?
+
+    * add feature
+        I have a suggestion, you know how people is leading the game. Why not make the chat message 
+        of the person who is leading to Level 4 blah blah in hint box instead of chat to keep chat 
+        clean and spam-free for those people who talks on chat.
+        Atm, everything I have put on hint box, only one missing part is the leading message.
+        sames goes for "(username) is tied with the leader on level 16", "You are 5 levels behind the leader"
+
+    * add functionality to execute any defined config when the leader reaches defined level.
+        add functionality to execute any defined config when the leader leaves defined level down.
+        add functionality to execute any defined config when there is a someone on a defined level.
+        add functionality to execute any defined config when there there is noone on a defined level.
+
+    * add console command to reload all config files, usefull after changing sm_gungame_cfgdir
+        for changes to take effect immediately.
+
+    * add console command to quick change any config variables like cvars.
+        For example to turn turbo on we could exec "gungame_config TurboMode 1"
+        So "gungame_config TurboMode" is for dumping variable
+        So "gungame_config" is for dumping all config variables
+    
+    * add ExtraTaser, BonusWeaponTaser, BlockWeaponSwitchOnExtraTaser
+        I think he means, he wishes for there to be an additional pistol (like is available for hegrenade level), and when you get a pistol kill on taser level, you receive an additional taser. Similarly for molotov level.
+        I think the taser level works best as it is right now, but I can see why people would want additional features to make it more consistent with the hegrenade level.
+
+    * add option - random multiple triplelevel sounds
+        if enabled - plays random sound every time player triggers triplelevel
+        if disabled - plays same sound every time player triggers triplelevel, but choose random sound every map start
+
+    * Отличная идея    
+        Сейчас человек, который играет несколько месяцев имеет много сотен побед. 
+        Новому игроку так же придется играть несколько месяцев, чтобы хотя бы приблизиться к ТОПу. 
+        Могли бы вы когда-то дописать статистику побед? 
+        Идея такова, что место в рейтинге рассчитывалось бы исходя из процента побед:
+        Количество выигранных игр деленное на Количество сыгранных игр умноженное на 100.
+        Сыгранной бы считалась игра, если игрок зашел на карту и поднялся хотя бы на 5-10 уровней 
+        (такой подход сильно увеличит объем базы? я в этом не силен).
+
+    * @Altex, any thought on adding unlimitedMolotovs "" to the gungame.equip.smx/.cfg? 
+        similar to the hegrenade level? It's very hard to get a kill with a molotov and 
+        with using pistol/knife kill for extra molotov it gives other players too much 
+        time to catch up to the molotov level.
+
+    * Hi is it possible to add options: (game mode TP)
+        The whole team gets the level of the target maps
+        
+        /* Enables objective bonus game mode TP (Team player all give bonus) */
+        "ObjectiveBonusTP" "1"
+
+    * add feature
+        /**
+        *Disable Armor on spawn if a player is on nade level.
+        *
+        *1 - Disables armor if someone is on nade level
+        *0 - Doesn't remove armor
+        */
+        "DisableArmorOnNade" "1"
+
+    * add feature
+        /**
+        * Disable level down on knifepro when killer is on nade level.
+        *
+        * 1 - Level down disabled on nade-level
+        * 0 - Level down enabled on nade-level
+        */
+        "DisableLevelDownOnNadeLevel" "1"
+
+    * Add autoupdater.
+
+    * there is another option for controlling number on nades on nade level. If I could 
+        change it during the gameplay, I would set it to value we need based on number of players. 
+
+    * Would be really great 
+        I have a small request. Is it possible for you to add option to 
+        built-in AFK manager, which would disable it during the warmup? 
+        I'm currently replacing Mani Admin Plugin with SourceMod plugins 
+        and your AFK manager is the best for GunGame. But I enable DM in 
+        warmup and I'm afraid that 3 AFK kills I set to kick players might 
+        not work well. Of course in normal gameplay it is a good value but 
+        in warmup it can kick them if they won't move for a 10-20 seconds 
+        (not sure about but it is possible). So, I request "AfkDisableInWarmup".
+
+    * Hello, first of all cause I´m new here, very thx for that plugin!
+
+        I´ve a small problem, maybe someone can help. We are running a server for a small group of "old" dm-shooters. Default server setting is CSSDM in FFA mode.
+        We can switch on the fly to nonFFA/teams (depending on how many players are on...) without probs.
+        I figured out how to switch to gungame FFA/nonFFA on the fly too, by loading from different config dirs and using the gg_enable/gg_disable command in config files.
+        It works well with one limitation. The level down on tk does not work on the "nonFFA"-mode, the teamkiller gets a notice but will be leveled up. I can´t find a reason for that...
+        I´ve checked the cvar cssdm_ffa_enabled - its 0
+        I´ve checked the cvar sm_gg_cfgdirname - it points to the right directory (where FFA is 0 and TkLooseLevel is 1)
+        Does anybody has an idea and can help me? 
+
+        I got it, had to restart the config reader plugin to make things happen
+        (btw - some cvars could make things easier for somebody like me)
+
+        nevertheless - thx again for that great plugin 
+
+    * Make 2 plugins.
+    
+        Add multiple triple level sounds. Plaing randomly each triple level.
+        It will be separate optional plugin for gg, not affecting gungame inself.
+        It will play randomly unlimited number of songs.
+        There will no need to configure each file,
+        but it will be config variable to set directory with files.[/color]
+        
+        Check how much winner songs is supported. Make it possible to use up to 
+        100 songs. Make as separate plugin as for triple level unlimited songs.
+
+    + Feature request:
+
+        Make it possible to disable or enable Turbo on the fly. gg_turbo 0...
+        Make it possible to change triple level amount on the fly. gg_multilvl_amount 6
+        Make it possible to change Weapon order on the fly. IE gg_weaponorder 1 or gg_weaponorder 2...
+
+        If those are possible man That would be awsome..
+
+        Also is it possible to give 2 flashes with knife level? 
+
+    + Feature request:
+        Altex, could you please add disabling winner announce in left upper corner in the next release? 
+
+    + Feature request:
+        Altex, do you think it's possible to add a feature to start the map 
+        vote once someone has won the game?
+        I'd like to have the mapvote after the game has been won instead of 
+        when someone reaches "x" level. 
+    * Bug report:
+        во еще глюк заметил !score
+        появляется меню если игроков много или ники длинные то next exit 
+        непоявляется но нажать можно перейдет на след страничку
+    + Feature request:
+        Is there an option to display how many kills a person has on each level? Where when you spawn or kill someone it would say:
+
+        You are on level 1 :: Glock 1/4 kills
+        You are on level 1 :: Glock 2/4 kills
+
+        etc for each level?
+    * Bug report: gungame does not work with cssdm.
+        Native "SetFailState" reported: Signature CSSPlayer::CSWeaponDrop Failed. Please contact the author. 
+        2.1.1. CSSDM
+    + Feature: maybe its possible to implement a very simple achievement system (for 
+            example "Owner of the Day with x.xxx Kills" or "Killing Machine with 
+            xxx Kills") which is set to zero every day, so you dont need a big database.
+    + Feature: I have one more question. Is it possible to have few equip files (for 
+        classic mode, reversed, random etc.) and change them by my own plugin?
+        And what about changing GG cvar by plugin (some native for example)?
+    * Bug report: Problem is that on nade level I get sometimes 2 flash nades. 
+        I throw one and suddenly get another from nowhere. I'm not sure how to 
+        reproduce it yet.
+    * feature request
+        we have a server runnign this gg mod but wanted to know if it is possible to have the players kills moved into the deaths column.
+        at the moment i have the players level in the kills column and i assume that the deaths column is untouched?
+    ----====----==== High severity list ----====----====
+    
+    + Add winners menu:
+        Also could you incorporate the attached code into your next release?
+        The menu idea is from GG5's Winner Menu 
+        (http://addons.eventscripts.com/addons/view/gg_winner_menu)
+        https://forums.alliedmods.net/showpost.php?p=949442&postcount=255
+        High severity because of much code to review and implement.
+        
+    ----====----==== Pending list ----====----====
+    
+    + Feature: create some options for gungame_stats like display rank to 
+        all or to player only, show winner in chat etc.
+        Pending because of i do not know what exactly features is needed.
+    
+    ----====----==== Low priority list ----====----====
+    
+    + Feature: Implement !buylevel.
+    + Feature: Need features from es gg 5: Colorize knife-level player.
+    + Feature: Need features from es gg 5: Random sounds?
