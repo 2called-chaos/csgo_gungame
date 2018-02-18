@@ -84,7 +84,7 @@ ReadConfig()
     {
         return;
     }
-    
+
     decl String:ConfigDirName[PLATFORM_MAX_PATH];
     GetConVarString(g_Cvar_CfgDirName, ConfigDirName, sizeof(ConfigDirName));
 
@@ -99,7 +99,7 @@ ReadConfig()
 
     decl String:ConfigFile[PLATFORM_MAX_PATH], String:EquipFile[PLATFORM_MAX_PATH];
     decl String:Error[PLATFORM_MAX_PATH + 64];
-    
+
     FormatEx(ConfigFile, sizeof(ConfigFile), "%s\\gungame.config.txt", ConfigDir);
 
     if(FileExists(ConfigFile))
@@ -110,9 +110,9 @@ ReadConfig()
         FormatEx(Error, sizeof(Error), "[GunGame] FATAL *** ERROR *** can not find %s", ConfigFile);
         SetFailState(Error);
     }
-    
+
     FormatEx(EquipFile, sizeof(EquipFile), "%s\\gungame.equip.txt", ConfigDir);
-    
+
     if(FileExists(EquipFile))
     {
         ConfigCount++;
@@ -121,9 +121,9 @@ ReadConfig()
         FormatEx(Error, sizeof(Error), "[GunGame] FATAL *** ERROR *** can not find %s", EquipFile);
         SetFailState(Error);
     }
-    
+
     /* Build map config and map prefix config*/
-    
+
     /**
      * Thanks sawce for the idea from your prefix map plugin loading for AMX Mod X
      * saved me alot of time doing it this way.
@@ -132,7 +132,7 @@ ReadConfig()
 
     decl String:Map[32];
     new len = GetCurrentMap(Map, sizeof(Map));
-    
+
     new i, b;
     while(Map[i] != '_' && Map[i] != '\0' && i < len)
     {
@@ -141,7 +141,7 @@ ReadConfig()
 
     decl String:PrefixConfigFile[PLATFORM_MAX_PATH],  String:PrefixEquipFile[PLATFORM_MAX_PATH];
     new bool:EquipOne, bool:ConfigOne;
-    
+
     if(Map[i] == '_')
     {
         b = Map[i];
@@ -156,7 +156,7 @@ ReadConfig()
             PrintToServer("[GunGame] Loading %s.config.txt config file", Map);
             ConfigCount++;
         }
-        
+
         if(FileExists(PrefixEquipFile))
         {
             EquipOne = true;
@@ -169,7 +169,7 @@ ReadConfig()
 
     decl String:MapEquipFile[PLATFORM_MAX_PATH], String:MapConfigFile[PLATFORM_MAX_PATH];
     new bool:EquipTwo, bool:ConfigTwo;
-    
+
     FormatEx(MapConfigFile, sizeof(MapConfigFile), "%s\\maps\\%s.config.txt", ConfigDir, Map);
     FormatEx(MapEquipFile, sizeof(MapEquipFile), "%s\\maps\\%s.equip.txt", ConfigDir, Map);
 
@@ -179,32 +179,32 @@ ReadConfig()
         ConfigTwo = true;
         ConfigCount++;
     }
-    
+
     if(FileExists(MapEquipFile))
     {
         PrintToServer("[GunGame] Loading %s.equip.txt file", Map);
         EquipTwo = true;
         ConfigCount++;
     }
-    
+
     InternalReadConfig(ConfigFile);
     InternalReadConfig(EquipFile);
-    
+
     if(ConfigOne)
     {
         InternalReadConfig(PrefixConfigFile);
     }
-    
+
     if(EquipOne)
     {
         InternalReadConfig(PrefixEquipFile);
     }
-    
+
     if(ConfigTwo)
     {
         InternalReadConfig(MapConfigFile);
     }
-    
+
     if(EquipTwo)
     {
         InternalReadConfig(MapEquipFile);
@@ -269,7 +269,7 @@ public ReadConfig_ParseEnd(Handle:smc, bool:halted, bool:failed)
 {
     Call_StartForward(FwdConfigParseEnd);
     Call_Finish();
-    
+
     if(ConfigCount == ++ParseConfigCount)
     {
         Call_StartForward(FwdConfigEnd);

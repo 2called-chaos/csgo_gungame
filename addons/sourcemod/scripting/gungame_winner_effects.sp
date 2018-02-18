@@ -176,7 +176,7 @@ public Action:Timer_SetPlayerWinnerEffectWinner(Handle:timer, any:data) {
 }
 
 SetPlayerWinnerEffectWinnerReal(client) {
-    // shine    
+    // shine
     new Float:vec[3];
     GetClientAbsOrigin(client, vec);
     vec[2] += 40;
@@ -215,4 +215,4 @@ stock CreateLight(client) {
     SetVariantString(target);
     AcceptEntityInput(GLOW_ENTITY, "SetParent");
     AcceptEntityInput(GLOW_ENTITY, "TurnOn");
-}    
+}

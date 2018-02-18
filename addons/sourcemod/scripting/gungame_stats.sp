@@ -39,7 +39,7 @@ public OnPluginStart()
 {
     FwdLoadRank = CreateGlobalForward("GG_OnLoadRank", ET_Ignore);
     FwdLoadPlayerWins = CreateGlobalForward("GG_OnLoadPlayerWins", ET_Ignore, Param_Cell);
-    
+
     LoadTranslations("gungame_stats");
     OnCreateKeyValues();
 
@@ -138,7 +138,7 @@ EndProcess()
     {
         return;
     }
-    
+
     SaveProcess = true;
     SavePlayerDataInfo();
 }

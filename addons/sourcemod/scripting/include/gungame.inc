@@ -27,7 +27,7 @@ forward GG_OnShutdown(bool:Command);
  * Called when the player level changed.
  *
  * @param client        Player index.
- * @param level     Player current level (starting from 0). 
+ * @param level     Player current level (starting from 0).
  * @param difference    The difference in the level change.
  * @param steal     true if it was a knife steal otherwise false
  * @param last      true if player reached last level.
@@ -117,12 +117,12 @@ forward Action:GG_OnSoundWinner(client);
 /**
  * Gives the client the average/minimum level of all players in the server.
  *
- * Handicap mode: 
+ * Handicap mode:
  *    1 - Average level
  *    2 - Minimum level
  *
  * @param client        Player index.
- * @return              If level was set then return 1. 
+ * @return              If level was set then return 1.
  *                      0 - level was not changed.
  */
 native GG_GiveHandicapLevel(client);

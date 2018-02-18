@@ -98,21 +98,21 @@ public __GiveHandicapLevel(Handle:plugin, numParams)
     if ( !HandicapMode ) {
         return 0;
     }
-    
+
     if ( g_Cfg_HandicapSkipBots && IsFakeClient(client) ) {
         return 0;
     }
-    
+
     if ( !IsFakeClient(client)
-         && !TopRankHandicap 
-         && StatsEnabled 
+         && !TopRankHandicap
+         && StatsEnabled
          && ( !GG_IsPlayerWinsLoaded(client) /* HINT: gungame_stats */
             || GG_IsPlayerInTopRank(client) ) /* HINT: gungame_stats */
     )
     {
         return 0;
     }
-    
+
     new level = UTIL_GetHandicapLevel(client);
     if ( PlayerLevel[client] < level )
     {
@@ -121,7 +121,7 @@ public __GiveHandicapLevel(Handle:plugin, numParams)
         UTIL_UpdatePlayerScoreLevel(client);
         return 1;
     }
-    
+
     return 0;
 }
 
@@ -143,7 +143,7 @@ public __RemoveLevelMulti(Handle:plugin, numParams)
         CurrentLevelPerRound[client] = 0;
     }
     CurrentLevelPerRoundTriple[client] = 0;
-    
+
     new oldLevel = PlayerLevel[client];
     new level = UTIL_ChangeLevel(client, -loose);
     if ( level == oldLevel )
@@ -175,7 +175,7 @@ public __RemoveALevel(Handle:plugin, numParams)
         CurrentLevelPerRound[client] = 0;
     }
     CurrentLevelPerRoundTriple[client] = 0;
-    
+
     new oldLevel = PlayerLevel[client];
     new level = UTIL_ChangeLevel(client, -1);
     if ( level == oldLevel )
@@ -206,7 +206,7 @@ public __AddALevel(Handle:plugin, numParams)
     {
         return 0;
     }
-    
+
     CurrentLevelPerRound[client]++;
 
     new oldLevel = PlayerLevel[client];
@@ -283,14 +283,14 @@ public __AddAPoint(Handle:plugin, numParams)
     {
         return 0;
     }
-    
+
     new oldLevel = PlayerLevel[client];
     new point = ++CurrentKillsPerWeap[client];
     if ( point < UTIL_GetCustomKillPerLevel(oldLevel) )
     {
         return point;
     }
-    
+
     /* They leveled up.*/
     new level = UTIL_ChangeLevel(client, 1);
     if ( level == oldLevel )
@@ -325,8 +325,8 @@ public __RemoveAPoint(Handle:plugin, numParams)
     if ( point >= 0 )
     {
         return point;
-    } 
-    
+    }
+
     // remove a level
     if ( --CurrentLevelPerRound[client] < 0 )
     {
@@ -344,7 +344,7 @@ public __RemoveAPoint(Handle:plugin, numParams)
     {
         UTIL_GiveNextWeapon(client, level);
     }
-    
+
     return CurrentKillsPerWeap[client] = UTIL_GetCustomKillPerLevel(level) - 1;
 }
 public __GetClientPointLevel(Handle:plugin, numParams)

@@ -279,10 +279,10 @@ public GG_ConfigKeyValue(const String:key[], const String:value[])
                 g_Cfg_EndGameSilent = StringToInt(value);
             }
         }
-        
+
         case CONFIG_STATE_EQUIP:
         {
-            
+
             if ( ( strcmp("RandomWeaponReserveLevels", key, false) == 0 ) && ( value[0] ) )
             {
                 new String:buffers[sizeof(g_Cfg_RandomWeaponReservLevels)][3];
@@ -338,7 +338,7 @@ public GG_ConfigKeyValue(const String:key[], const String:value[])
         case CONFIG_STATE_KILLS:
         {
             new Level = StringToInt(key)-1;
-            if ( RandomWeaponOrder ) 
+            if ( RandomWeaponOrder )
             {
                 for (new i = 0; i < WeaponOrderCount; i++)
                 {

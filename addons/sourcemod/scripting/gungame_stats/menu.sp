@@ -27,7 +27,7 @@ public T_DisplayTopMenu(Handle:owner, Handle:result, const String:error[], any:c
         LogError("Failed to retrieve top players (error: %s)", error);
         return;
     }
-    
+
     new offset, itemsOnPage = 10;
     offset = ClientOnPage[client] * itemsOnPage;
 
@@ -35,7 +35,7 @@ public T_DisplayTopMenu(Handle:owner, Handle:result, const String:error[], any:c
         offset = 0;
         ClientOnPage[client] = 0;
     }
-        
+
     new end, pages;
     end = offset + itemsOnPage;
     if ( end > TotalWinners ) {
@@ -45,7 +45,7 @@ public T_DisplayTopMenu(Handle:owner, Handle:result, const String:error[], any:c
 
     SetGlobalTransTarget(client);
     decl String:text[256];
-    
+
     new Handle:menu = CreatePanel();
 
     if ( TotalWinners )
@@ -53,11 +53,11 @@ public T_DisplayTopMenu(Handle:owner, Handle:result, const String:error[], any:c
         Format(text, sizeof(text), "%t", "TopPanel: Top", offset + 1, end, TotalWinners);
         SetPanelTitle(menu, text);
         DrawPanelText(menu, BLANK_SPACE);
-    
+
         Format(text, sizeof(text), "%t", "Panel: Page", ClientOnPage[client] + 1, pages);
         DrawPanelText(menu, text);
         DrawPanelText(menu, BLANK_SPACE);
-        
+
         new i = offset;
         decl String:name[MAX_NAME_SIZE], String:subtext[64];
         new wins;
@@ -83,11 +83,11 @@ public T_DisplayTopMenu(Handle:owner, Handle:result, const String:error[], any:c
         Format(text, sizeof(text), "%t", "TopPanel: Top short");
         SetPanelTitle(menu, text);
         DrawPanelText(menu, BLANK_SPACE);
-        
+
         Format(text, sizeof(text), "%t", "TopPanel: There are currently no players in the top");
         DrawPanelItem(menu, text);
     }
-   
+
     DrawPanelText(menu, BLANK_SPACE);
     SetPanelCurrentKey(menu, 8);
 

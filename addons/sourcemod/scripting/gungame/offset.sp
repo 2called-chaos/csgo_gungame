@@ -1,7 +1,7 @@
 OnOffsetStart()
 {
     decl String:Error[64];
-    
+
     g_iOffsetAmmo = FindSendPropInfo("CBasePlayer", "m_iAmmo");
     if (g_iOffsetAmmo == INVALID_OFFSET) {
         SetFailState("FATAL ERROR: Offset \"CBasePlayer::m_iAmmo\" was not found.");
@@ -27,14 +27,14 @@ OnOffsetStart()
         FormatEx(Error, sizeof(Error), "FATAL ERROR OffsetWeaponParent [%d]. Please contact the author.", OffsetWeaponParent);
         SetFailState(Error);
     }
-    
+
     g_iOffs_iPrimaryAmmoType = FindSendPropInfo("CBaseCombatWeapon","m_iPrimaryAmmoType");
     if ( g_iOffs_iPrimaryAmmoType == INVALID_OFFSET )
     {
         FormatEx(Error, sizeof(Error), "FATAL ERROR g_iOffs_iPrimaryAmmoType [%d]. Please contact the author.", g_iOffs_iPrimaryAmmoType);
         SetFailState(Error);
     }
-    
+
     FindCstrikeOffset();
 
     /**

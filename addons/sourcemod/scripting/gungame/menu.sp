@@ -16,7 +16,7 @@ public CommandPanelHandler(Handle:menu, MenuAction:action, client, param2)
                 ShowPlayerLevelMenu(client);
             case 4: /* !top */
             {
-                if ( StatsEnabled ) 
+                if ( StatsEnabled )
                 {
                     GG_DisplayTop(client); /* HINT: gungame_stats */
                 }
@@ -29,7 +29,7 @@ public CommandPanelHandler(Handle:menu, MenuAction:action, client, param2)
                 ShowLeaderMenu(client);
             case 6: /* !rank */
             {
-                if ( StatsEnabled ) 
+                if ( StatsEnabled )
                 {
                     GG_ShowRank(client); /* HINT: gungame_stats */
                 }
@@ -52,7 +52,7 @@ public ScoreCommandPanelHandler(Handle:menu, MenuAction:action, client, param2)
         {
             case 2: /* !top */
             {
-                if ( StatsEnabled ) 
+                if ( StatsEnabled )
                 {
                     GG_DisplayTop(client); /* HINT: gungame_stats */
                 }
@@ -81,7 +81,7 @@ CreateLevelPanel(client)
     SetPanelTitle(LevelPanel, text);
     DrawPanelItem(LevelPanel, BLANK, ITEMDRAW_SPACER|ITEMDRAW_RAWLINE);
 
-    new Level = PlayerLevel[client], 
+    new Level = PlayerLevel[client],
         killsPerLevel = UTIL_GetCustomKillPerLevel(Level);
 
     Format(text, sizeof(text), "%t", "LevelPanel: Level");
@@ -104,7 +104,7 @@ CreateLevelPanel(client)
 
     if ( StatsEnabled )
     {
-        FormatLanguageNumberTextEx(client, subtext, sizeof(subtext), 
+        FormatLanguageNumberTextEx(client, subtext, sizeof(subtext),
             GG_GetClientWins(client), /* HINT: gungame_stats */
             "times"
         );
@@ -162,7 +162,7 @@ CreateLevelPanel(client)
     DrawPanelItem(LevelPanel, text, ITEMDRAW_CONTROL);
     Format(text, sizeof(text), "%t", "LevelPanel: Press 4 to show scores");
     DrawPanelText(LevelPanel, text);
-    
+
     DrawPanelItem(LevelPanel, BLANK, ITEMDRAW_SPACER|ITEMDRAW_RAWLINE);
     SetPanelCurrentKey(LevelPanel, 9);
     Format(text, sizeof(text), "%t", "Panel: Exit");
@@ -193,7 +193,7 @@ ShowPlayerLevelMenu(client)
             GetClientName(i, Name, sizeof(Name));
             if ( StatsEnabled )
             {
-                FormatLanguageNumberTextEx(client, subtext, sizeof(subtext), 
+                FormatLanguageNumberTextEx(client, subtext, sizeof(subtext),
                     GG_GetClientWins(i), /* HINT: gungame_stats */
                     "wins"
                 );
@@ -244,7 +244,7 @@ ShowLeaderMenu(client)
         Format(text, sizeof(text), "%t", "LeaderMenu: No leaders");
         AddMenuItem(menu, BLANK, text, ++counter%7? ITEMDRAW_DISABLED: ITEMDRAW_DEFAULT);
     }
-        
+
     DisplayMenu(menu, client, GUNGAME_MENU_TIME);
 }
 
@@ -320,7 +320,7 @@ ShowJoinMsgPanel(client)
     DrawPanelText(faluco, BLANK_SPACE);
     Format(text, sizeof(text), "%t", "Panel: Exit");
     DrawPanelItem(faluco, text, ITEMDRAW_CONTROL);
-    
+
     SendPanelToClient(faluco, client, EmptyPanelHandler, GUNGAME_MENU_TIME);
     CloseHandle(faluco);
 }
@@ -455,7 +455,7 @@ DisplayRulesMenu(client)
     SetGlobalTransTarget(client);
     decl String:text[256];
     decl String:subtext[64];
-    
+
     new Handle:menu = CreatePanel();
     Format(text, sizeof(text), "%t", "RulesPanel: [GunGame] Rules information");
     SetPanelTitle(menu, text);
@@ -469,19 +469,19 @@ DisplayRulesMenu(client)
     if ( KnifeElite )           itemsCount++;
     if ( TurboMode )            itemsCount++;
     if ( CommitSuicide )        itemsCount++;
-    
+
     new itemsOnPage = 3;
     new pagesCount  = (itemsCount - 1)/itemsOnPage + 1;
-    
+
     if ( ClientOnPage[client] < 0 )             ClientOnPage[client] = pagesCount - 1;
     if ( ClientOnPage[client] >= pagesCount )   ClientOnPage[client] = 0;
     new itemStart   = ClientOnPage[client] * itemsOnPage + 1;
     new itemEnd     = itemStart + itemsOnPage - 1;
-        
+
     Format(text, sizeof(text), "%t", "RulesPanel: Page", ClientOnPage[client] + 1, pagesCount);
     DrawPanelText(menu, text);
     DrawPanelText(menu, BLANK_SPACE);
-    
+
     new item = 0;
     if ( (++item >= itemStart) && (itemEnd <= itemEnd) ) {
         FormatLanguageNumberTextEx(client, subtext, sizeof(subtext), MinKillsPerLevel, "points");
@@ -489,7 +489,7 @@ DisplayRulesMenu(client)
         Format(text, sizeof(text), "%t", "RulesPanel: You must get kills with your current weapon to level up", subtext);
         DrawPanelText(menu, text);
     }
-            
+
     if ( (++item >= itemStart) && (itemEnd <= itemEnd) ) {
         Format(text, sizeof(text), "%t", "RulesPanel: If you get a kill with a weapon out of order. It does not count towards your level");
         DrawPanelText(menu, text);
@@ -516,7 +516,7 @@ DisplayRulesMenu(client)
         Format(text, sizeof(text), "%t", "RulesPanel: Friendly Fire is automatically turned ON when someone reaches GRENADE level");
         DrawPanelText(menu, text);
     }
-    
+
     if ( (MaxLevelPerRound > 1) && (++item >= itemStart) && (item <= itemEnd) ) {
         Format(text, sizeof(text), "%t", "RulesPanel: You CAN gained more than one level per round");
         DrawPanelText(menu, text);
@@ -536,9 +536,9 @@ DisplayRulesMenu(client)
         Format(text, sizeof(text), "%t", "RulesPanel: You will receive your next weapon immediately when you level up");
         DrawPanelText(menu, text);
     }
-    
+
     if ( CommitSuicide && (++item >= itemStart) && (item <= itemEnd) ) {
-        
+
         FormatLanguageNumberTextEx(client, subtext, sizeof(subtext), CommitSuicide, "levels");
         CRemoveTags(subtext, sizeof(subtext));
         Format(text, sizeof(text), "%t", "RulesPanel: If you commit suicide you will lose levels", subtext);
@@ -554,7 +554,7 @@ DisplayRulesMenu(client)
         Format(text, sizeof(text), "%t", "RulesPanel: Type !commands to see the list of gungame commands");
         DrawPanelText(menu, text);
     }
-    
+
     DrawPanelText(menu, BLANK_SPACE);
     SetPanelCurrentKey(menu, 7);
 

@@ -31,7 +31,7 @@ public Plugin:myinfo =
 public OnPluginStart()
 {
     LoadTranslations("gungame_afk");
-    
+
     OffsetOrigin = FindSendPropOffs("CBaseEntity", "m_vecOrigin");
 
     if(OffsetOrigin == INVALID_OFFSET)
@@ -123,11 +123,11 @@ public Action:GG_OnClientDeath(Killer, Victim, WeaponId, bool:TeamKilled)
             }
             else if ( AfkAction & AFK_SPECTATE )
             {
-                ChangeClientTeam(Victim, TEAM_SPECTATOR);         
+                ChangeClientTeam(Victim, TEAM_SPECTATOR);
                 PlayerAfkCount[Victim] = 0;
             }
         }
-        
+
         if ( AfkReload )
         {
             return Plugin_Changed;

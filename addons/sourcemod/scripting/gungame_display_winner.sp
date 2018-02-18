@@ -65,7 +65,7 @@ public GG_OnLoadRank()
     {
         return;
     }
-    
+
     if ( g_Cfg_ShowPlayerRankOnWin && IsClientInGame(g_winner) )
     {
         GG_ShowRank(g_winner);                  /* HINT: gungame_stats */
@@ -80,11 +80,11 @@ public GG_OnLoadRank()
 
         new bool:urlHasParams = (StrContains(g_Cfg_DisplayWinnerUrl, "?", true) != -1);
 
-        Format(url, sizeof(url), "%s%swinnerName=%s&loserName=%s&wins=%i&place=%i&totalPlaces=%i", 
-            g_Cfg_DisplayWinnerUrl, 
+        Format(url, sizeof(url), "%s%swinnerName=%s&loserName=%s&wins=%i&place=%i&totalPlaces=%i",
+            g_Cfg_DisplayWinnerUrl,
             urlHasParams? "&": "?",
-            winnerNameUrlEncoded, 
-            looserNameUrlEncoded, 
+            winnerNameUrlEncoded,
+            looserNameUrlEncoded,
             GG_GetClientWins(g_winner),         /* HINT: gungame_stats */
             GG_GetPlayerPlaceInStat(g_winner),  /* HINT: gungame_stats */
             GG_CountPlayersInStat()             /* HINT: gungame_stats */

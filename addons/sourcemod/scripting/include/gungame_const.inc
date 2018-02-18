@@ -29,7 +29,7 @@
  * Maximum level in gungame.
  */
 #define GUNGAME_MAX_LEVEL   64
-                                        
+
 /**
  * This is the maximum allow time for a menu to be !rules, !weapons, !score, !level is display for.
  */
@@ -83,7 +83,7 @@ stock const String:BLANK_SPACE[] = " ";
 
 // AfkAction
 #define AFK_KICK             1
-#define AFK_SPECTATE         2                                                                        
+#define AFK_SPECTATE         2
 
 #define PRINT_NOTIFY         1
 #define PRINT_CONSOLE        2

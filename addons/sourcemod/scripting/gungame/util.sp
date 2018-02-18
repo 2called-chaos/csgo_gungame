@@ -1,7 +1,7 @@
 UTIL_FindMapObjective()
 {
     new i = FindEntityByClassname(-1, "func_bomb_target");
-    
+
     if(i > MaxClients)
     {
         MapStatus |= OBJECTIVE_BOMB;
@@ -11,12 +11,12 @@ UTIL_FindMapObjective()
             MapStatus |= OBJECTIVE_BOMB;
         }
     }
-    
+
     if((i = FindEntityByClassname((i = 0), "hostage_entity")) > MaxClients)
     {
         MapStatus |= OBJECTIVE_HOSTAGE;
     }
-    
+
     HostageEntInfo = FindEntityByClassname(-1, "cs_player_manager");
 }
 
@@ -253,7 +253,7 @@ UTIL_ChangeLevel(client, difference, bool:KnifeSteal = false, victim = 0)
     {
         return PlayerLevel[client];
     }
-    
+
     new oldLevel = PlayerLevel[client], Level = oldLevel + difference;
 
     if ( Level < 0 ) {
@@ -291,12 +291,12 @@ UTIL_ChangeLevel(client, difference, bool:KnifeSteal = false, victim = 0)
     } else {
         CurrentKillsPerWeap[client] = 0;
     }
-    
+
     if ( difference < 0 )
     {
         UTIL_PlaySound(client, Down);
     }
-    else 
+    else
     {
         if ( KnifeSteal )
         {
@@ -321,7 +321,7 @@ UTIL_ChangeLevel(client, difference, bool:KnifeSteal = false, victim = 0)
         Call_StartForward(FwdDisableRtv);
         Call_Finish();
     }
-    
+
     if ( g_cfgEnableFriendlyFireLevel && !g_isCalledEnableFriendlyFire && Level >= g_cfgEnableFriendlyFireLevel )
     {
         g_isCalledEnableFriendlyFire = true;
@@ -331,7 +331,7 @@ UTIL_ChangeLevel(client, difference, bool:KnifeSteal = false, victim = 0)
             UTIL_ChangeFriendlyFire(false);
         }
     }
-    
+
     /* WeaponOrder count is the last weapon. */
     if ( Level >= WeaponOrderCount )
     {
@@ -601,7 +601,7 @@ UTIL_CheckForFriendlyFire(client, WeapId)
     {
         PlayerOnGrenade++;
         PlayerState[client] |= GRENADE_LEVEL;
-            
+
         if ( !GetConVarInt(mp_friendlyfire) )
         {
             if ( g_cfgFriendlyFireOnOff ) {
@@ -620,7 +620,7 @@ UTIL_GiveNextWeapon(client, level, bool:levelupWithKnife = false, Float:delay = 
     WritePackCell(data, level);
     WritePackCell(data, _:levelupWithKnife);
     WritePackCell(data, _:spawn);
-       
+
     CreateTimer(delay, UTIL_Timer_GiveNextWeapon, data);
 }
 
@@ -651,7 +651,7 @@ UTIL_GiveNextWeaponReal(client, level, bool:levelupWithKnife, bool:spawn) {
         LogError("[DEBUG-GUNGAME] UTIL GIVE_WEAPON weaponName=%s weaponId=%d slotId=%d clientId=%d levelId=%d", g_WeaponName[WeapId], WeapId, slot, client, level);
     #endif
 
-    // A check to make sure player always has a knife 
+    // A check to make sure player always has a knife
     // because some maps do not give the knife.
 
     if (blockSwitch) {
@@ -685,13 +685,13 @@ UTIL_GiveNextWeaponReal(client, level, bool:levelupWithKnife, bool:spawn) {
                 // Remove bonus weapon ammo! So player can not reload weapon!
                 if ( (ent != -1) && RemoveBonusWeaponAmmo ) {
                     new iAmmo = UTIL_GetAmmoType(ent); // TODO: not needed
-    
+
                     if ((iAmmo != -1) && (ent != INVALID_ENT_REFERENCE)) {
                         new Handle:Info = CreateDataPack();
                         WritePackCell(Info, client);
                         WritePackCell(Info, ent);
                         ResetPack(Info);
-    
+
                         CreateTimer(0.1, UTIL_DelayAmmoRemove, Info, TIMER_HNDL_CLOSE);
                     }
                 }
@@ -709,13 +709,13 @@ UTIL_GiveNextWeaponReal(client, level, bool:levelupWithKnife, bool:spawn) {
                 // Remove bonus weapon ammo! So player can not reload weapon!
                 if ( (ent != -1) && RemoveBonusWeaponAmmo ) {
                     new iAmmo = UTIL_GetAmmoType(ent); // TODO: not needed
-    
+
                     if ((iAmmo != -1) && (ent != INVALID_ENT_REFERENCE)) {
                         new Handle:Info = CreateDataPack();
                         WritePackCell(Info, client);
                         WritePackCell(Info, ent);
                         ResetPack(Info);
-    
+
                         CreateTimer(0.1, UTIL_DelayAmmoRemove, Info, TIMER_HNDL_CLOSE);
                     }
                 }
@@ -781,7 +781,7 @@ UTIL_PlaySoundDelayed(Float:delay, client, Sounds:type, entity = SOUND_FROM_PLAY
     WritePackCell(data, _:type);
     WritePackCell(data, entity);
     WritePackCell(data, _:stop);
-       
+
     CreateTimer(delay, UTIL_Timer_PlaySound, data);
 }
 
@@ -803,17 +803,17 @@ public Action:UTIL_Timer_PlaySound(Handle:timer, Handle:data) {
 }
 
 /*
-stock EmitSoundToAll(const String:sample[], 
-                 entity = SOUND_FROM_PLAYER, 
-                 channel = SNDCHAN_AUTO, 
-                 level = SNDLEVEL_NORMAL, 
-                 flags = SND_NOFLAGS, 
-                 Float:volume = SNDVOL_NORMAL, 
-                 pitch = SNDPITCH_NORMAL, 
-                 speakerentity = -1, 
-                 const Float:origin[3] = NULL_VECTOR, 
-                 const Float:dir[3] = NULL_VECTOR, 
-                 bool:updatePos = true, 
+stock EmitSoundToAll(const String:sample[],
+                 entity = SOUND_FROM_PLAYER,
+                 channel = SNDCHAN_AUTO,
+                 level = SNDLEVEL_NORMAL,
+                 flags = SND_NOFLAGS,
+                 Float:volume = SNDVOL_NORMAL,
+                 pitch = SNDPITCH_NORMAL,
+                 speakerentity = -1,
+                 const Float:origin[3] = NULL_VECTOR,
+                 const Float:dir[3] = NULL_VECTOR,
+                 bool:updatePos = true,
                  Float:soundtime = 0.0)
 */
 /**
@@ -893,10 +893,10 @@ GivePlayerItemWrapper(client, const String:item[], bool:blockSwitch = false) {
 
     new ent = GivePlayerItem(client, item);
     #if defined GUNGAME_DEBUG
-        LogError("[DEBUG-GUNGAME] ... offset, client=%i item=%s ammotypesend=%i ammotypedata=%i", 
-            client, 
-            item, 
-            GetEntProp(ent, Prop_Send, "m_iPrimaryAmmoType"), 
+        LogError("[DEBUG-GUNGAME] ... offset, client=%i item=%s ammotypesend=%i ammotypedata=%i",
+            client,
+            item,
+            GetEntProp(ent, Prop_Send, "m_iPrimaryAmmoType"),
             GetEntData(ent, g_iOffs_iPrimaryAmmoType, 1)
         );
     #endif
@@ -1068,7 +1068,7 @@ stock UTIL_StringToUpper(String:Source[])
 UTIL_GiveWarmUpWeaponDelayed(Float:delay, client) {
     new Handle:data = CreateDataPack();
     WritePackCell(data, client);
-       
+
     CreateTimer(delay, UTIL_Timer_GiveWarmUpWeapon, data);
 }
 
@@ -1089,7 +1089,7 @@ public Action:UTIL_Timer_GiveWarmUpWeapon(Handle:timer, Handle:data) {
 UTIL_GiveWarmUpWeapon(client) {
     UTIL_ForceDropAllWeapon(client, false);
 
-    if (WarmupRandomWeaponMode) {   
+    if (WarmupRandomWeaponMode) {
         if (WarmupRandomWeaponMode == 1 || WarmupRandomWeaponMode == 2) {
             if (WarmupRandomWeaponLevel == -1) {
                 WarmupRandomWeaponLevel = UTIL_GetRandomInt(0, WeaponOrderCount-1);
@@ -1137,8 +1137,8 @@ UTIL_GiveExtraNade(client, bool:knifeKill) {
         if (!UTIL_HasClientHegrenade(client)) {
             new bool:blockWeapSwitch = g_SdkHooksEnabled && ( g_Cfg_BlockWeaponSwitchIfKnife && knifeKill || g_Cfg_BlockWeaponSwitchOnNade );
             new newWeapon = GivePlayerItemWrapper(
-                client, 
-                g_WeaponName[g_WeaponIdHegrenade], 
+                client,
+                g_WeaponName[g_WeaponIdHegrenade],
                 blockWeapSwitch
             );
             if (!blockWeapSwitch) {
@@ -1155,8 +1155,8 @@ UTIL_GiveExtraMolotov(client, WeaponId) {
     if (!UTIL_HasClientMolotov(client)) {
         new bool:blockWeapSwitch = g_SdkHooksEnabled && g_Cfg_BlockWeaponSwitchIfKnife;
         new newWeapon = GivePlayerItemWrapper(
-            client, 
-            g_WeaponName[WeaponId], 
+            client,
+            g_WeaponName[WeaponId],
             blockWeapSwitch
         );
         if (!blockWeapSwitch) {
@@ -1183,8 +1183,8 @@ UTIL_GiveExtraTaser(client) {
 
     new bool:blockWeapSwitch = g_SdkHooksEnabled && g_Cfg_BlockWeaponSwitchIfKnife;
     new newWeapon = GivePlayerItemWrapper(
-        client, 
-        g_WeaponName[g_WeaponIdTaser], 
+        client,
+        g_WeaponName[g_WeaponIdTaser],
         blockWeapSwitch
     );
     if (!blockWeapSwitch) {
@@ -1231,12 +1231,12 @@ UTIL_ShowHintTextMulti(client, const String:textHint[], times, Float:time)
     {
         return;
     }
-    
+
     new Handle:data = CreateDataPack();
     WritePackCell(data, times);
     WritePackCell(data, client);
     WritePackString(data, textHint);
-    
+
     new Handle:timer = CreateTimer(time, UTIL_Timer_ShowHintText, data, TIMER_REPEAT);
     CreateTimer(0.1, UTIL_Timer_ShowHintTextFirst, timer);
 }
@@ -1249,18 +1249,18 @@ public Action:UTIL_Timer_ShowHintTextFirst(Handle:timer, any:data)
 public Action:UTIL_Timer_ShowHintText(Handle:timer, any:data)
 {
     new client, String:textHint[512], times;
-    
+
     ResetPack(data);
     times = ReadPackCell(data);
     client = ReadPackCell(data);
     ReadPackString(data, textHint, sizeof(textHint));
-    
+
     if ( !IsClientInGame(client) )
     {
         CloseHandle(data);
         return Plugin_Stop;
     }
-    
+
     PrintHintText(client, textHint);
     if ( --times <= 0 )
     {
@@ -1290,7 +1290,7 @@ UTIL_ArrayIntRand(array[], size)
             continue;
         }
         tmpValue = array[tmpIndex];
-        
+
         array[tmpIndex] = array[i];
         array[i] = tmpValue;
     }
@@ -1331,7 +1331,7 @@ UTIL_GetMinimumLevel(bool:skipBots = false, aboveLevel = -1, skipClient = 0)
     {
         if ( IsClientInGame(i) && ( g_Cfg_HandicapUseSpectators || GetClientTeam(i) > 1 ) )
         {
-            if ( ( skipBots && IsFakeClient(i) ) 
+            if ( ( skipBots && IsFakeClient(i) )
                 || ( GetClientTeam(i) < 2 )
                 || ( skipClient == i ) )
             {
@@ -1342,7 +1342,7 @@ UTIL_GetMinimumLevel(bool:skipBots = false, aboveLevel = -1, skipClient = 0)
                 continue;
             }
             if ( (minimum == -1) || (level < minimum) )
-            {                 
+            {
                 minimum = level;
             }
         }
@@ -1357,7 +1357,7 @@ UTIL_GetAverageLevel(bool:skipBots = false, aboveLevel = -1, skipClient = 0)
     {
         if ( IsClientInGame(i) && ( g_Cfg_HandicapUseSpectators || GetClientTeam(i) > 1 ) )
         {
-            if ( ( skipBots && IsFakeClient(i) ) 
+            if ( ( skipBots && IsFakeClient(i) )
                 || ( GetClientTeam(i) < 2 )
                 || ( skipClient == i ) )
             {
@@ -1397,7 +1397,7 @@ bool:UTIL_SetHandicapForClient(client)
         times++;
         SetTrieValue(PlayerHandicapTimes, auth, times);
     }
-    
+
     return bool:GG_GiveHandicapLevel(client);
 }
 
@@ -1441,7 +1441,7 @@ UTIL_CreateMultilevelEffect1(client) {
     new ent = CreateEntityByName("env_spritetrail");
     new String:target[32];
     Format(target, sizeof(target), "target%i", client);
-     
+
     DispatchKeyValue(client, "targetname", target);
     DispatchKeyValue(ent, "parentname", target);
     DispatchKeyValue(ent, "lifetime", "1.0");
@@ -1453,14 +1453,14 @@ UTIL_CreateMultilevelEffect1(client) {
     //DispatchKeyValue(ent, "rendercolor", "0 128 255");
     DispatchKeyValue(ent, "rendercolor", "255 128 0");
     DispatchKeyValue(ent, "rendermode", "5");
-    
+
     DispatchSpawn(ent);
-    
+
     new Float:Client_Origin[3];
     GetClientAbsOrigin(client,Client_Origin);
     Client_Origin[2] += 20.0; //Beam clips into the floor without this
     TeleportEntity(ent, Client_Origin, NULL_VECTOR, NULL_VECTOR);
-    
+
     SetVariantString(target);
     AcceptEntityInput(ent, "SetParent");
     return ent;
@@ -1485,7 +1485,7 @@ UTIL_CreateMultilevelEffect2(client) {
     DispatchKeyValueFloat( particle, "StartSize", 2.0 );
     DispatchKeyValueFloat( particle, "EndSize", 6.0 );
     DispatchKeyValueFloat( particle, "Twist", 0.0 );
-    
+
     DispatchKeyValue( particle, "Name", Name );
     DispatchKeyValue( particle, "SmokeMaterial", MULTI_LEVEL_EFFECT2 );
     DispatchKeyValue( particle, "RenderColor", "252 232 131" );
@@ -1518,8 +1518,8 @@ UTIL_CreateEffect(client) {
 }
 
 stock UTIL_WeaponTypeIsGrenade(type) {
-    return type == g_WeaponAmmoTypeHegrenade 
-        || type == g_WeaponAmmoTypeFlashbang 
+    return type == g_WeaponAmmoTypeHegrenade
+        || type == g_WeaponAmmoTypeFlashbang
         || type == g_WeaponAmmoTypeSmokegrenade;
 }
 
@@ -1532,7 +1532,7 @@ UTIL_RemoveAmmo(client, weapon) {
     if (primaryAmmoType != -1) {
         SetEntProp(client, Prop_Send, "m_iAmmo", 0, _, primaryAmmoType);
     }
-        
+
     /*
     // NOT USED BECAUSE NOT ALL WEAPONS HAS SECAMMO (TODO: check with mp5navy!)
     new secondaryAmmoType = GetEntProp(weapon, Prop_Send, "m_iSeconaryAmmoType");
@@ -1540,7 +1540,7 @@ UTIL_RemoveAmmo(client, weapon) {
         SetEntProp(client, Prop_Send, "m_iAmmo", 0, _, secondaryAmmoType);
     }
     */
-    
+
     // LEAVE ONE CLIP -> COMMENTED REMOVE
     // SetEntProp(weapon, Prop_Send, "m_iClip1", 0);
 
@@ -1597,9 +1597,9 @@ UTIL_EndMultiplayerGameSilent() {
 }
 
 UTIL_EndMultiplayerGameNormal() {
-    new Handle:hTimelimit = FindConVar("mp_timelimit"), 
-        Handle:hFraglimit = FindConVar("mp_fraglimit"), 
-        Handle:hMaxrounds = FindConVar("mp_maxrounds"), 
+    new Handle:hTimelimit = FindConVar("mp_timelimit"),
+        Handle:hFraglimit = FindConVar("mp_fraglimit"),
+        Handle:hMaxrounds = FindConVar("mp_maxrounds"),
         Handle:hWinlimit = FindConVar("mp_winlimit");
     SetConVarInt(hTimelimit, 0);
     SetConVarInt(hFraglimit, 0);
@@ -1612,7 +1612,7 @@ UTIL_EndMultiplayerGameNormal() {
         SetConVarInt(hIgnoreConditions, 0);
         SetConVarInt(hMatchEndChangelevel, 1);
 	}
-    		
+
     if (GetClientTeam(GameWinner) == CS_TEAM_T) {
         CS_TerminateRound(0.1, CSRoundEnd_TerroristWin);
     } else {
@@ -1622,7 +1622,7 @@ UTIL_EndMultiplayerGameNormal() {
 
 /**
  * Get the count of any grenade type a client has. It does not work for taser or other weapons.
- * 
+ *
  * @param client    The client index.
  * @param type      The type of grenade.
  */

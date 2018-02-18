@@ -132,11 +132,11 @@ public OnPluginStart() {
     LoadTranslations("gungame");
     PlayerLevelsBeforeDisconnect = CreateTrie();
     PlayerHandicapTimes = CreateTrie();
-    
+
     // ConVar
     mp_friendlyfire = FindConVar("mp_friendlyfire");
     mp_restartgame = FindConVar("mp_restartgame");
-    
+
     new Handle:Version = CreateConVar("sm_gungamesm_version", GUNGAME_VERSION,    "GunGame Version", FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY);
 
     /* Just to make sure they it updates the convar version if they just had the plugin reload on map change */
@@ -154,10 +154,10 @@ public OnPluginStart() {
     FwdTripleLevel = CreateGlobalForward("GG_OnTripleLevel", ET_Ignore, Param_Cell);
     FwdWarmupEnd = CreateGlobalForward("GG_OnWarmupEnd", ET_Ignore);
     FwdWarmupStart = CreateGlobalForward("GG_OnWarmupStart", ET_Ignore);
-    
+
     FwdVoteStart = CreateGlobalForward("GG_OnStartMapVote", ET_Ignore);
     FwdDisableRtv = CreateGlobalForward("GG_OnDisableRtv", ET_Ignore);
-    
+
     FwdStart = CreateGlobalForward("GG_OnStartup", ET_Ignore, Param_Cell);
     FwdShutdown = CreateGlobalForward("GG_OnShutdown", ET_Ignore, Param_Cell);
 
@@ -194,7 +194,7 @@ public OnClientPutInServer(client) {
 public OnClientAuthorized(client, const String:auth[])
 {
     if ( RestoreLevelOnReconnect )
-    {    
+    {
         new level = 0;
         if ( GetTrieValue(PlayerLevelsBeforeDisconnect, auth, level) )
         {
@@ -205,7 +205,7 @@ public OnClientAuthorized(client, const String:auth[])
             }
         }
     }
-    
+
     UTIL_UpdatePlayerScoreLevel(client);
 }
 
@@ -298,13 +298,13 @@ public OnClientDisconnect(client)
         GetClientAuthString(client, steamid, sizeof(steamid));
         SetTrieValue(PlayerLevelsBeforeDisconnect, steamid, PlayerLevel[client]);
     }
-    
+
     PlayerLevel[client] = 0;
     CurrentKillsPerWeap[client] = 0;
     CurrentLevelPerRound[client] = 0;
     CurrentLevelPerRoundTriple[client] = 0;
     PlayerState[client] = 0;
-    
+
     if ( IsClientInGame(client) && IsPlayerAlive(client) )
     {
         UTIL_StopTripleEffects(client);
@@ -326,7 +326,7 @@ public GG_OnStartup(bool:Command)
     }
 
     UTIL_DisableBuyZones();
-        
+
     if ( !WarmupInitialized && WarmupEnabled )
     {
         StartWarmupRound();
@@ -344,7 +344,7 @@ public GG_OnStartup(bool:Command)
             HookEvent("bomb_defused", _BombState);
             HookEvent("bomb_pickup", _BombPickup);
         }
-    
+
         if ( MapStatus & OBJECTIVE_HOSTAGE )
         {
             IsObjectiveHooked = true;
@@ -360,7 +360,7 @@ public GG_OnStartup(bool:Command)
             PrecacheSoundFixed(i);
         }
     }
-    
+
     Tcount = 0;
     CTcount = 0;
     for ( new i = 1; i <= MaxClients; i++ )
@@ -370,14 +370,14 @@ public GG_OnStartup(bool:Command)
             switch ( GetClientTeam(i) ) {
                 case TEAM_T: {
                     Tcount++;
-                } 
+                }
                 case TEAM_CT: {
                     CTcount++;
                 }
             }
         }
     }
-    
+
     if ( g_Cfg_HandicapUpdate )
     {
         StartHandicapUpdate();
@@ -408,7 +408,7 @@ public GG_OnShutdown(bool:Command)
     CurrentLeader = 0;
     ClearTrie(PlayerLevelsBeforeDisconnect);
     ClearTrie(PlayerHandicapTimes);
-        
+
     OnEventShutdown();
 
     if ( Command )
@@ -545,10 +545,10 @@ public Action:EndOfWarmup(Handle:timer)
         PlayerLevel[i] = 0;
         UTIL_UpdatePlayerScoreLevel(i);
     }
-    
+
     Call_StartForward(FwdWarmupEnd);
     Call_Finish();
-        
+
     return Plugin_Stop;
 }
 
@@ -588,7 +588,7 @@ public Action:Timer_HandicapUpdate(Handle:timer)
     if ( level <= minimum ) {
         return Plugin_Continue;
     }
-        
+
     for ( new i = 1; i <= MaxClients; i++ )
     {
         if ( IsClientInGame(i) && (PlayerLevel[i] == minimum) )
@@ -597,8 +597,8 @@ public Action:Timer_HandicapUpdate(Handle:timer)
                 continue;
             }
             if ( !IsFakeClient(i)
-                 && !TopRankHandicap 
-                 && StatsEnabled 
+                 && !TopRankHandicap
+                 && StatsEnabled
                  && ( !GG_IsPlayerWinsLoaded(i) /* HINT: gungame_stats */
                     || GG_IsPlayerInTopRank(i) ) /* HINT: gungame_stats */
             )
@@ -615,7 +615,7 @@ public Action:Timer_HandicapUpdate(Handle:timer)
             UTIL_UpdatePlayerScoreLevel(i);
         }
     }
-    
+
     return Plugin_Continue;
 }
 

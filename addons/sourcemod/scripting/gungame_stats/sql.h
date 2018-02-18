@@ -15,7 +15,7 @@ new const String:g_sql_createPlayerTable[DbType:MaxDbTypes][]   =
     "CREATE TABLE IF NOT EXISTS `gungame_playerdata`(`id` int(11) NOT NULL auto_increment,`wins` int(12) NOT NULL default '0',`authid` varchar(255) NOT NULL default '',`name` varchar(255) NOT NULL default '',`timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,PRIMARY KEY  (`id`),KEY `wins` (`wins`),KEY `authid` (`authid`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
     "CREATE TABLE gungame_playerdata (id serial, wins int NOT NULL default 0, authid varchar(255) NOT NULL default '', name  varchar(255) NOT NULL default '', timestamp timestamp NOT NULL default CURRENT_TIMESTAMP, PRIMARY KEY (id));"
 };
-new const String:g_sql_createPlayerTableIndex1[DbType:MaxDbTypes][]  = 
+new const String:g_sql_createPlayerTableIndex1[DbType:MaxDbTypes][]  =
 {
     "CREATE INDEX wins ON gungame_playerdata(wins);",
     "",
