@@ -24,12 +24,12 @@ public Plugin:myinfo =
 
 public OnPluginStart()
 {
-    new Handle:hVersion = CreateConVar("sm_ggmvp_version", PLUGIN_VERSION, "", FCVAR_PLUGIN|FCVAR_NOTIFY|FCVAR_REPLICATED|FCVAR_DONTRECORD);
+    new Handle:hVersion = CreateConVar("sm_ggmvp_version", PLUGIN_VERSION, "", FCVAR_NOTIFY|FCVAR_REPLICATED|FCVAR_DONTRECORD);
     if(hVersion != INVALID_HANDLE)
         SetConVarString(hVersion, PLUGIN_VERSION);
 
-    g_hCVShowLeaderMVP = CreateConVar("sm_ggmvp_showleader", "1", "Always show the leader as the best player on round end in the winning panel?", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-    g_hCVShowLevelScoreB = CreateConVar("sm_ggmvp_showlevel", "1", "Show the current player's level as MVP stars in the scoreboard next to their name?", FCVAR_PLUGIN, true, 0.0, true, 1.0);
+    g_hCVShowLeaderMVP = CreateConVar("sm_ggmvp_showleader", "1", "Always show the leader as the best player on round end in the winning panel?", FCVAR_NONE, true, 0.0, true, 1.0);
+    g_hCVShowLevelScoreB = CreateConVar("sm_ggmvp_showlevel", "1", "Show the current player's level as MVP stars in the scoreboard next to their name?", FCVAR_NONE, true, 0.0, true, 1.0);
     g_bShowLevelScoreBoard = GetConVarBool(g_hCVShowLevelScoreB);
     HookConVarChange(g_hCVShowLevelScoreB, ConVar_ChangeShowLevel);
 
