@@ -356,13 +356,19 @@ public _PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
             }
 
             if ( !g_Cfg_DisableLevelDown ) {
-                new ChangedLevel = UTIL_ChangeLevel(Victim, -1, true);
-                if ( VictimLevel )
-                {
-                    if ( ChangedLevel == VictimLevel ) {
-                        break;
+                if ( PlayerLevelIndex == g_WeaponLevelIdKnife ) {
+                    CPrintToChatEx(Killer, Victim, "%t", "You can not steal level from %s because you are on knife level", vName);
+                    CPrintToChatEx(Victim, Killer, "%t", "You didn't lose a level because %s is on knife level", kName);
+                    break;
+                } else {
+                    new ChangedLevel = UTIL_ChangeLevel(Victim, -1, true);
+                    if ( VictimLevel )
+                    {
+                        if ( ChangedLevel == VictimLevel ) {
+                            break;
+                        }
+                        CPrintToChatAllEx(Killer, "%t", "Has stolen a level from", kName, vName);
                     }
-                    CPrintToChatAllEx(Killer, "%t", "Has stolen a level from", kName, vName);
                 }
             }
 
