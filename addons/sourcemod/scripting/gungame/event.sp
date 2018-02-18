@@ -8,6 +8,7 @@ OnEventStart()
     HookEvent("player_team", _PlayerTeam);
     HookEvent("item_pickup", _ItemPickup);
     HookEvent("hegrenade_detonate",_HeExplode);
+    HookEvent("molotov_detonate",_MolliExplode);
 
     if ( g_SdkHooksEnabled && g_Cfg_BlockWeaponSwitchIfKnife ) {
         StartSwitchHook();
@@ -28,6 +29,7 @@ OnEventShutdown()
     UnhookEvent("player_team", _PlayerTeam);
     UnhookEvent("item_pickup", _ItemPickup);
     UnhookEvent("hegrenade_detonate",_HeExplode);
+    UnhookEvent("molotov_detonate",_MolliExplode);
 
     if ( g_SdkHooksEnabled && g_Cfg_BlockWeaponSwitchIfKnife ) {
         StopSwitchHook();
@@ -220,6 +222,11 @@ public _PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
 
     new Victim = GetClientOfUserId(GetEventInt(event, "userid"));
     UTIL_StopTripleEffects(Victim);
+    if (RegiveTimers[Victim] != null)
+    {
+        KillTimer(RegiveTimers[Victim]);
+        RegiveTimers[Victim] = null;
+    }
 
     new Killer = GetClientOfUserId(GetEventInt(event, "attacker"));
     UTIL_UpdatePlayerScoreDelayed(Victim);
@@ -790,25 +797,84 @@ public _HeExplode(Handle:event, const String:name[], bool:dontBroadcast) {
     if ( !IsClientInGame(client) || !IsPlayerAlive(client) ) {
         return;
     }
-
-    if ( ( WarmupNades && WarmupEnabled )
-         || ( g_WeaponLevelIndex[WeaponOrderId[PlayerLevel[client]]] == g_WeaponLevelIdHegrenade
-            && ( UnlimitedNades
-               || ( NumberOfNades && g_NumberOfNades[client] ) ) ) )
+    if (RegiveTimers[client] != null)
     {
-        /* Do not give them another nade if they already have one */
-        if (!UTIL_HasClientHegrenade(client)) {
-            if ( NumberOfNades ) {
-                g_NumberOfNades[client]--;
-            }
+        KillTimer(RegiveTimers[client]);
+        RegiveTimers[client] = null;
+    }
+    if (WarmupEnabled) {
+        RegiveTimers[client] = CreateTimer(1.5, giveDelayedHE, client);
+    } else {
+        RegiveTimers[client] = CreateTimer(3.0, giveDelayedHE, client);
+    }
+}
 
-            new bool:blockSwitch = g_SdkHooksEnabled && g_Cfg_BlockWeaponSwitchOnNade;
-            new newWeapon = GivePlayerItemWrapper(client, g_WeaponName[g_WeaponIdHegrenade], blockSwitch);
-            if (!blockSwitch) {
-                UTIL_UseWeapon(client, g_WeaponIdHegrenade);
-                UTIL_FastSwitchWithCheck(client, newWeapon, true, g_WeaponIdHegrenade);
-            }
+public _MolliExplode(Handle:event, const String:name[], bool:dontBroadcast) {
+    new client = GetClientOfUserId(GetEventInt(event, "userid"));
+    if ( !IsClientInGame(client) || !IsPlayerAlive(client) ) {
+        return;
+    }
+    if (RegiveTimers[client] != null)
+    {
+        KillTimer(RegiveTimers[client]);
+        RegiveTimers[client] = null;
+    }
+    RegiveTimers[client] = CreateTimer(7.0, giveDelayedMolli, client);
+}
+
+public Action giveDelayedHE(Handle timer, any client) {
+    if ( !IsClientInGame(client) || !IsPlayerAlive(client) ) {
+        return;
+    }
+
+    new level = PlayerLevel[client], WeaponLevel = WeaponOrderId[level], PlayerLevelIndex = g_WeaponLevelIndex[WeaponLevel];
+
+    /* Do not give them another nade if they already have one */
+    if (!UTIL_HasClientHegrenade(client) && (PlayerLevelIndex == g_WeaponLevelIdHegrenade || WarmupEnabled)) {
+        if ( NumberOfNades ) {
+            g_NumberOfNades[client]--;
         }
+
+        new bool:blockSwitch = g_SdkHooksEnabled && g_Cfg_BlockWeaponSwitchOnNade;
+        new newWeapon = GivePlayerItemWrapper(client, g_WeaponName[g_WeaponIdHegrenade], blockSwitch);
+        if (!blockSwitch) {
+            UTIL_UseWeapon(client, g_WeaponIdHegrenade);
+            UTIL_FastSwitchWithCheck(client, newWeapon, true, g_WeaponIdHegrenade);
+        }
+    }
+
+    if (RegiveTimers[client] != null)
+    {
+        KillTimer(RegiveTimers[client]);
+        RegiveTimers[client] = null;
+    }
+}
+
+public Action giveDelayedMolli(Handle timer, any client) {
+    if ( !IsClientInGame(client) || !IsPlayerAlive(client) ) {
+        return;
+    }
+
+    new WeaponId = 38;
+    new level = PlayerLevel[client], WeaponLevel = WeaponOrderId[level], PlayerLevelIndex = g_WeaponLevelIndex[WeaponLevel];
+    if (!UTIL_HasClientMolotov(client) && PlayerLevelIndex == g_WeaponLevelIdMolotov) {
+        new bool:blockWeapSwitch = g_SdkHooksEnabled && g_Cfg_BlockWeaponSwitchIfKnife;
+        new newWeapon = GivePlayerItemWrapper(
+            client,
+            "weapon_molotov",
+            blockWeapSwitch
+        );
+        if (!blockWeapSwitch) {
+            UTIL_UseWeapon(client, WeaponId);
+            UTIL_FastSwitchWithCheck(client, newWeapon, true, WeaponId);
+        }
+    }
+
+
+    if (RegiveTimers[client] != null)
+    {
+        KillTimer(RegiveTimers[client]);
+        RegiveTimers[client] = null;
     }
 }
 

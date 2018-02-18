@@ -19,3 +19,6 @@ new GameWinner;
 new bool:g_teamChange[MAXPLAYERS + 1];
 new g_NumberOfNades[MAXPLAYERS + 1];
 new bool:g_BlockSwitch[MAXPLAYERS + 1];
+
+// delayed HE/Molotov
+new Handle:RegiveTimers[MAXPLAYERS+1];

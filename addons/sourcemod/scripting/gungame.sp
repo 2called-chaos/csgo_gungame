@@ -268,6 +268,12 @@ public OnClientDisconnect(client)
         #endif
     }
 
+    if (RegiveTimers[client] != null)
+    {
+        KillTimer(RegiveTimers[client]);
+        RegiveTimers[client] = null;
+    }
+
     /* Clear current leader if player is leader */
     if ( CurrentLeader == client )
     {
