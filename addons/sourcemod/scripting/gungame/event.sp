@@ -308,7 +308,7 @@ public _PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
 
     /* Give them another taser if they killed another person with another weapon */
     if ( (PlayerLevelIndex == g_WeaponLevelIdTaser)
-        && (WeaponLevelIndex == g_WeaponLevelIdKnife)
+        && (WeaponLevelIndex != g_WeaponLevelIdTaser)
         && g_Cfg_ExtraTaserOnKnifeKill
     ) {
         UTIL_GiveExtraTaser(Killer);
@@ -316,7 +316,7 @@ public _PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
 
     /* Give them another molotov if they killed another person with another weapon */
     if ((PlayerLevelIndex == g_WeaponLevelIdMolotov)
-        && (WeaponLevelIndex == g_WeaponLevelIdKnife)
+        && (WeaponLevelIndex != g_WeaponLevelIdMolotov)
         && g_Cfg_ExtraMolotovOnKnifeKill
     ) {
         UTIL_GiveExtraMolotov(Killer, WeaponLevel);
