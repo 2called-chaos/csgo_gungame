@@ -1,6 +1,7 @@
 #pragma semicolon 1
 
 #include <sourcemod>
+#include <csgo_motdfix>
 #include <gungame_const>
 #include <gungame>
 #include <gungame_stats>
@@ -93,7 +94,7 @@ public GG_OnLoadRank()
         {
             if ( IsClientInGame(i) )
             {
-                ShowMOTDPanel(i, "", url, MOTDPANEL_TYPE_URL);
+                MOTDFixOpenURL(i, "", url);
             }
         }
     }
