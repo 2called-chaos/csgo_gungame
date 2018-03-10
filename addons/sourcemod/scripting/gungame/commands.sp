@@ -13,6 +13,8 @@ OnCreateCommand()
     RegAdminCmd("gg_restart", CmdReset, GUNGAME_ADMINFLAG, "Restarts the whole game from the beginning.");
     RegAdminCmd("gg_enable", _CmdEnable, GUNGAME_ADMINFLAG, "Turn off gungame and restart the game.");
     RegAdminCmd("gg_disable", _CmdDisable, GUNGAME_ADMINFLAG, "Turn on gungame and restart the game.");
+    RegAdminCmd("gg_setlevel", _CmdAdminSetlevel, GUNGAME_ADMINFLAG, "sets target's level (use +/- for relative)");
+    RegAdminCmd("gg_win", _CmdAdminWin, GUNGAME_ADMINFLAG, "forces target or highest player to win");
 
     /**
      * Add any ES GunGame command if there is any.
@@ -155,6 +157,94 @@ public Action:_CmdStatus(client, args)
     if(IsActive)
     {
         ReplyToCommand(client, "[GunGame] Currently not implmented");
+    }
+
+    return Plugin_Handled;
+}
+
+public Action:_CmdAdminSetlevel(client, args)
+{
+    if(!IsActive)
+    {
+        ReplyToCommand(client, "[GunGame] is not enabled!");
+        return Plugin_Handled;
+    }
+
+    // usage
+    if (args != 2)
+    {
+        ReplyToCommand(client, "Usage: gg_setlevel <target> <level>");
+        return Plugin_Handled;
+    }
+
+    // find target
+    new String: target_string[65];
+    GetCmdArg(1, target_string, sizeof(target_string));
+    int target = FindTarget(client, target_string, false, false);
+    if (!IsClientConnected(target) || !IsClientInGame(target))
+    {
+        ReplyToCommand(client, "Invalid target!");
+        return Plugin_Handled;
+    }
+
+    // level
+    int oldLevel = PlayerLevel[target];
+    char level_string[16];
+    GetCmdArg(2, level_string, sizeof(level_string));
+    int setLevel = StringToInt(level_string) - 1;
+    if (!StrEqual(level_string[0], "-") && !StrEqual(level_string[0], "+"))
+    {
+        setLevel -= oldLevel;
+    }
+    int newLevel = UTIL_ChangeLevel(target, setLevel);
+    UTIL_GiveNextWeapon(target, newLevel);
+
+    decl String:name[MAX_NAME_SIZE];
+    GetClientName(target, name, sizeof(name));
+    PrintLeaderToChat(target, oldLevel, newLevel, name);
+    return Plugin_Handled;
+}
+
+public Action:_CmdAdminWin(client, args)
+{
+    if(!IsActive)
+    {
+        ReplyToCommand(client, "[GunGame] is not enabled!");
+        return Plugin_Handled;
+    }
+
+    // find target
+    if (args == 0)
+    {
+        if(CurrentLeader == 0)
+        {
+            ReplyToCommand(client, "[GunGame] There is no leader!");
+            return Plugin_Handled;
+        }
+        char targetName[MAX_NAME_LENGTH];
+        GetClientName(CurrentLeader, targetName, sizeof(targetName));
+        ReplyToCommand(client, "[GunGame] Forcing best player (%s) to win...", targetName);
+        UTIL_ChangeLevel(CurrentLeader, WeaponOrderCount);
+    }
+    else if (args == 1)
+    {
+        new String: target_string[65];
+        GetCmdArg(1, target_string, sizeof(target_string));
+        int target = FindTarget(client, target_string, false, false);
+
+        if (target && IsClientConnected(target) && IsClientInGame(target))
+        {
+            char targetName[MAX_NAME_LENGTH];
+            GetClientName(target, targetName, sizeof(targetName));
+            ReplyToCommand(client, "[GunGame] Forcing player (%s) to win (cheater)...", targetName);
+            UTIL_ChangeLevel(target, WeaponOrderCount);
+        } else {
+            ReplyToCommand(client, "Invalid target!");
+        }
+    }
+    else
+    {
+        ReplyToCommand(client, "Usage: gg_win [target]");
     }
 
     return Plugin_Handled;
