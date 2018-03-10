@@ -5,7 +5,7 @@
 #include <gungame_const>
 #include <gungame>
 #include <gungame_config>
-#include <colors>
+#include <colorvariables>
 
 new OffsetOrigin;
 new bool:AfkManagement;

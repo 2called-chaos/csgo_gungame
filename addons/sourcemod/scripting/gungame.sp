@@ -4,7 +4,7 @@
 #include <sdktools>
 #include <cstrike>
 
-#include <colors>
+#include <colorvariables>
 #include <gungame_const>
 #include <gungame>
 #include <gungame_config>
@@ -473,10 +473,11 @@ PrintLeaderToChat(client, oldLevel, newLevel, const String:name[])
     if ( CurrentLeader == client )
     {
         // say leading on level X
+        CSetNextAuthor(client);
         if ( g_Cfg_ShowLeaderWeapon ) {
-            CPrintToChatAllEx(client, "%t", "Is leading on level weapon", name, newLevel + 1, WeaponOrderName[newLevel]);
+            CPrintToChatAll("%t", "Is leading on level weapon", name, newLevel + 1, WeaponOrderName[newLevel]);
         } else {
-            CPrintToChatAllEx(client, "%t", "Is leading on level", name, newLevel + 1);
+            CPrintToChatAll("%t", "Is leading on level", name, newLevel + 1);
         }
         return;
     }
@@ -491,7 +492,8 @@ PrintLeaderToChat(client, oldLevel, newLevel, const String:name[])
     }
     // new level == leader level
     // say tied to the lead on level X
-    CPrintToChatAllEx(client, "%t", "Is tied with the leader on level", name, newLevel + 1);
+    CSetNextAuthor(client);
+    CPrintToChatAll("%t", "Is tied with the leader on level", name, newLevel + 1);
 }
 
 StartWarmupRound()

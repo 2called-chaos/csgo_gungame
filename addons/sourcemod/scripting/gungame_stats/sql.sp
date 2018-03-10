@@ -735,7 +735,8 @@ ShowRankInChat(client)
     GetClientName(client, name, sizeof(name));
     if ( !PlayerPlaceData[client] )
     {
-        CPrintToChatAllEx(client, "%t", "Rank: not ranked", name);
+        CSetNextAuthor(client);
+        CPrintToChatAll("%t", "Rank: not ranked", name);
     }
     else
     {
@@ -746,7 +747,8 @@ ShowRankInChat(client)
                 decl String:subtext[64];
                 SetGlobalTransTarget(i);
                 FormatLanguageNumberTextEx(i, subtext, sizeof(subtext), PlayerWinsData[client], "with wins");
-                CPrintToChatEx(i, client, "%t", "Rank: rank", name, PlayerPlaceData[client], subtext, TotalWinners);
+                CSetNextAuthor(client);
+                CPrintToChat(i, "%t", "Rank: rank", name, PlayerPlaceData[client], subtext, TotalWinners);
             }
         }
     }

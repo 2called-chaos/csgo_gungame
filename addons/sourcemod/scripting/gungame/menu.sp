@@ -114,7 +114,7 @@ CreateLevelPanel(client)
     else
     {
         Format(text, sizeof(text), "%t", "GunGame Stats is disabled");
-        CRemoveTags(text, sizeof(text));
+        CRemoveColors(text, sizeof(text));
         DrawPanelText(LevelPanel, text);
     }
     DrawPanelText(LevelPanel, BLANK_SPACE);
@@ -142,7 +142,7 @@ CreateLevelPanel(client)
                 else if ( level > Level )
                 {
                     FormatLanguageNumberTextEx(client, subtext, sizeof(subtext), level - Level, "levels");
-                    CRemoveTags(subtext, sizeof(subtext));
+                    CRemoveColors(subtext, sizeof(subtext));
                     Format(text, sizeof(text), "%t", "LevelPanel: You are levels from the leader", subtext);
                     DrawPanelText(LevelPanel, text);
                 }
@@ -485,7 +485,7 @@ DisplayRulesMenu(client)
     new item = 0;
     if ( (++item >= itemStart) && (itemEnd <= itemEnd) ) {
         FormatLanguageNumberTextEx(client, subtext, sizeof(subtext), MinKillsPerLevel, "points");
-        CRemoveTags(subtext, sizeof(subtext));
+        CRemoveColors(subtext, sizeof(subtext));
         Format(text, sizeof(text), "%t", "RulesPanel: You must get kills with your current weapon to level up", subtext);
         DrawPanelText(menu, text);
     }
@@ -503,7 +503,7 @@ DisplayRulesMenu(client)
 
     if ( ObjectiveBonus && (++item >= itemStart) && (item <= itemEnd) ) {
         FormatLanguageNumberTextEx(client, subtext, sizeof(subtext), ObjectiveBonus, "levels");
-        CRemoveTags(subtext, sizeof(subtext));
+        CRemoveColors(subtext, sizeof(subtext));
         if ( g_Cfg_ObjectiveBonusExplode ) {
             Format(text, sizeof(text), "%t", "RulesPanel: You can gain level by EXPLODING or DEFUSING the bomb", subtext);
         } else {
@@ -540,7 +540,7 @@ DisplayRulesMenu(client)
     if ( CommitSuicide && (++item >= itemStart) && (item <= itemEnd) ) {
 
         FormatLanguageNumberTextEx(client, subtext, sizeof(subtext), CommitSuicide, "levels");
-        CRemoveTags(subtext, sizeof(subtext));
+        CRemoveColors(subtext, sizeof(subtext));
         Format(text, sizeof(text), "%t", "RulesPanel: If you commit suicide you will lose levels", subtext);
         DrawPanelText(menu, text);
     }

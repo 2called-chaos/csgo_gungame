@@ -4,7 +4,7 @@
 #include <gungame_const>
 #include <gungame>
 #include <gungame_config>
-#include <colors>
+#include <colorvariables>
 #include <langutils>
 
 new State:ConfigState;
@@ -54,13 +54,15 @@ public Action:GG_OnClientDeath(Killer, Victim, WeaponId, bool:TeamKilled)
             {
                 SetGlobalTransTarget(i);
                 FormatLanguageNumberTextEx(i, subtext, sizeof(subtext), lost, "levels");
-                CPrintToChatEx(i, Killer, "%t", "Has lost levels due to team kill", kName, vName, subtext);
+                CSetNextAuthor(Killer);
+                CPrintToChat(i, "%t", "Has lost levels due to team kill", kName, vName, subtext);
             }
         }
     }
     else
     {
-        CPrintToChatAllEx(Killer, "%t", "Has lost a level due to team kill", kName, vName);
+        CSetNextAuthor(Killer);
+        CPrintToChatAll("%t", "Has lost a level due to team kill", kName, vName);
     }
 
     return Plugin_Handled;

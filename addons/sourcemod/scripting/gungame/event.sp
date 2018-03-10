@@ -340,20 +340,24 @@ public _PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
 
             if ( VictimLevel < KnifeProMinLevel )
             {
-                CPrintToChatEx(Killer, Victim, "%t", "Is lower than the minimum knife stealing level", vName, KnifeProMinLevel);
+                CSetNextAuthor(Victim);
+                CPrintToChat(Killer, "%t", "Is lower than the minimum knife stealing level", vName, KnifeProMinLevel);
                 break;
             }
 
             if ( g_Cfg_KnifeProMaxDiff && ( g_Cfg_KnifeProMaxDiff < level - VictimLevel ) )
             {
-                CPrintToChatEx(Killer, Victim, "%t", "You can not steal level from %s, your levels difference is more then %d", vName, g_Cfg_KnifeProMaxDiff);
+                CSetNextAuthor(Victim);
+                CPrintToChat(Killer, "%t", "You can not steal level from %s, your levels difference is more then %d", vName, g_Cfg_KnifeProMaxDiff);
                 break;
             }
 
             if ( !g_Cfg_DisableLevelDown ) {
                 if ( PlayerLevelIndex == g_WeaponLevelIdKnife ) {
-                    CPrintToChatEx(Killer, Victim, "%t", "You can not steal level from %s because you are on knife level", vName);
-                    CPrintToChatEx(Victim, Killer, "%t", "You didn't lose a level because %s is on knife level", kName);
+                    CSetNextAuthor(Victim);
+                    CPrintToChat(Killer, "%t", "You can not steal level from %s because you are on knife level", vName);
+                    CSetNextAuthor(Killer);
+                    CPrintToChat(Victim, "%t", "You didn't lose a level because %s is on knife level", kName);
                     break;
                 } else {
                     new ChangedLevel = UTIL_ChangeLevel(Victim, -1, true);
@@ -362,7 +366,8 @@ public _PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
                         if ( ChangedLevel == VictimLevel ) {
                             break;
                         }
-                        CPrintToChatAllEx(Killer, "%t", "Has stolen a level from", kName, vName);
+                        CSetNextAuthor(Killer);
+                        CPrintToChatAll("%t", "Has stolen a level from", kName, vName);
                     }
                 }
             }
@@ -476,7 +481,7 @@ public _PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
                         decl String:subtext[64];
                         FormatLanguageNumberTextEx(Killer, subtext, sizeof(subtext), killsPerLevel - kills, "points");
                         Format(textHint, sizeof(textHint), "%t", "You need kills to advance to the next level", subtext, kills, killsPerLevel);
-                        CRemoveTags(textHint, sizeof(textHint));
+                        CRemoveColors(textHint, sizeof(textHint));
 
                         UTIL_ShowHintTextMulti(Killer, textHint, 3, 1.0);
                     }
@@ -658,7 +663,7 @@ public _PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
         SetGlobalTransTarget(client);
         decl String:textHint[512], String:textHint2[256];
         Format(textHint, sizeof(textHint), "%t", "You are on level", Level + 1, WeaponOrderName[Level]);
-        CRemoveTags(textHint, sizeof(textHint));
+        CRemoveColors(textHint, sizeof(textHint));
         if ( g_Cfg_ShowLeaderInHintBox && CurrentLeader )
         {
             new leaderLevel = PlayerLevel[CurrentLeader];
@@ -678,7 +683,7 @@ public _PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
             decl String:subtext[64];
             FormatLanguageNumberTextEx(client, subtext, sizeof(subtext), killsPerLevel - kills, "points");
             Format(textHint2, sizeof(textHint2), "\n%t", "You need kills to advance to the next level", subtext, kills, killsPerLevel);
-            CRemoveTags(textHint2, sizeof(textHint2));
+            CRemoveColors(textHint2, sizeof(textHint2));
             StrCat(textHint, sizeof(textHint), textHint2);
         }
         UTIL_ShowHintTextMulti(client, textHint, 3, 1.0);
@@ -761,7 +766,8 @@ public _HostageKilled(Handle:event, const String:name[], bool:dontBroadcast)
         return;
     }
     PrintLeaderToChat(client, oldLevel, newLevel, Name);
-    CPrintToChatAllEx(client, "%t", "Has lost a level by killing a hostage", Name);
+    CSetNextAuthor(client);
+    CPrintToChatAll("%t", "Has lost a level by killing a hostage", Name);
 }
 
 ClientSuicide(client, const String:Name[], loose)
@@ -781,13 +787,15 @@ ClientSuicide(client, const String:Name[], loose)
             {
                 SetGlobalTransTarget(i);
                 FormatLanguageNumberTextEx(i, subtext, sizeof(subtext), oldLevel - newLevel, "levels");
-                CPrintToChatEx(i, client, "%t", "Has lost levels by suicided", Name, subtext);
+                CSetNextAuthor(client);
+                CPrintToChat(i, "%t", "Has lost levels by suicided", Name, subtext);
             }
         }
     }
     else
     {
-        CPrintToChatAllEx(client, "%t", "Has lost a level by suicided", Name);
+        CSetNextAuthor(client);
+        CPrintToChatAll("%t", "Has lost a level by suicided", Name);
     }
 
     PrintLeaderToChat(client, oldLevel, newLevel, Name);

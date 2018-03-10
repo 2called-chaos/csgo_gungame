@@ -4,7 +4,7 @@
 #include <gungame_const>
 #include <gungame>
 #include <gungame_config>
-#include <colors>
+#include <colorvariables>
 
 new State:ConfigState;
 new bool:g_Cfg_AllowUpByKnifeBot;

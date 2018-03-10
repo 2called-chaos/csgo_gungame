@@ -5,7 +5,7 @@
 #include <gungame>
 #include <gungame_stats>
 #include <gungame_config>
-#include <colors>
+#include <colorvariables>
 #include <langutils>
 
 #include "gungame_stats/gungame_stats.h"
