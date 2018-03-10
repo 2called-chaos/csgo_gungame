@@ -18,7 +18,7 @@
         "slot" "2"
         "is_taser" "1"
         "clipsize" "1"
-        "ammotype" "18"
+        "ammotype" "19"
         "level_index" "3"
     }
 
