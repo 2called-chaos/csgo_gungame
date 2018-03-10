@@ -465,35 +465,66 @@ public GG_OnShutdown(bool:Command)
  */
 PrintLeaderToChat(client, oldLevel, newLevel, const String:name[])
 {
-    if ( !CurrentLeader || newLevel <= oldLevel )
+    if ( !CurrentLeader )
     {
         return;
     }
-    // newLevel > oldLevel
+
     if ( CurrentLeader == client )
     {
-        // say leading on level X
         CSetNextAuthor(client);
+        CSkipNextClient(CurrentLeader);
+        int leadBy = UTIL_GetLeadByLevel(newLevel);
+
+        // client is leading
         if ( g_Cfg_ShowLeaderWeapon ) {
             CPrintToChatAll("%t", "Is leading on level weapon", name, newLevel + 1, WeaponOrderName[newLevel]);
+            CPrintToChat(CurrentLeader, "%t", "You are leading on level weapon", leadBy, newLevel + 1, WeaponOrderName[newLevel]);
         } else {
             CPrintToChatAll("%t", "Is leading on level", name, newLevel + 1);
+            CPrintToChat(CurrentLeader, "%t", "You are leading on level", leadBy, newLevel + 1);
         }
-        return;
     }
-    // CurrentLeader != client
-    if ( newLevel < PlayerLevel[CurrentLeader] )
+    else if ( newLevel < PlayerLevel[CurrentLeader] )
     {
-        // say how much to the lead
+        // client is behind the lead
         decl String:subtext[64];
         FormatLanguageNumberTextEx(client, subtext, sizeof(subtext), PlayerLevel[CurrentLeader]-newLevel, "levels");
         CPrintToChat(client, "%t", "You are levels behind leader", subtext);
-        return;
     }
-    // new level == leader level
-    // say tied to the lead on level X
-    CSetNextAuthor(client);
-    CPrintToChatAll("%t", "Is tied with the leader on level", name, newLevel + 1);
+    else
+    {
+        // client tied
+        int other_leaders = UTIL_GetCountOnLevel(newLevel) - 1; // -1 for client
+        CSkipNextClient(client);
+        CSkipNextClient(CurrentLeader);
+        CSetNextAuthor(client);
+        if (other_leaders > 1)
+        {
+            CPrintToChatAll("%t", "Is tied with the leader and others on level", name, other_leaders, newLevel + 1);
+            CPrintToChat(client, "%t", "You are tied for the lead with others", other_leaders, newLevel + 1);
+            CPrintToChat(CurrentLeader, "%t", "You are tied for the lead with others", other_leaders, newLevel + 1);
+        }
+        else
+        {
+            CPrintToChatAll("%t", "Is tied with the leader on level", name, newLevel + 1);
+            if (other_leaders == 1)
+            {
+                int otherClient = UTIL_FirstClientOnLevel(newLevel, client);
+                decl String:otherName[MAX_NAME_SIZE];
+                GetClientName(otherClient, otherName, sizeof(otherName));
+                CPrintToChat(client, "%t", "You are tied for the lead with", otherName, newLevel + 1);
+                otherClient = UTIL_FirstClientOnLevel(newLevel, CurrentLeader);
+                GetClientName(otherClient, otherName, sizeof(otherName));
+                CPrintToChat(CurrentLeader, "%t", "You are tied for the lead with", otherName, newLevel + 1);
+            }
+            else
+            {
+                CPrintToChat(client, "%t", "You are tied for the lead", newLevel + 1);
+                CPrintToChat(CurrentLeader, "%t", "You are tied for the lead", newLevel + 1);
+            }
+        }
+    }
 }
 
 StartWarmupRound()

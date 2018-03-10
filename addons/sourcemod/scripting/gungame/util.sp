@@ -1379,6 +1379,42 @@ UTIL_GetAverageLevel(bool:skipBots = false, aboveLevel = -1, skipClient = 0)
     return level;
 }
 
+UTIL_GetCountOnLevel(level) {
+    new count = 0;
+    for ( new i = 1; i <= MaxClients; i++ )
+    {
+        if ( IsClientInGame(i) && PlayerLevel[i] == level )
+        {
+            count++;
+            LogError("--------------client %i is on level %i (count is %i)", i, level, count);
+        }
+    }
+    return count;
+}
+
+UTIL_FirstClientOnLevel(level, client = -1) {
+    for ( new i = 1; i <= MaxClients; i++ )
+    {
+        if ( IsClientInGame(i) && i != client && PlayerLevel[i] == level )
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+UTIL_GetLeadByLevel(level) {
+    new highest_level = 0;
+    for ( new i = 1; i <= MaxClients; i++ )
+    {
+        if ( IsClientInGame(i) && PlayerLevel[i] > highest_level && PlayerLevel[i] < level )
+        {
+            highest_level = PlayerLevel[i];
+        }
+    }
+    return level - highest_level;
+}
+
 bool:UTIL_SetHandicapForClient(client)
 {
     if ( g_Cfg_HandicapTimesPerMap )
