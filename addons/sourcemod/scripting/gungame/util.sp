@@ -751,6 +751,7 @@ UTIL_GiveNextWeaponReal(client, level, bool:levelupWithKnife, bool:spawn) {
         // LEVEL WEAPON PRIMARY/SECONDARY
         /* Give new weapon */
         newWeapon = GivePlayerItemWrapper(client, g_WeaponName[WeapId]);
+        UTIL_ReloadActiveWeapon(client, WeapId, true);
     }
 
     if (blockSwitch) {
@@ -868,7 +869,7 @@ UTIL_EnableBuyZones() {
     }
 }
 
-UTIL_ReloadActiveWeapon(client, WeaponId) {
+UTIL_ReloadActiveWeapon(client, WeaponId, initial = false) {
     new Slots:slot = g_WeaponSlot[WeaponId];
     if ((slot == Slot_Primary )
         || (slot == Slot_Secondary)
@@ -876,7 +877,12 @@ UTIL_ReloadActiveWeapon(client, WeaponId) {
     ) {
         new ent = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
         if ((ent > -1) && g_WeaponAmmo[WeaponId]) {
-            SetEntProp(ent, Prop_Send, "m_iClip1", g_WeaponAmmo[WeaponId] + (g_GameName==GameName:Csgo?1:0)); // "+1" is needed because ammo is refilling before last shot is counted
+            int newAmmo = g_WeaponAmmo[WeaponId];
+            if(StrEqual(g_WeaponName[WeaponId], "weapon_awp", false) && g_Cfg_OneShowAwp)
+            {
+                newAmmo = 1;
+            }
+            SetEntProp(ent, Prop_Send, "m_iClip1", newAmmo + (!initial&&g_GameName==GameName:Csgo?1:0)); // "+1" is needed because ammo is refilling before last shot is counted
         }
     }
 }
