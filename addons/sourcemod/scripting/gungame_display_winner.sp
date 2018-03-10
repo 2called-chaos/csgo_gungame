@@ -29,7 +29,6 @@ public Plugin:myinfo =
 public OnPluginStart()
 {
     HookEvent("player_death", Event_PlayerDeath);
-
     ResetLastVictims();
 }
 
@@ -108,7 +107,6 @@ public GG_ConfigParseEnd()
 public OnMapEnd()
 {
     g_showWinnerOnRankUpdate = false;
-    ResetLastVictims();
 }
 
 void ResetLastVictims()
@@ -131,7 +129,8 @@ void ShowWinnerMotdAll()
     new loserClient = g_lastVictim[g_winner];
     decl String:loserName[MAX_NAME_LENGTH];
     decl String:loserID[64];
-    if(IsClientInGame(loserClient))
+
+    if(loserClient > 0 && IsClientConnected(loserClient) && IsClientInGame(loserClient))
     {
         GetClientName(loserClient, loserName, sizeof(loserName));
         GetClientAuthId(loserClient, AuthId_Steam2, loserID, sizeof(loserID));

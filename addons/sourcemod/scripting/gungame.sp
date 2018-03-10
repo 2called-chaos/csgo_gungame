@@ -129,6 +129,7 @@ public OnPluginStart() {
     }
     */
 
+    LoadTranslations("common.phrases");
     LoadTranslations("gungame");
     PlayerLevelsBeforeDisconnect = CreateTrie();
     PlayerHandicapTimes = CreateTrie();

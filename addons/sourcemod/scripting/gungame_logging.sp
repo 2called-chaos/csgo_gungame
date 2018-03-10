@@ -18,7 +18,8 @@ public Plugin:myinfo = {
 
 public GG_OnWinner(client, const String:Weapon[], victim) {
     LogEventToGame("gg_win", client);
-    LogEventToGame("gg_lose", victim);
+    if(victim > 0)
+        LogEventToGame("gg_lose", victim);
 
     new teamWin = GetClientTeam(client);
     new teamLose = (teamWin == TEAM_CT)? TEAM_T: TEAM_CT;
