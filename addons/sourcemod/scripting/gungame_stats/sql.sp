@@ -104,7 +104,7 @@ SavePlayerData(client)
     }
 
     decl String:auth[64], String:name[MAX_NAME_SIZE];
-    GetClientAuthString(client, auth, sizeof(auth));
+    GetClientAuthId(client, AuthId_Steam2, auth, sizeof(auth));
     GetClientName(client, name, sizeof(name));
 
     new bufferLen = sizeof(name) * 2 + 1;
@@ -387,7 +387,7 @@ public Action:_CmdImport(client, args)
     {
         if ( IsClientAuthorized(i) )
         {
-            GetClientAuthString(i, Auth, sizeof(Auth));
+            GetClientAuthId(i, AuthId_Steam2, Auth, sizeof(Auth));
             RetrieveKeyValues(i, Auth);
         }
     }
@@ -498,7 +498,7 @@ public Action:_CmdImportDb(client, args)
     {
         if ( IsClientAuthorized(i) )
         {
-            GetClientAuthString(i, Auth, sizeof(Auth));
+            GetClientAuthId(i, AuthId_Steam2, Auth, sizeof(Auth));
             RetrieveKeyValues(i, Auth);
         }
     }

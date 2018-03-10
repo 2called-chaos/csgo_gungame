@@ -1383,7 +1383,7 @@ bool:UTIL_SetHandicapForClient(client)
     if ( g_Cfg_HandicapTimesPerMap )
     {
         decl String:auth[64];
-        GetClientAuthString(client, auth, sizeof(auth));
+        GetClientAuthId(client, AuthId_Steam2, auth, sizeof(auth));
 
         new times = 0;
         if ( !GetTrieValue(PlayerHandicapTimes, auth, times) ) {
