@@ -400,17 +400,17 @@ public Action:_CmdImport(client, args)
 // non-threaded
 public Action:_CmdImportDb(client, args)
 {
-    decl String:File[PLATFORM_MAX_PATH];
-    BuildPath(Path_SM, File, sizeof(File), "data/gungame/playerdata.txt");
+    decl String:txtFile[PLATFORM_MAX_PATH];
+    BuildPath(Path_SM, txtFile, sizeof(txtFile), "data/gungame/playerdata.txt");
 
-    if ( !FileExists(File) )
+    if ( !FileExists(txtFile) )
     {
         ReplyToCommand(client, "[GunGame] playerdata.txt does not exists to be imported.");
         return Plugin_Handled;
     }
 
     new Handle:KvGunGame = CreateKeyValues("gg_PlayerData", BLANK, BLANK);
-    FileToKeyValues(KvGunGame, File);
+    FileToKeyValues(KvGunGame, txtFile);
 
     /* Go to first SubKey */
     if ( !KvGotoFirstSubKey(KvGunGame) )
