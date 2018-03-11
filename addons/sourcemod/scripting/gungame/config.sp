@@ -59,7 +59,7 @@ public GG_ConfigKeyValue(const String:key[], const String:value[])
             } else if(strcmp("FastSwitchOnLevelUp", key, false) == 0) {
                 g_Cfg_FastSwitchOnLevelUp = StringToInt(value);
             } else if(strcmp("OneShotAwp", key, false) == 0) {
-                g_Cfg_OneShowAwp = StringToInt(value);
+                g_Cfg_OneShotAwp = StringToInt(value);
             } else if(strcmp("WinnerFreezePlayers", key, false) == 0) {
                 g_Cfg_WinnerFreezePlayers = StringToInt(value);
 

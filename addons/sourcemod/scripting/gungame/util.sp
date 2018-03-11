@@ -751,7 +751,6 @@ UTIL_GiveNextWeaponReal(client, level, bool:levelupWithKnife, bool:spawn) {
         // LEVEL WEAPON PRIMARY/SECONDARY
         /* Give new weapon */
         newWeapon = GivePlayerItemWrapper(client, g_WeaponName[WeapId]);
-        UTIL_ReloadActiveWeapon(client, WeapId, true);
     }
 
     if (blockSwitch) {
@@ -877,12 +876,8 @@ UTIL_ReloadActiveWeapon(client, WeaponId, initial = false) {
     ) {
         new ent = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
         if ((ent > -1) && g_WeaponAmmo[WeaponId]) {
-            int newAmmo = g_WeaponAmmo[WeaponId];
-            if(StrEqual(g_WeaponName[WeaponId], "weapon_awp", false) && g_Cfg_OneShowAwp)
-            {
-                newAmmo = 1;
-            }
-            SetEntProp(ent, Prop_Send, "m_iClip1", newAmmo + (!initial&&g_GameName==GameName:Csgo?1:0)); // "+1" is needed because ammo is refilling before last shot is counted
+            SetEntProp(ent, Prop_Send, "m_iClip1", g_WeaponAmmo[WeaponId] + (!initial&&g_GameName==GameName:Csgo?1:0)); // "+1" is needed because ammo is refilling before last shot is counted
+            OnWeaponReload(ent); // Hint: Fix AWP ammo
         }
     }
 }
@@ -905,6 +900,11 @@ GivePlayerItemWrapper(client, const String:item[], bool:blockSwitch = false) {
             GetEntProp(ent, Prop_Send, "m_iPrimaryAmmoType"),
             GetEntData(ent, g_iOffs_iPrimaryAmmoType, 1)
         );
+    #endif
+
+    #if defined WITH_SDKHOOKS
+    SDKHook(ent, SDKHook_Reload, OnWeaponReload);
+    OnWeaponReload(ent);
     #endif
 
     if (blockSwitch) {
@@ -1392,7 +1392,6 @@ UTIL_GetCountOnLevel(level) {
         if ( IsClientInGame(i) && PlayerLevel[i] == level )
         {
             count++;
-            LogError("--------------client %i is on level %i (count is %i)", i, level, count);
         }
     }
     return count;
@@ -1671,10 +1670,10 @@ UTIL_EndMultiplayerGameNormal() {
  */
 stock UTIL_WeaponAmmoGetGrenadeCount(client, type) {
     #if defined GUNGAME_DEBUG
-        LogError("[DEBUG-GUNGAME] FUNC UTIL_WeaponAmmoGetGrenadeCount, client=%i type=%i count=%i", client, type, GetEntData(client, g_iOffsetAmmo + (type * 4)));
+        LogError("[DEBUG-GUNGAME] FUNC UTIL_WeaponAmmoGetGrenadeCount, client=%i type=%i count=%i", client, type, GetEntData(client, g_iOffs_iClip1 + (type * 4)));
     #endif
 
-    return GetEntData(client, g_iOffsetAmmo + (type * 4));
+    return GetEntData(client, g_iOffs_iAmmo + (type * 4));
 }
 
 stock bool:UTIL_HasClientHegrenade(client) {
