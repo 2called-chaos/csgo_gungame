@@ -18,7 +18,7 @@ bool g_bLateLoad = false;
 bool g_bEnabled = false;
 bool g_bTakeReserveAmmo = false;
 int g_iReserveAmmo = -1;
-int g_iReloadingClients[MAXPLAYERS+1] = {-1,...};
+int g_iReloadingWeapons[MAXPLAYERS+1] = {-1,...};
 
 // cvars
 ConVar g_Cvar_PluginVersion;
@@ -83,13 +83,13 @@ public void OnMapStart()
 
 public void OnClientPutInServer(int client)
 {
-    g_iReloadingClients[client] = -1;
+    g_iReloadingWeapons[client] = -1;
     SDKHook(client, SDKHook_WeaponSwitch, CompleteWeaponReload);
 }
 
 public void OnClientDisconnect(int client)
 {
-    g_iReloadingClients[client] = -1;
+    g_iReloadingWeapons[client] = -1;
     SDKUnhook(client, SDKHook_WeaponSwitch, CompleteWeaponReload);
 }
 
@@ -145,15 +145,15 @@ public Action OnWeaponReload(int weapon)
 // Fix clip/ammo after reload animation or weapon switch
 public Action CompleteWeaponReload(int client, int weapon)
 {
-    if (g_iReloadingClients[client] == weapon)
+    if (g_iReloadingWeapons[client] == weapon)
     {
+        int clip = GetEntProp(weapon, Prop_Send, "m_iClip1");
         SetEntProp(weapon, Prop_Send, "m_iClip1", 1);
-        if (g_bTakeReserveAmmo)
-        {
-            int ammo = GetEntProp(weapon, Prop_Send, "m_iPrimaryReserveAmmoCount");
-            SetEntProp(weapon, Prop_Send, "m_iPrimaryReserveAmmoCount", ammo - 2);
-        }
-        g_iReloadingClients[client] = -1;
+
+        int ammo = GetEntProp(weapon, Prop_Send, "m_iPrimaryReserveAmmoCount");
+        if (g_bTakeReserveAmmo) ammo--;
+        SetEntProp(weapon, Prop_Send, "m_iPrimaryReserveAmmoCount", ammo + clip);
+        g_iReloadingWeapons[client] = -1;
     }
     return Plugin_Continue;
 }
@@ -179,7 +179,7 @@ public Action Timer_FixAwpAmmunition(Handle event, DataPack data)
     if (GetEntProp(weapon, Prop_Data, "m_bInReload", true))
     {
         // remember which weapon is reloading
-        g_iReloadingClients[client] = weapon;
+        g_iReloadingWeapons[client] = weapon;
     }
     else
     {
