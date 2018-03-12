@@ -7,6 +7,8 @@ to recreate some of the behaviour of the original AMXX mod.
 
 This modified version is running on our [GunGame DM on steroids](https://funcs.de/gungame) server.
 
+Note that I don't play CS:S and can't test my changes for CS:S but they should work in theory.
+
 
 Changes include:
 
