@@ -8,7 +8,7 @@
 
 #define PLUGIN_AUTHOR      "2called-chaos"
 #define PLUGIN_NAME        "Gungame: OneShot AWP"
-#define PLUGIN_VERSION     "1.0.1"
+#define PLUGIN_VERSION     "1.0.2"
 #define PLUGIN_DESCRIPTION "Sets and monitors the AWP clip size to 1 (hit = refill, miss = reload)"
 #define PLUGIN_URL         "https://github.com/2called-chaos/csgo_gungame"
 
