@@ -751,6 +751,10 @@ UTIL_GiveNextWeaponReal(client, level, bool:levelupWithKnife, bool:spawn) {
         // LEVEL WEAPON PRIMARY/SECONDARY
         /* Give new weapon */
         newWeapon = GivePlayerItemWrapper(client, g_WeaponName[WeapId]);
+        Action ret;
+        Call_StartForward(FwdWeaponEquipped);
+        Call_PushCell(newWeapon);
+        Call_Finish(ret);
     }
 
     if (blockSwitch) {
@@ -868,7 +872,7 @@ UTIL_EnableBuyZones() {
     }
 }
 
-UTIL_ReloadActiveWeapon(client, WeaponId) {
+UTIL_ReloadActiveWeapon(client, WeaponId, bool:forwardEvent = false) {
     new Slots:slot = g_WeaponSlot[WeaponId];
     if ((slot == Slot_Primary )
         || (slot == Slot_Secondary)
@@ -877,6 +881,13 @@ UTIL_ReloadActiveWeapon(client, WeaponId) {
         new ent = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
         if ((ent > -1) && g_WeaponAmmo[WeaponId]) {
             SetEntProp(ent, Prop_Send, "m_iClip1", g_WeaponAmmo[WeaponId] + (g_GameName==GameName:Csgo?1:0)); // "+1" is needed because ammo is refilling before last shot is counted
+            if(forwardEvent)
+            {
+                Action ret;
+                Call_StartForward(FwdWeaponInstantReloaded);
+                Call_PushCell(ent);
+                Call_Finish(ret);
+            }
         }
     }
 }
@@ -899,11 +910,6 @@ GivePlayerItemWrapper(client, const String:item[], bool:blockSwitch = false) {
             GetEntProp(ent, Prop_Send, "m_iPrimaryAmmoType"),
             GetEntData(ent, g_iOffs_iPrimaryAmmoType, 1)
         );
-    #endif
-
-    #if defined WITH_SDKHOOKS
-    SDKHook(ent, SDKHook_Reload, OnWeaponReload);
-    OnWeaponReload(ent);
     #endif
 
     if (blockSwitch) {

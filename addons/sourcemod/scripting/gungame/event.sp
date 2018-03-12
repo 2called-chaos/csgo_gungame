@@ -491,7 +491,7 @@ public _PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
                 UTIL_PlaySound(Killer, MultiKill);
                 if ( ReloadWeapon )
                 {
-                    UTIL_ReloadActiveWeapon(Killer, WeaponLevel);
+                    UTIL_ReloadActiveWeapon(Killer, WeaponLevel, true);
                 }
                 return;
             }

@@ -2,7 +2,7 @@
 cd addons/sourcemod/scripting
 set -e
 
-for SPFILE in gungame gungame_afk gungame_bot gungame_config gungame_display_winner gungame_logging gungame_mapvoting gungame_mvp gungame_stats gungame_tk gungame_warmup_configs gungame_winner_effects
+for SPFILE in gungame gungame_afk gungame_bot gungame_config gungame_display_winner gungame_logging gungame_mapvoting gungame_mvp gungame_one_shot_awp gungame_stats gungame_tk gungame_warmup_configs gungame_winner_effects
 do
   echo "#####################"
   echo "##### $SPFILE"

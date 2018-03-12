@@ -56,6 +56,8 @@ new Handle:FwdDeath = INVALID_HANDLE;
 new Handle:FwdPoint = INVALID_HANDLE;
 new Handle:FwdStart = INVALID_HANDLE;
 new Handle:FwdShutdown = INVALID_HANDLE;
+new Handle:FwdWeaponEquipped = INVALID_HANDLE;
+new Handle:FwdWeaponInstantReloaded = INVALID_HANDLE;
 
 new Handle:WarmupTimer = INVALID_HANDLE;
 

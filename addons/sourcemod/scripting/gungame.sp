@@ -162,6 +162,9 @@ public OnPluginStart() {
     FwdStart = CreateGlobalForward("GG_OnStartup", ET_Ignore, Param_Cell);
     FwdShutdown = CreateGlobalForward("GG_OnShutdown", ET_Ignore, Param_Cell);
 
+    FwdWeaponEquipped = CreateGlobalForward("GG_OnWeaponEquipped", ET_Ignore, Param_Cell);
+    FwdWeaponInstantReloaded = CreateGlobalForward("GG_OnWeaponInstantReloaded", ET_Ignore, Param_Cell);
+
     OnKeyValueStart();
     OnOffsetStart();
     OnCreateCommand();
