@@ -2,8 +2,8 @@ OnOffsetStart()
 {
     decl String:Error[64];
 
-    g_iOffs_iAmmo = FindSendPropInfo("CBasePlayer", "m_iAmmo");
-    if (g_iOffs_iAmmo == INVALID_OFFSET) {
+    g_iOffsetAmmo = FindSendPropInfo("CBasePlayer", "m_iAmmo");
+    if (g_iOffsetAmmo == INVALID_OFFSET) {
         SetFailState("FATAL ERROR: Offset \"CBasePlayer::m_iAmmo\" was not found.");
     }
 
@@ -21,13 +21,6 @@ OnOffsetStart()
         SetFailState(Error);
     }
 
-    g_iOffs_hActiveWeapon = FindSendPropInfo("CBasePlayer", "m_hActiveWeapon");
-    if(g_iOffs_hActiveWeapon == INVALID_OFFSET)
-    {
-        FormatEx(Error, sizeof(Error), "FATAL ERROR g_iOffs_hActiveWeapon [%d]. Please contact the author.", g_iOffs_hActiveWeapon);
-        SetFailState(Error);
-    }
-
     OffsetWeaponParent = FindSendPropInfo("CBaseCombatWeapon", "m_hOwnerEntity");
     if ( OffsetWeaponParent == INVALID_OFFSET )
     {
@@ -39,27 +32,6 @@ OnOffsetStart()
     if ( g_iOffs_iPrimaryAmmoType == INVALID_OFFSET )
     {
         FormatEx(Error, sizeof(Error), "FATAL ERROR g_iOffs_iPrimaryAmmoType [%d]. Please contact the author.", g_iOffs_iPrimaryAmmoType);
-        SetFailState(Error);
-    }
-
-    g_iOffs_WeaponClip1 = FindSendPropInfo("CBaseCombatWeapon","m_iClip1");
-    if ( g_iOffs_WeaponClip1 == INVALID_OFFSET )
-    {
-        FormatEx(Error, sizeof(Error), "FATAL ERROR g_iOffs_WeaponClip1 [%d]. Please contact the author.", g_iOffs_WeaponClip1);
-        SetFailState(Error);
-    }
-
-    g_iOffs_WeaponClip2 = FindSendPropInfo("CBaseCombatWeapon","m_iClip2");
-    if ( g_iOffs_WeaponClip2 == INVALID_OFFSET )
-    {
-        FormatEx(Error, sizeof(Error), "FATAL ERROR g_iOffs_WeaponClip2 [%d]. Please contact the author.", g_iOffs_WeaponClip2);
-        SetFailState(Error);
-    }
-
-    g_iOffs_WeaponOwner = FindSendPropInfo("CBaseCombatWeapon","m_hOwner");
-    if ( g_iOffs_WeaponOwner == INVALID_OFFSET )
-    {
-        FormatEx(Error, sizeof(Error), "FATAL ERROR g_iOffs_WeaponOwner [%d]. Please contact the author.", g_iOffs_WeaponOwner);
         SetFailState(Error);
     }
 

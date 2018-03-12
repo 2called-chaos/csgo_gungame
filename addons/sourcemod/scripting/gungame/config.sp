@@ -58,11 +58,8 @@ public GG_ConfigKeyValue(const String:key[], const String:value[])
                 g_Cfg_FastSwitchOnChangeWeapon = StringToInt(value);
             } else if(strcmp("FastSwitchOnLevelUp", key, false) == 0) {
                 g_Cfg_FastSwitchOnLevelUp = StringToInt(value);
-            } else if(strcmp("OneShotAwp", key, false) == 0) {
-                g_Cfg_OneShotAwp = StringToInt(value);
             } else if(strcmp("WinnerFreezePlayers", key, false) == 0) {
                 g_Cfg_WinnerFreezePlayers = StringToInt(value);
-
             } else if(strcmp("MolotovBonusFlash", key, false) == 0) {
                 g_Cfg_MolotovBonusFlash = StringToInt(value);
             } else if(strcmp("MolotovBonusSmoke", key, false) == 0) {
@@ -75,10 +72,8 @@ public GG_ConfigKeyValue(const String:key[], const String:value[])
                 }
             } else if(strcmp("ExtraMolotovOnKnifeKill", key, false) == 0) {
                 g_Cfg_ExtraMolotovOnKnifeKill = StringToInt(value);
-
             } else if(strcmp("EndGameDelay", key, false) == 0) {
                 g_Cfg_EndGameDelay = StringToFloat(value);
-
             } else if(strcmp("ExtraTaserOnKnifeKill", key, false) == 0) {
                 g_Cfg_ExtraTaserOnKnifeKill = StringToInt(value);
             } else if(strcmp("BonusWeaponAmmo", key, false) == 0) {

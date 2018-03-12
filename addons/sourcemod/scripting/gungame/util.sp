@@ -868,7 +868,7 @@ UTIL_EnableBuyZones() {
     }
 }
 
-UTIL_ReloadActiveWeapon(client, WeaponId, initial = false) {
+UTIL_ReloadActiveWeapon(client, WeaponId) {
     new Slots:slot = g_WeaponSlot[WeaponId];
     if ((slot == Slot_Primary )
         || (slot == Slot_Secondary)
@@ -876,8 +876,7 @@ UTIL_ReloadActiveWeapon(client, WeaponId, initial = false) {
     ) {
         new ent = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
         if ((ent > -1) && g_WeaponAmmo[WeaponId]) {
-            SetEntProp(ent, Prop_Send, "m_iClip1", g_WeaponAmmo[WeaponId] + (!initial&&g_GameName==GameName:Csgo?1:0)); // "+1" is needed because ammo is refilling before last shot is counted
-            OnWeaponReload(ent); // Hint: Fix AWP ammo
+            SetEntProp(ent, Prop_Send, "m_iClip1", g_WeaponAmmo[WeaponId] + (g_GameName==GameName:Csgo?1:0)); // "+1" is needed because ammo is refilling before last shot is counted
         }
     }
 }
@@ -1673,7 +1672,7 @@ stock UTIL_WeaponAmmoGetGrenadeCount(client, type) {
         LogError("[DEBUG-GUNGAME] FUNC UTIL_WeaponAmmoGetGrenadeCount, client=%i type=%i count=%i", client, type, GetEntData(client, g_iOffs_iClip1 + (type * 4)));
     #endif
 
-    return GetEntData(client, g_iOffs_iAmmo + (type * 4));
+    return GetEntData(client, g_iOffsetAmmo + (type * 4));
 }
 
 stock bool:UTIL_HasClientHegrenade(client) {

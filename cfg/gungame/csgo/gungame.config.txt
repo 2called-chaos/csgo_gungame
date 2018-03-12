@@ -24,15 +24,6 @@
         "FastSwitchSkipWeapons" "taser,hegrenade,molotov,incgrenade"
 
         /**
-         * One shot AWP (hit = new round, miss = reload)
-         *
-         * Options:
-         *      1 - Enabled.
-         *      0 - Disabled.
-         */
-        "OneShotAwp" "0"
-
-        /**
          * Switch weapon without delays after level up.
          *
          * Options:
