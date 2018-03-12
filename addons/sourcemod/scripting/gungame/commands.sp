@@ -189,13 +189,16 @@ public Action:_CmdAdminSetlevel(client, args)
     }
 
     // level
-    int oldLevel = PlayerLevel[target];
+    int oldLevel = PlayerLevel[target], setLevel;
     char level_string[16];
     GetCmdArg(2, level_string, sizeof(level_string));
-    int setLevel = StringToInt(level_string) - 1;
-    if (!StrEqual(level_string[0], "-") && !StrEqual(level_string[0], "+"))
+    if (level_string[0] == '-' || level_string[0] == '+')
     {
-        setLevel -= oldLevel;
+        setLevel = StringToInt(level_string);
+    }
+    else
+    {
+        setLevel = StringToInt(level_string) - oldLevel - 1;
     }
     int newLevel = UTIL_ChangeLevel(target, setLevel);
     UTIL_GiveNextWeapon(target, newLevel);
