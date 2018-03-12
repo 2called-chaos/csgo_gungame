@@ -21,10 +21,10 @@ Changes include:
   * New commands
     * gg_setlevel // <target> <level> - sets target's level. use + or - for relative, otherwise it's absolute.
     * gg_win // [target] - if target, forces target to win. if no target, forces highest level player to win.
+    * gg_ffa // [1/0] [> 0=restart game] - enable/disable FFA, second argument > 0 = restart game in that many seconds
 
 
 Todo:
 
   * With the recent introduction of snd_stream (and the future removal of the audio cache) add wav-sounds for other events like in AMXX (tied, lost lead, etc.)
   * LostLead Fwd
-  * FFA toggle command

@@ -1196,4 +1196,16 @@
         "es"    "{green}You didn't lose a level because {teamcolor}{1}{green} is on knife level{default}"
         "pl"    "{green}You didn't lose a level because {teamcolor}{1}{green} is on knife level{default}"
     }
+    "FFA has been enabled"
+    {
+        "en"    "{red}WARNING: FFA has been ENABLED!{default}"
+    }
+    "FFA has been disabled"
+    {
+        "en"    "{red}WARNING: FFA has been DISABLED!{default}"
+    }
+    "GAME WILL RESTART"
+    {
+        "en"    "{red}=!= GAME WILL RESTART =!={default}"
+    }
 }

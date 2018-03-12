@@ -15,6 +15,7 @@ OnCreateCommand()
     RegAdminCmd("gg_disable", _CmdDisable, GUNGAME_ADMINFLAG, "Turn on gungame and restart the game.");
     RegAdminCmd("gg_setlevel", _CmdAdminSetlevel, GUNGAME_ADMINFLAG, "sets target's level (use +/- for relative)");
     RegAdminCmd("gg_win", _CmdAdminWin, GUNGAME_ADMINFLAG, "forces target or highest player to win");
+    RegAdminCmd("gg_ffa", _CmdAdminFfa, GUNGAME_ADMINFLAG, "set FFA at runtime");
 
     /**
      * Add any ES GunGame command if there is any.
@@ -245,6 +246,81 @@ public Action:_CmdAdminWin(client, args)
     else
     {
         ReplyToCommand(client, "Usage: gg_win [target]");
+    }
+
+    return Plugin_Handled;
+}
+
+public Action:_CmdAdminFfa(client, args)
+{
+    if(!IsActive)
+    {
+        ReplyToCommand(client, "[GunGame] is not enabled!");
+    }
+    else if (args == 0)
+    {
+        ReplyToCommand(client, "[GunGame] FFA is currently %s", FFA ? "enabled" : "disabled");
+    }
+    else if (args > 2)
+    {
+        ReplyToCommand(client, "Usage: gg_ffa [enable=0/1] [restart round=0/1]");
+    }
+    else
+    {
+        char ConfigGameDirName[PLATFORM_MAX_PATH];
+        GG_ConfigGetDir(ConfigGameDirName, sizeof(ConfigGameDirName));
+
+        char arg1[16], arg2[16];
+        GetCmdArg(1, arg1, sizeof(arg1));
+        GetCmdArg(2, arg2, sizeof(arg2));
+        int restartDelay = StringToInt(arg2);
+
+        if(StrEqual(arg1, "1"))
+        {
+            if (FFA)
+            {
+                ReplyToCommand(client, "[GunGame] FFA is already enabled!");
+            }
+            else
+            {
+                FFA = true;
+                InsertServerCommand("exec \\%s\\gungame.ffa_on.cfg", ConfigGameDirName);
+                CPrintToChatAll("%t", "FFA has been enabled");
+                CPrintToChatAll("%t", "FFA has been enabled");
+                CPrintToChatAll("%t", "FFA has been enabled");
+            }
+        }
+        else if(StrEqual(arg1, "0"))
+        {
+            if (!FFA)
+            {
+                ReplyToCommand(client, "[GunGame] FFA is already disabled!");
+            }
+            else
+            {
+                FFA = false;
+                CPrintToChatAll("%t", "FFA has been disabled");
+                CPrintToChatAll("%t", "FFA has been disabled");
+                CPrintToChatAll("%t", "FFA has been disabled");
+                InsertServerCommand("exec \\%s\\gungame.ffa_off.cfg", ConfigGameDirName);
+            }
+        }
+
+        if(restartDelay > 0)
+        {
+            CPrintToChatAll("%t", "GAME WILL RESTART");
+            if(IsActive)
+            {
+                /* Reset the game and start over */
+                for(new i = 1; i <= MaxClients; i++)
+                {
+                    PlayerLevel[i] = 0;
+                    UTIL_UpdatePlayerScoreLevel(i);
+                }
+
+                SetConVarInt(mp_restartgame, restartDelay);
+            }
+        }
     }
 
     return Plugin_Handled;

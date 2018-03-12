@@ -335,6 +335,14 @@ public GG_OnStartup(bool:Command)
         return;
     }
 
+    if ( FFA )
+    {
+        char ConfigGameDirName[PLATFORM_MAX_PATH];
+        GG_ConfigGetDir(ConfigGameDirName, sizeof(ConfigGameDirName));
+        PrintToServer("[GunGame] Loading gungame.ffa_%s.cfg file", ConfigGameDirName, FFA ? "on" : "off");
+        InsertServerCommand("exec \\%s\\gungame.ffa_%s.cfg", ConfigGameDirName, FFA ? "on" : "off");
+    }
+
     UTIL_DisableBuyZones();
 
     if ( !WarmupInitialized && WarmupEnabled )
