@@ -1729,7 +1729,7 @@ UTIL_RemoveEntityByClassName(const String:entityName[]) {
 
 PrecacheSoundFixed(Sounds:soundType) {
     new bool:useDiskStream = false;
-    if (g_GameName == GameName:Csgo) {
+    if (g_GameName == GameName:Csgo && StrContains(EventSounds[soundType], ".mp3", false) != -1) {
         new const String:musicFolder[] = "music/";
         decl String:tmpString[sizeof(musicFolder)];
         strcopy(tmpString, sizeof(tmpString), EventSounds[soundType]);
