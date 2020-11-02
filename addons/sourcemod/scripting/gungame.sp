@@ -288,7 +288,7 @@ public OnClientDisconnect(client)
         }
     }
 
-    if ( AutoFriendlyFire && (PlayerState[client] & GRENADE_LEVEL) )
+    if ( !FFA && AutoFriendlyFire && (PlayerState[client] & GRENADE_LEVEL) )
     {
         PlayerState[client] &= ~GRENADE_LEVEL;
 

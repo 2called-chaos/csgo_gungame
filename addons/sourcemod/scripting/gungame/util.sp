@@ -322,7 +322,7 @@ UTIL_ChangeLevel(client, difference, bool:KnifeSteal = false, victim = 0)
         Call_Finish();
     }
 
-    if ( g_cfgEnableFriendlyFireLevel && !g_isCalledEnableFriendlyFire && Level >= g_cfgEnableFriendlyFireLevel )
+    if ( !FFA && g_cfgEnableFriendlyFireLevel && !g_isCalledEnableFriendlyFire && Level >= g_cfgEnableFriendlyFireLevel )
     {
         g_isCalledEnableFriendlyFire = true;
         if ( g_cfgFriendlyFireOnOff ) {
@@ -578,7 +578,7 @@ stock UTIL_FindGrenadeByAmmoType(client, Grenade, bool:drop = false, bool:remove
 
 UTIL_CheckForFriendlyFire(client, WeapId)
 {
-    if ( !AutoFriendlyFire )
+    if ( !AutoFriendlyFire || FFA )
     {
         return;
     }
