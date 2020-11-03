@@ -148,7 +148,17 @@ public Action CompleteWeaponReload(int client, int weapon)
     if (g_iReloadingWeapons[client] == weapon)
     {
         int clip = GetEntProp(weapon, Prop_Send, "m_iClip1");
-        SetEntProp(weapon, Prop_Send, "m_iClip1", 1);
+
+        if (clip < 1)
+        {
+            // the weapon was shot before the timer fired
+            clip = 1;
+            SetEntProp(weapon, Prop_Send, "m_iClip1", 0);
+        }
+        else
+        {
+            SetEntProp(weapon, Prop_Send, "m_iClip1", 1);
+        }
 
         int ammo = GetEntProp(weapon, Prop_Send, "m_iPrimaryReserveAmmoCount");
         if (g_bTakeReserveAmmo) ammo--;
