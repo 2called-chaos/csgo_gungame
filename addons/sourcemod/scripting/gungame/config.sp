@@ -375,6 +375,12 @@ public GG_ConfigKeyValue(const String:key[], const String:value[])
                 ConfigSetSound(WarmupTimerSound, value);
             } else if(strcmp(key, "Winner", false) == 0) {
                 ConfigSetSound(Winner, value);
+            } else if(strcmp(key, "LeadTaken", false) == 0) {
+                ConfigSetSound(LeadTaken, value);
+            } else if(strcmp(key, "LeadTied", false) == 0) {
+                ConfigSetSound(LeadTied, value);
+            } else if(strcmp(key, "LeadLost", false) == 0) {
+                ConfigSetSound(LeadLost, value);
             }
         }
     }

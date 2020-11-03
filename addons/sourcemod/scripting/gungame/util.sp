@@ -163,35 +163,44 @@ UTIL_SetClientGodMode(client, mode = 0)
  */
 UTIL_RecalculateLeader(client, oldLevel, newLevel)
 {
+    // level didn't change
     if ( newLevel == oldLevel )
     {
         return;
     }
+
+    // level decreased
     if ( newLevel < oldLevel )
     {
+        // no leader? don't recalc it then
         if ( !CurrentLeader )
         {
             return;
         }
+
+        // we are the leader
         if ( client == CurrentLeader )
         {
-            // was the leader
+            // are we still the leader?
             CurrentLeader = FindLeader();
             if ( CurrentLeader != client )
             {
+                // no, lost lead
                 Call_StartForward(FwdLeader);
                 Call_PushCell(CurrentLeader);
                 Call_PushCell(newLevel);
                 Call_PushCell(WeaponOrderCount);
                 Call_Finish();
+                UTIL_PlaySound(client, LeadLost);
+                UTIL_PlaySound(CurrentLeader, LeadTaken);
                 UTIL_PlaySoundForLeaderLevel();
             }
             return;
         }
-        // was not a leader
+        // we were not the leader
         return;
     }
-    // newLevel > oldLevel
+    // level increased, no leader, we are the leader
     if ( !CurrentLeader )
     {
         CurrentLeader = client;
@@ -200,35 +209,46 @@ UTIL_RecalculateLeader(client, oldLevel, newLevel)
         Call_PushCell(newLevel);
         Call_PushCell(WeaponOrderCount);
         Call_Finish();
+        UTIL_PlaySound(CurrentLeader, LeadTaken);
         UTIL_PlaySoundForLeaderLevel();
         return;
     }
+
+    // level increased, we are leader, we keep leading
     if ( CurrentLeader == client )
     {
         // still leading
         UTIL_PlaySoundForLeaderLevel();
         return;
     }
-    // CurrentLeader != client
+
+    // level increased but we are not leader
     if ( newLevel < PlayerLevel[CurrentLeader] )
     {
-        // not leading
         return;
     }
+
+    // level increased and we take the lead
     if ( newLevel > PlayerLevel[CurrentLeader] )
     {
+        UTIL_PlaySound(CurrentLeader, LeadLost);
         CurrentLeader = client;
         Call_StartForward(FwdLeader);
         Call_PushCell(CurrentLeader);
         Call_PushCell(newLevel);
         Call_PushCell(WeaponOrderCount);
         Call_Finish();
-        // start leading
+        UTIL_PlaySound(CurrentLeader, LeadTaken);
         UTIL_PlaySoundForLeaderLevel();
         return;
     }
-    // new level == leader level
-    // tied to the lead
+
+    // level increased and we tied
+    int other_leaders = UTIL_GetCountOnLevel(newLevel) - 1; // -1 for client
+    if ( other_leaders == 1 )
+    {
+        UTIL_PlaySound(CurrentLeader, LeadTied);
+    }
     UTIL_PlaySoundForLeaderLevel();
 }
 

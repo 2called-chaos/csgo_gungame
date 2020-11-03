@@ -19,7 +19,10 @@ enum Sounds
     MultiKill,
     Winner,
     WarmupTimerSound,
-    MaxSounds
+    LeadTaken,
+    LeadTied,
+    LeadLost,
+    MaxSounds,
 }
 
 new String:g_WeaponName[MAX_WEAPONS_COUNT][MAX_WEAPON_NAME_LEN];

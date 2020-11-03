@@ -668,5 +668,8 @@
         /* Put each song filename in this list seperated by commas */
         "Winner"            "gungame/winner.mp3"      // (Ñ) VALVE
         "WarmupTimerSound"  "gungame/timer.wav"       // (Ñ) VALVE
+        "LeadTaken"         "gungame/lead_taken.wav"
+        "LeadTied"          "gungame/lead_tied.wav"
+        "LeadLost"          "gungame/lead_lost.wav"
     }
 }
