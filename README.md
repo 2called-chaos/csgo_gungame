@@ -21,6 +21,7 @@ Changes include:
   * Includes new [`gungame_one_shot_awp` plugin](https://github.com/2called-chaos/csgo_gungame/blob/master/addons/sourcemod/scripting/gungame_one_shot_awp.sp)
   * Allow for sounds to be in wave (.wav) format which allows concurrent playback (default sound pack switched to wav except endgame music)
   * Add new cvar `sm_gg_bot_turbo` which - when set to 1 - will make bots level up with every kill
+  * Add cvar-less setting `BotNadeSkip` to let bots skip nade and taser level
   * Added missing sounds (from AMXX perspective) "lead taken", "lead tied" and "lead lost"
   * New commands
     * gg_setlevel // <target> <level> - sets target's level. use + or - for relative, otherwise it's absolute.
@@ -31,4 +32,3 @@ Changes include:
 ### Todo
 
   * sometimes a bomb exists and can be planted and defused in deathmatch (shouldn't?)
-  * bot fast mode

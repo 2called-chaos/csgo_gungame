@@ -190,6 +190,9 @@
         /* BotTurbo: bots always only need 1 kill with every weapon */
         "BotTurbo" "0"
 
+        /* BotNadeSkip: bots skip nade and taser levels (they 99% can't complete them) */
+        "BotNadeSkip" "1"
+
         /* Knife Elite force them to only have a knife after they level up.
            They will get a normal weapon again next round */
         "KnifeElite" "0"

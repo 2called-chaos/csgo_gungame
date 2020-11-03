@@ -10,6 +10,7 @@ new MaxLevelPerRound = 0;
 new MinKillsPerLevel = 1;
 new bool:TurboMode;
 new bool:BotTurbo;
+new bool:BotNadeSkip;
 new StripDeadPlayersWeapon;
 new bool:AllowLevelUpAfterRoundEnd;
 new bool:RemoveBonusWeaponAmmo;

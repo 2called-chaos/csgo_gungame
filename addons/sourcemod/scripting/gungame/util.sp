@@ -276,14 +276,27 @@ UTIL_ChangeLevel(client, difference, bool:KnifeSteal = false, victim = 0)
 
     new oldLevel = PlayerLevel[client], Level = oldLevel + difference;
 
+    // skip nade levels for bots
+    if (IsClientInGame(client) && IsFakeClient(client) && BotNadeSkip)
+    {
+        while (
+            g_WeaponLevelIndex[WeaponOrderId[Level]] == g_WeaponLevelIdHegrenade ||
+            g_WeaponLevelIndex[WeaponOrderId[Level]] == g_WeaponLevelIdMolotov ||
+            g_WeaponLevelIndex[WeaponOrderId[Level]] == g_WeaponLevelIdTaser
+        ) {
+            Level++;
+        }
+    }
+
+    // clamp level (0..WeaponOrderCount)
     if ( Level < 0 ) {
         Level = 0;
     } else if ( Level > WeaponOrderCount ) {
         Level = WeaponOrderCount;
     }
 
+    // call forward
     new ret;
-
     Call_StartForward(FwdLevelChange);
     Call_PushCell(client);
     Call_PushCell(Level);
@@ -293,14 +306,15 @@ UTIL_ChangeLevel(client, difference, bool:KnifeSteal = false, victim = 0)
     Call_PushCell(g_WeaponLevelIndex[WeaponOrderId[Level]] == g_WeaponLevelIdKnife);
     Call_Finish(ret);
 
+    // allow forward to cancel level up
     if ( ret )
     {
         return PlayerLevel[client] = oldLevel;
     }
 
+    // Bot can't win so just keep them at the last level
     if ( !BotCanWin && IsFakeClient(client) && (Level >= WeaponOrderCount) )
     {
-        /* Bot can't win so just keep them at the last level */
         return oldLevel;
     }
 
