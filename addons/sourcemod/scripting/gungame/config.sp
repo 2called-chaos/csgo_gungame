@@ -111,6 +111,9 @@ public GG_ConfigKeyValue(const String:key[], const String:value[])
             } else if(strcmp("TurboMode", key, false) == 0) {
                 TurboMode = bool:StringToInt(value);
                 SetConVarInt(g_Cvar_Turbo, TurboMode);
+            } else if(strcmp("BotTurbo", key, false) == 0) {
+                BotTurbo = bool:StringToInt(value);
+                SetConVarInt(g_Cvar_BotTurbo, BotTurbo);
             } else if(strcmp("HandicapTimesPerMap", key, false) == 0) {
                 g_Cfg_HandicapTimesPerMap = StringToInt(value);
             } else if(strcmp("MultiLevelAmount", key, false) == 0) {

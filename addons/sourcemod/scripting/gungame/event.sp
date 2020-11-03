@@ -374,7 +374,7 @@ public _PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
 
             if ( (PlayerLevelIndex == g_WeaponLevelIdKnife) )
             {
-                if ( UTIL_GetCustomKillPerLevel(level) > 1 ) {
+                if ( UTIL_GetCustomKillPerLevel(level, Victim) > 1 ) {
                     break;
                 }
             }
@@ -445,7 +445,7 @@ public _PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
         }
     }
 
-    new killsPerLevel = UTIL_GetCustomKillPerLevel(level);
+    new killsPerLevel = UTIL_GetCustomKillPerLevel(level, Killer);
     if ( ( killsPerLevel > 1 ) && !LevelUpWithPhysics )
     {
         new kills = ++CurrentKillsPerWeap[Killer], Handled;
@@ -644,7 +644,7 @@ public _PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
     UTIL_GiveNextWeapon(client, Level, false, 0.3, true);
 
     // spawn chat messages
-    new killsPerLevel = UTIL_GetCustomKillPerLevel(Level);
+    new killsPerLevel = UTIL_GetCustomKillPerLevel(Level, client);
 
     if ( !g_Cfg_ShowSpawnMsgInHintBox )
     {
@@ -933,6 +933,9 @@ public Action:OnGetGameDescription(String:gameDesc[64]) {
 public Event_CvarChanged(Handle:cvar, const String:oldValue[], const String:newValue[]) {
     if ( cvar == g_Cvar_Turbo ) {
         TurboMode = GetConVarBool(g_Cvar_Turbo);
+        return;
+    } else if ( cvar == g_Cvar_BotTurbo ) {
+        BotTurbo = GetConVarBool(g_Cvar_BotTurbo);
         return;
     } else if ( cvar == g_Cvar_MultiLevelAmount ) {
         g_Cfg_MultiLevelAmount = GetConVarInt(g_Cvar_MultiLevelAmount);

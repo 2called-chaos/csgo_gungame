@@ -20,8 +20,15 @@ Changes include:
   * Includes [`gungame_mvp` plugin](https://forums.alliedmods.net/showpost.php?p=1627823&postcount=3105) by default (thanks to Peace-Maker)
   * Includes new [`gungame_one_shot_awp` plugin](https://github.com/2called-chaos/csgo_gungame/blob/master/addons/sourcemod/scripting/gungame_one_shot_awp.sp)
   * Allow for sounds to be in wave (.wav) format which allows concurrent playback (default sound pack switched to wav except endgame music)
+  * Add new cvar `sm_gg_bot_turbo` which - when set to 1 - will make bots level up with every kill
   * Added missing sounds (from AMXX perspective) "lead taken", "lead tied" and "lead lost"
   * New commands
     * gg_setlevel // <target> <level> - sets target's level. use + or - for relative, otherwise it's absolute.
     * gg_win // [target] - if target, forces target to win. if no target, forces highest level player to win.
     * gg_ffa // [1/0] [> 0=restart game] - enable/disable FFA, second argument > 0 = restart game in that many seconds
+
+
+### Todo
+
+  * sometimes a bomb exists and can be planted and defused in deathmatch (shouldn't?)
+  * bot fast mode

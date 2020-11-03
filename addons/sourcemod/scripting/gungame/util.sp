@@ -307,7 +307,7 @@ UTIL_ChangeLevel(client, difference, bool:KnifeSteal = false, victim = 0)
     // Client got new level
     PlayerLevel[client] = Level;
     if ( KnifeSteal && g_Cfg_KnifeProRecalcPoints && (oldLevel != Level) ) {
-        CurrentKillsPerWeap[client] = CurrentKillsPerWeap[client] * UTIL_GetCustomKillPerLevel(Level) / UTIL_GetCustomKillPerLevel(oldLevel);
+        CurrentKillsPerWeap[client] = CurrentKillsPerWeap[client] * UTIL_GetCustomKillPerLevel(Level, client) / UTIL_GetCustomKillPerLevel(oldLevel, client);
     } else {
         CurrentKillsPerWeap[client] = 0;
     }
@@ -1328,8 +1328,12 @@ UTIL_ArrayIntRand(array[], size)
     }
 }
 
-UTIL_GetCustomKillPerLevel(level)
+UTIL_GetCustomKillPerLevel(level, client)
 {
+    if (client && IsClientInGame(client) && IsFakeClient(client) && BotTurbo)
+    {
+        return 1;
+    }
     new killsPerLevel = CustomKillPerLevel[level];
     return killsPerLevel ? killsPerLevel : MinKillsPerLevel;
 }

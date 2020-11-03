@@ -9,6 +9,7 @@ new MapStatus;
 new MaxLevelPerRound = 0;
 new MinKillsPerLevel = 1;
 new bool:TurboMode;
+new bool:BotTurbo;
 new StripDeadPlayersWeapon;
 new bool:AllowLevelUpAfterRoundEnd;
 new bool:RemoveBonusWeaponAmmo;
@@ -97,6 +98,7 @@ new bool:g_SdkHooksEnabled = false;
 #endif
 
 new Handle:g_Cvar_Turbo;
+new Handle:g_Cvar_BotTurbo;
 new Handle:g_Cvar_MultiLevelAmount;
 new g_Cfg_MultiplySoundVolume = 0;
 new g_Cfg_BonusWeaponAmmo = 0;

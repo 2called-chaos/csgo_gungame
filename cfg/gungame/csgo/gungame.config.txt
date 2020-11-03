@@ -187,6 +187,9 @@
         /* Turbo Mode: give next level weapon on level up */
         "TurboMode" "0"
 
+        /* BotTurbo: bots always only need 1 kill with every weapon */
+        "BotTurbo" "0"
+
         /* Knife Elite force them to only have a knife after they level up.
            They will get a normal weapon again next round */
         "KnifeElite" "0"

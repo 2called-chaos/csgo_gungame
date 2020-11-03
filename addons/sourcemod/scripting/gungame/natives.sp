@@ -286,7 +286,7 @@ public __AddAPoint(Handle:plugin, numParams)
 
     new oldLevel = PlayerLevel[client];
     new point = ++CurrentKillsPerWeap[client];
-    if ( point < UTIL_GetCustomKillPerLevel(oldLevel) )
+    if ( point < UTIL_GetCustomKillPerLevel(oldLevel, client) )
     {
         return point;
     }
@@ -345,7 +345,7 @@ public __RemoveAPoint(Handle:plugin, numParams)
         UTIL_GiveNextWeapon(client, level);
     }
 
-    return CurrentKillsPerWeap[client] = UTIL_GetCustomKillPerLevel(level) - 1;
+    return CurrentKillsPerWeap[client] = UTIL_GetCustomKillPerLevel(level, client) - 1;
 }
 public __GetClientPointLevel(Handle:plugin, numParams)
 {
@@ -371,7 +371,7 @@ public __GetClientMaxPointLevel(Handle:plugin, numParams)
         return ThrowNativeError(SP_ERROR_NATIVE, "Client is not currently ingame [%d]", client);
     }
 
-    return UTIL_GetCustomKillPerLevel(PlayerLevel[client]);
+    return UTIL_GetCustomKillPerLevel(PlayerLevel[client], client);
 }
 
 public __SetWeaponLevel(Handle:plugin, numParams)

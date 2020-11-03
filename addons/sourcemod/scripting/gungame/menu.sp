@@ -82,7 +82,7 @@ CreateLevelPanel(client)
     DrawPanelItem(LevelPanel, BLANK, ITEMDRAW_SPACER|ITEMDRAW_RAWLINE);
 
     new Level = PlayerLevel[client],
-        killsPerLevel = UTIL_GetCustomKillPerLevel(Level);
+        killsPerLevel = UTIL_GetCustomKillPerLevel(Level, client);
 
     Format(text, sizeof(text), "%t", "LevelPanel: Level");
     DrawPanelItem(LevelPanel, text);
@@ -377,7 +377,7 @@ DisplayWeaponLevelPanel(client)
     {
         if ( i < WeaponOrderCount )
         {
-            Format(text, sizeof(text), "%t", "WeaponLevelPanel: Order Weapon Kills", i + 1, WeaponOrderName[i], UTIL_GetCustomKillPerLevel(i));
+            Format(text, sizeof(text), "%t", "WeaponLevelPanel: Order Weapon Kills", i + 1, WeaponOrderName[i], UTIL_GetCustomKillPerLevel(i, client));
             DrawPanelText(Ham, text);
         }
     }
@@ -568,4 +568,3 @@ DisplayRulesMenu(client)
     SendPanelToClient(menu, client, RulesMenuHandler, GUNGAME_MENU_TIME);
     CloseHandle(menu);
 }
-
