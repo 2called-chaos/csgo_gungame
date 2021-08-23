@@ -153,7 +153,7 @@
     }
     "You are leading on level"
     {
-        "#format"    "{1:d,2:d}"
+        "#format"    "{1:d},{2:d}"
         "en"     "{green}You are in the lead by {default}{1}{green} levels on level {default}{2}{green}"
     }
     "You are leading on level weapon"
